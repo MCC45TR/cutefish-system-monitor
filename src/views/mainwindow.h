@@ -17,6 +17,7 @@ class ProcessDetails;
 class ResourcePage;
 
 namespace cutefish::ui {
+class AboutDialog;
 class ConfirmDialog;
 }
 
@@ -41,7 +42,6 @@ public:
     ResourcePage* resourcePage() const { return m_resource; }
     ProcessDetails* details() const { return m_details.get(); }
     cutefish::ui::Menu& contextMenu() { return m_contextMenu; }
-    cutefish::ui::Menu& intervalMenu() { return m_intervalMenu; }
     cutefish::ui::ConfirmDialog* confirmDialog() const { return m_confirm.get(); }
 
 private:
@@ -49,6 +49,9 @@ private:
 
     // The views and menus, all of which show text.
     void buildContent();
+    // The menus the status bar shows while the window is active.
+    void buildMainMenu();
+    void openAbout();
     void retranslate();
     void update();
     void updateContextMenu();
@@ -62,8 +65,9 @@ private:
     int m_page = 0;
     ProcessesPage* m_processes;
     ResourcePage* m_resource = nullptr;
-    cutefish::ui::Menu m_intervalMenu;
+    std::unique_ptr<cutefish::ui::Menu> m_mainMenu;
     cutefish::ui::Menu m_contextMenu;
+    std::unique_ptr<cutefish::ui::AboutDialog> m_about;
     std::unique_ptr<cutefish::ui::ConfirmDialog> m_confirm;
     std::unique_ptr<ProcessDetails> m_details;
     cutefish::base::Subscription m_updated;
