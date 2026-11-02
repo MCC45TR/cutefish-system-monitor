@@ -11,10 +11,10 @@
 #include "textmetrics.h"
 
 #include "base/i18n.h"
+#include "ui/about_dialog.h"
 #include "ui/application.h"
 #include "ui/clipboard.h"
 #include "ui/dialog_window.h"
-#include "ui/header_button.h"
 #include "ui/keys.h"
 #include "ui/label.h"
 #include "ui/layout.h"
@@ -47,21 +47,18 @@ static std::vector<double> sumSeries(const std::vector<double>& first, const std
     return sum;
 }
 
-// The header's titles and the update interval button.
+// The header's page title.
 class HeaderContent : public View
 {
 public:
     explicit HeaderContent(WindowHeader* header)
         : m_header(header)
         , m_pageTitle(addLabel(this, tr(kPageTitles[0]), 11))
-        , m_interval(addChild<HeaderButton>("menu", 32))
     {
         m_pageTitle->setName("pageTitle");
-        m_interval->setName("refreshInterval");
     }
 
     Label* pageTitle() const { return m_pageTitle; }
-    HeaderButton* intervalButton() const { return m_interval; }
 
 protected:
     void layout() override
@@ -78,16 +75,14 @@ protected:
 
         // The end margin matches the window buttons' start margin.
         const double right = geometry().width - buttonTop;
-        m_interval->setGeometry({right - 32, buttonTop, 32, 32});
         const double pageX = kSidebarWidth + 12;
         m_pageTitle->setColor(color);
-        m_pageTitle->setGeometry({pageX, top, std::max(0.0, right - 32 - 12 - pageX), metrics.lineHeight});
+        m_pageTitle->setGeometry({pageX, top, std::max(0.0, right - pageX), metrics.lineHeight});
     }
 
 private:
     WindowHeader* m_header;
     Label* m_pageTitle;
-    HeaderButton* m_interval;
 };
 
 class MainWindow::Root : public View
@@ -185,6 +180,7 @@ MainWindow::MainWindow(Monitor& monitor)
         setCurrentPage(0);
         m_processes->focusSearch();
     });
+    m_window.addShortcut(ControlModifier, key::letter('q'), [] { Application::instance()->quit(); });
     m_window.addShortcut(NoModifier, key::Escape, [this] {
         if (m_page == 0 && !m_processes->isEditingSearch())
             return;
@@ -197,6 +193,7 @@ MainWindow::MainWindow(Monitor& monitor)
     m_languageChanged = Application::instance()->languageChanged.connect([this] { retranslate(); });
     update();
     setCurrentPage(0);
+    buildMainMenu();
 }
 
 void MainWindow::buildContent()
@@ -217,23 +214,6 @@ void MainWindow::buildContent()
         ++page;
     }
 
-    m_intervalMenu.clear();
-    for (const auto& [text, interval] : std::vector<std::pair<const char*, int>>{
-             {tr("Update Every Second"), 1000}, {tr("Update Every 2 Seconds"), 2000}, {tr("Update Every 5 Seconds"), 5000}}) {
-        m_intervalMenu.addItem(text, [this, interval] { m_monitor.setInterval(interval); });
-    }
-    HeaderButton* intervalButton = m_root->content->intervalButton();
-    intervalButton->onClicked = [this, intervalButton] {
-        for (size_t i = 0; i < 3; ++i)
-            m_intervalMenu.setItemChecked(i, m_monitor.interval() == (i == 0 ? 1000 : i == 1 ? 2000 : 5000));
-        // DesktopMenu.popupFor(intervalButton.background, 3): under the button's 25.33 px plate.
-        const double plate = 76.0 / 3;
-        const double inset = (32 - plate) / 2;
-        intervalButton->setChecked(true);
-        m_intervalMenu.popupFor(intervalButton, 3, RectF{inset, inset, plate, plate});
-    };
-    m_intervalMenu.onClosed = [intervalButton] { intervalButton->setChecked(false); };
-
     m_contextMenu.clear();
     m_contextMenu.addItem(tr("Details"), [this] { openDetails(); });
     m_contextMenu.addItem(tr("Copy Process ID"), [this] { Clipboard::setText(std::to_string(m_selection.pid)); });
@@ -249,6 +229,64 @@ void MainWindow::buildContent()
     };
 }
 
+void MainWindow::buildMainMenu()
+{
+    m_window.setMainMenu(nullptr);
+    m_mainMenu = std::make_unique<Menu>();
+
+    Menu* application = m_mainMenu->addSubmenu(tr("System Monitor"));
+    application->setRole(MenuRole::Application);
+    application->addItem(tr("About System Monitor"), [this] { openAbout(); });
+    application->addSeparator();
+    application->addItem(tr("Hide System Monitor"), [this] { m_window.hideApplication(); });
+    application->addSeparator();
+    const size_t quit = application->addItem(tr("Quit System Monitor"), [] { Application::instance()->quit(); });
+    application->setItemKeyEquivalent(quit, "q", ControlModifier);
+
+    Menu* edit = m_mainMenu->addSubmenu(tr("Edit"));
+    const size_t find = edit->addItem(tr("Find"), [this] {
+        setCurrentPage(0);
+        m_processes->focusSearch();
+    });
+    edit->setItemKeyEquivalent(find, "f", ControlModifier);
+
+    Menu* view = m_mainMenu->addSubmenu(tr("View"));
+    for (int page = 0; page < 6; ++page)
+        view->addItem(tr(kPageTitles[page]), [this, page] { setCurrentPage(page); });
+    view->addSeparator();
+    static constexpr int kIntervals[] = {1000, 2000, 5000};
+    const size_t firstInterval = 7;
+    view->addItem(tr("Update Every Second"), [this] { m_monitor.setInterval(kIntervals[0]); });
+    view->addItem(tr("Update Every 2 Seconds"), [this] { m_monitor.setInterval(kIntervals[1]); });
+    view->addItem(tr("Update Every 5 Seconds"), [this] { m_monitor.setInterval(kIntervals[2]); });
+    view->onAboutToShow = [this, view, firstInterval] {
+        for (int page = 0; page < 6; ++page)
+            view->setItemChecked(size_t(page), page == m_page);
+        view->setItemEnabled(5, m_monitor.metrics().gpuAvailable);
+        for (size_t i = 0; i < 3; ++i)
+            view->setItemChecked(firstInterval + i, m_monitor.interval() == kIntervals[i]);
+    };
+
+    Menu* windowMenu = m_mainMenu->addSubmenu(tr("Window"));
+    windowMenu->setRole(MenuRole::Windows);
+    windowMenu->addItem(tr("Minimize"), [this] { m_window.minimize(); });
+    windowMenu->addItem(tr("Zoom"), [this] { m_window.setMaximized(!m_window.states().maximized); });
+
+    m_window.setMainMenu(m_mainMenu.get());
+}
+
+void MainWindow::openAbout()
+{
+    if (!m_about) {
+        m_about = std::make_unique<AboutDialog>(&m_window);
+        m_about->setName(tr("System Monitor"));
+        m_about->setDescription(tr("Shows what your computer is doing."));
+        m_about->setIconSource("utilities-system-monitor");
+        m_about->setLink("https://github.com/cutefishos/system-monitor");
+    }
+    m_about->show();
+}
+
 // The views are made again; the page, the scope, the search, the selection
 // and an open details window stay.
 void MainWindow::retranslate()
@@ -260,7 +298,9 @@ void MainWindow::retranslate()
     m_details.reset();
     m_confirm.reset();
     m_resource = nullptr;
+    m_about.reset();
     buildContent();
+    buildMainMenu();
     update();
     setCurrentPage(page);
     m_processes->selectionChanged();

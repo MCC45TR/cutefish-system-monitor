@@ -330,12 +330,10 @@ TEST(UiTest, MeasuredAlignment)
     View* search = fixture.view("processSearch");
     const double searchCenter = center(search).y;
 
-    View* interval = fixture.view("refreshInterval");
     View* endButton = fixture.view("endProcessButton");
     View* table = fixture.view("processTable");
     View* list = fixture.view("processList");
-    ASSERT_TRUE(interval && endButton && table && list);
-    EXPECT_EQ(interval->geometry().size(), (SizeF{32, 32}));
+    ASSERT_TRUE(endButton && table && list);
     const RectF action = windowRect(endButton);
     EXPECT_EQ(action.height, search->geometry().height);
     EXPECT_NEAR(action.y + action.height / 2, searchCenter, 0.01);
@@ -402,20 +400,45 @@ TEST(UiTest, ColumnHeadersSort)
     EXPECT_EQ(fixture.monitor.applications().sortColumn(), "name");
 }
 
-TEST(UiTest, IntervalMenu)
+TEST(UiTest, WindowShowsItsMenusInTheStatusBar)
 {
     Fixture fixture;
     MainWindow& window = fixture.window;
-    auto* button = static_cast<HeaderButton*>(fixture.view("refreshInterval"));
-    ASSERT_NE(button, nullptr);
-    TestInput::click(window.window(), center(button));
-    ASSERT_TRUE(window.intervalMenu().isOpen());
-    TestInput::typeKey(window.window(), key::Down);
-    TestInput::typeKey(window.window(), key::Down);
-    TestInput::typeKey(window.window(), key::Down);
-    TestInput::typeKey(window.window(), key::Return);
-    EXPECT_FALSE(window.intervalMenu().isOpen());
+    Menu* menu = window.window().mainMenu();
+    ASSERT_TRUE(menu);
+    const std::vector<MenuRole> roles{MenuRole::Application, MenuRole::None, MenuRole::None, MenuRole::Windows};
+    for (size_t i = 0; i < roles.size(); ++i) {
+        ASSERT_TRUE(menu->submenu(i)) << i;
+        EXPECT_EQ(menu->submenu(i)->role(), roles[i]) << i;
+    }
+    EXPECT_FALSE(menu->submenu(roles.size()));
+
+    Application::instance()->languageChanged.emit();
+    ASSERT_TRUE(window.window().mainMenu());
+    EXPECT_EQ(window.window().mainMenu()->submenu(0)->role(), MenuRole::Application);
+}
+
+TEST(UiTest, ViewMenuChoosesPageAndInterval)
+{
+    Fixture fixture;
+    MainWindow& window = fixture.window;
+    Menu* view = window.window().mainMenu()->submenu(2);
+    ASSERT_TRUE(view);
+    view->popup(&window.window(), {300, 100});
+    ASSERT_TRUE(view->isOpen());
+    TestInput::typeKey(*view->window(), key::Down);
+    TestInput::typeKey(*view->window(), key::Down);
+    TestInput::typeKey(*view->window(), key::Down);
+    TestInput::typeKey(*view->window(), key::Return);
+    EXPECT_EQ(window.currentPage(), 2);
+    view->close();
+
+    view->popup(&window.window(), {300, 100});
+    ASSERT_TRUE(view->isOpen());
+    TestInput::typeKey(*view->window(), key::End);
+    TestInput::typeKey(*view->window(), key::Return);
     EXPECT_EQ(fixture.monitor.interval(), 5000);
+    view->close();
 }
 
 TEST(UiTest, DetailsSize)
