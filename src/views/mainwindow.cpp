@@ -282,7 +282,6 @@ void MainWindow::openAbout()
         m_about->setName(tr("System Monitor"));
         m_about->setDescription(tr("Shows what your computer is doing."));
         m_about->setIconSource("utilities-system-monitor");
-        m_about->setLink("https://github.com/cutefishos/system-monitor");
     }
     m_about->show();
 }
@@ -298,11 +297,14 @@ void MainWindow::retranslate()
     m_details.reset();
     m_confirm.reset();
     m_resource = nullptr;
+    const bool about = m_about && m_about->isShown();
     m_about.reset();
     buildContent();
     buildMainMenu();
     update();
     setCurrentPage(page);
+    if (about)
+        openAbout();
     m_processes->selectionChanged();
     if (details) {
         m_details = std::make_unique<ProcessDetails>(&m_window, m_monitor, *details);
