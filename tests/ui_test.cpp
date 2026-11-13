@@ -458,7 +458,6 @@ TEST(UiTest, DetailsSize)
     ASSERT_NE(dialog, nullptr);
     dialog->setScale(1.5);
     dialog->grab();
-    // The dialog is 612 high, as the Qt version's.
     EXPECT_EQ(dialog->size().height, 612);
     EXPECT_EQ(dialog->size().width, 480);
 }

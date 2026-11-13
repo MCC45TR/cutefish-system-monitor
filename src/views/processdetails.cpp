@@ -25,8 +25,7 @@ using cutefish::i18n::format;
 using cutefish::i18n::tr;
 using cutefish::i18n::trNoop;
 
-// The dialog is 612 high: the toolkit's 44 header and 16 bottom padding around this.
-static constexpr double kContentHeight = 612 - 44 - 16;
+static constexpr double kDialogHeight = 612;
 static constexpr double kMemberHeight = 44;
 
 // One process of an application: its program, memory and PID.
@@ -178,9 +177,6 @@ public:
 
     void setPid(int pid) { m_pid->setText(format(tr("PID {pid}"), {{"pid", std::to_string(pid)}})); }
 
-    double heightForWidth(double) const override { return kContentHeight; }
-    SizeF sizeHint() const override { return {0, kContentHeight}; }
-
 protected:
     void layout() override
     {
@@ -212,6 +208,7 @@ ProcessDetails::ProcessDetails(Window* parent, Monitor& monitor, const Selection
     m_content = content.get();
     m_content->setPid(target.pid);
     m_dialog.setContentView(std::move(content));
+    m_dialog.setHeight(kDialogHeight);
     m_dialog.onClosed = [this] {
         if (onClosed)
             onClosed();
