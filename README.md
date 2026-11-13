@@ -3,6 +3,8 @@
 The system monitor of Cutefish Desktop. It shows CPU, memory, disk, network
 and GPU usage, and lists the running processes so they can be stopped.
 
+<img src="screenshots/system-monitor.png" alt="System Monitor" width="913">
+
 ## Dependencies
 
 System Monitor uses cutefish-toolkit and ICU; GoogleTest for the tests.
