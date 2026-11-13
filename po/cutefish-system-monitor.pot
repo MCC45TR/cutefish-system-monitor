@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cutefish-system-monitor\n"
 "Report-Msgid-Bugs-To: https://github.com/cutefishos\n"
-"POT-Creation-Date: 2026-10-19 22:12+0800\n"
+"POT-Creation-Date: 2026-11-13 15:22+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -168,18 +168,6 @@ msgid "System Monitor"
 msgstr ""
 
 #: src/views/mainwindow.cpp
-msgid "Update Every Second"
-msgstr ""
-
-#: src/views/mainwindow.cpp
-msgid "Update Every 2 Seconds"
-msgstr ""
-
-#: src/views/mainwindow.cpp
-msgid "Update Every 5 Seconds"
-msgstr ""
-
-#: src/views/mainwindow.cpp
 msgid "Details"
 msgstr ""
 
@@ -193,6 +181,58 @@ msgstr ""
 
 #: src/views/mainwindow.cpp
 msgid "Force Quit"
+msgstr ""
+
+#: src/views/mainwindow.cpp
+msgid "About System Monitor"
+msgstr ""
+
+#: src/views/mainwindow.cpp
+msgid "Hide System Monitor"
+msgstr ""
+
+#: src/views/mainwindow.cpp
+msgid "Quit System Monitor"
+msgstr ""
+
+#: src/views/mainwindow.cpp
+msgid "Edit"
+msgstr ""
+
+#: src/views/mainwindow.cpp
+msgid "Find"
+msgstr ""
+
+#: src/views/mainwindow.cpp
+msgid "View"
+msgstr ""
+
+#: src/views/mainwindow.cpp
+msgid "Update Every Second"
+msgstr ""
+
+#: src/views/mainwindow.cpp
+msgid "Update Every 2 Seconds"
+msgstr ""
+
+#: src/views/mainwindow.cpp
+msgid "Update Every 5 Seconds"
+msgstr ""
+
+#: src/views/mainwindow.cpp
+msgid "Window"
+msgstr ""
+
+#: src/views/mainwindow.cpp
+msgid "Minimize"
+msgstr ""
+
+#: src/views/mainwindow.cpp
+msgid "Zoom"
+msgstr ""
+
+#: src/views/mainwindow.cpp
+msgid "Shows what your computer is doing."
 msgstr ""
 
 #: src/views/mainwindow.cpp
