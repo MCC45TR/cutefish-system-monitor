@@ -183,31 +183,28 @@ msgid "Force Quit"
 msgstr "強制終了"
 
 #: src/views/mainwindow.cpp
-#, fuzzy
 msgid "About System Monitor"
-msgstr "システムモニタ"
+msgstr "システムモニタについて"
 
 #: src/views/mainwindow.cpp
-#, fuzzy
 msgid "Hide System Monitor"
-msgstr "システムモニタ"
+msgstr "システムモニタを非表示"
 
 #: src/views/mainwindow.cpp
-#, fuzzy
 msgid "Quit System Monitor"
-msgstr "システムモニタ"
+msgstr "システムモニタを終了"
 
 #: src/views/mainwindow.cpp
 msgid "Edit"
-msgstr ""
+msgstr "編集"
 
 #: src/views/mainwindow.cpp
 msgid "Find"
-msgstr ""
+msgstr "検索"
 
 #: src/views/mainwindow.cpp
 msgid "View"
-msgstr ""
+msgstr "表示"
 
 #: src/views/mainwindow.cpp
 msgid "Update Every Second"
@@ -223,19 +220,19 @@ msgstr "5 秒ごとに更新"
 
 #: src/views/mainwindow.cpp
 msgid "Window"
-msgstr ""
+msgstr "ウインドウ"
 
 #: src/views/mainwindow.cpp
 msgid "Minimize"
-msgstr ""
+msgstr "最小化"
 
 #: src/views/mainwindow.cpp
 msgid "Zoom"
-msgstr ""
+msgstr "ズーム"
 
 #: src/views/mainwindow.cpp
 msgid "Shows what your computer is doing."
-msgstr ""
+msgstr "コンピュータの動作状況を表示します。"
 
 #: src/views/mainwindow.cpp
 #, python-brace-format
