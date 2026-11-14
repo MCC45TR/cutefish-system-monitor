@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cutefish-system-monitor\n"
 "Report-Msgid-Bugs-To: https://github.com/cutefishos\n"
-"POT-Creation-Date: 2026-10-19 22:12+0800\n"
+"POT-Creation-Date: 2026-11-13 15:22+0800\n"
 "PO-Revision-Date: 2026-10-19 22:12+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -167,18 +167,6 @@ msgid "System Monitor"
 msgstr "システムモニタ"
 
 #: src/views/mainwindow.cpp
-msgid "Update Every Second"
-msgstr "1 秒ごとに更新"
-
-#: src/views/mainwindow.cpp
-msgid "Update Every 2 Seconds"
-msgstr "2 秒ごとに更新"
-
-#: src/views/mainwindow.cpp
-msgid "Update Every 5 Seconds"
-msgstr "5 秒ごとに更新"
-
-#: src/views/mainwindow.cpp
 msgid "Details"
 msgstr "詳細"
 
@@ -193,6 +181,58 @@ msgstr "終了"
 #: src/views/mainwindow.cpp
 msgid "Force Quit"
 msgstr "強制終了"
+
+#: src/views/mainwindow.cpp
+msgid "About System Monitor"
+msgstr "システムモニタについて"
+
+#: src/views/mainwindow.cpp
+msgid "Hide System Monitor"
+msgstr "システムモニタを非表示"
+
+#: src/views/mainwindow.cpp
+msgid "Quit System Monitor"
+msgstr "システムモニタを終了"
+
+#: src/views/mainwindow.cpp
+msgid "Edit"
+msgstr "編集"
+
+#: src/views/mainwindow.cpp
+msgid "Find"
+msgstr "検索"
+
+#: src/views/mainwindow.cpp
+msgid "View"
+msgstr "表示"
+
+#: src/views/mainwindow.cpp
+msgid "Update Every Second"
+msgstr "1 秒ごとに更新"
+
+#: src/views/mainwindow.cpp
+msgid "Update Every 2 Seconds"
+msgstr "2 秒ごとに更新"
+
+#: src/views/mainwindow.cpp
+msgid "Update Every 5 Seconds"
+msgstr "5 秒ごとに更新"
+
+#: src/views/mainwindow.cpp
+msgid "Window"
+msgstr "ウインドウ"
+
+#: src/views/mainwindow.cpp
+msgid "Minimize"
+msgstr "最小化"
+
+#: src/views/mainwindow.cpp
+msgid "Zoom"
+msgstr "ズーム"
+
+#: src/views/mainwindow.cpp
+msgid "Shows what your computer is doing."
+msgstr "コンピュータの動作状況を表示します。"
 
 #: src/views/mainwindow.cpp
 #, python-brace-format

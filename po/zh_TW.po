@@ -1,0 +1,538 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: cutefish-system-monitor\n"
+"Report-Msgid-Bugs-To: https://github.com/cutefishos\n"
+"POT-Creation-Date: 2026-11-13 15:22+0800\n"
+"PO-Revision-Date: 2026-11-13 15:22+0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. TRANSLATORS: a browser's helper process, such as "Chromium (Renderer)".
+#: src/monitor.cpp src/processlist.cpp
+#, python-brace-format
+msgid "{name} ({helper})"
+msgstr "{name}（{helper}）"
+
+#: src/monitor.cpp
+msgid "The process has already exited."
+msgstr "此程序已經結束。"
+
+#: src/monitor.cpp
+msgid "The application has already quit."
+msgstr "此應用程式已經結束。"
+
+#: src/monitor.cpp
+msgid "This application cannot be quit here."
+msgstr "無法在這裡結束此應用程式。"
+
+#: src/monitor.cpp
+msgid "This process cannot be ended here."
+msgstr "無法在這裡結束此程序。"
+
+#: src/monitor.cpp
+#, python-brace-format
+msgid "Unable to open the process: {error}"
+msgstr "無法開啟程序：{error}"
+
+#: src/monitor.cpp
+msgid "You can only end your own processes."
+msgstr "您只能結束自己的程序。"
+
+#: src/monitor.cpp
+#, python-brace-format
+msgid "Unable to end the process: {error}"
+msgstr "無法結束程序：{error}"
+
+#: src/monitor.cpp
+msgid "B"
+msgstr "B"
+
+#: src/monitor.cpp
+msgid "KiB"
+msgstr "KiB"
+
+#: src/monitor.cpp
+msgid "MiB"
+msgstr "MiB"
+
+#: src/monitor.cpp
+msgid "GiB"
+msgstr "GiB"
+
+#: src/monitor.cpp
+msgid "TiB"
+msgstr "TiB"
+
+#. TRANSLATORS: a size, such as "1.5 MiB".
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{value} {unit}"
+msgstr "{value} {unit}"
+
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{size}/s"
+msgstr "{size}/s"
+
+#: src/procreader.cpp
+msgid "Running"
+msgstr "執行中"
+
+#: src/procreader.cpp
+msgid "Sleeping"
+msgstr "睡眠中"
+
+#: src/procreader.cpp
+msgid "Waiting for I/O"
+msgstr "正在等待 I/O"
+
+#: src/procreader.cpp
+msgid "Stopped"
+msgstr "已停止"
+
+#: src/procreader.cpp
+msgid "Zombie"
+msgstr "殭屍"
+
+#: src/procreader.cpp
+msgid "Renderer"
+msgstr "轉譯器"
+
+#: src/procreader.cpp
+msgid "Extension"
+msgstr "擴充功能"
+
+#: src/procreader.cpp src/views/mainwindow.cpp
+msgid "GPU"
+msgstr "GPU"
+
+#: src/procreader.cpp
+msgid "Zygote"
+msgstr "Zygote"
+
+#: src/procreader.cpp src/views/mainwindow.cpp
+msgid "Network"
+msgstr "網路"
+
+#: src/procreader.cpp
+msgid "Audio"
+msgstr "音訊"
+
+#: src/procreader.cpp src/views/resourcepage.cpp
+msgid "Storage"
+msgstr "儲存空間"
+
+#: src/procreader.cpp
+msgid "Video Capture"
+msgstr "視訊擷取"
+
+#: src/procreader.cpp
+msgid "Utility"
+msgstr "公用程式"
+
+#: src/procreader.cpp
+msgid "System information is unavailable."
+msgstr "無法取得系統資訊。"
+
+#: src/views/chartcard.cpp
+msgid "Now"
+msgstr "現在"
+
+#: src/views/mainwindow.cpp src/views/processdetails.cpp
+#: src/views/summarycard.cpp
+msgid "Processes"
+msgstr "程序"
+
+#: src/views/mainwindow.cpp src/views/processdetails.cpp
+#: src/views/processespage.cpp
+msgid "CPU"
+msgstr "CPU"
+
+#: src/views/mainwindow.cpp src/views/processdetails.cpp
+#: src/views/processespage.cpp
+msgid "Memory"
+msgstr "記憶體"
+
+#: src/views/mainwindow.cpp
+msgid "Disk"
+msgstr "磁碟"
+
+#: src/views/mainwindow.cpp cutefish-system-monitor.desktop
+msgid "System Monitor"
+msgstr "系統監視器"
+
+#: src/views/mainwindow.cpp
+msgid "Details"
+msgstr "詳細資訊"
+
+#: src/views/mainwindow.cpp
+msgid "Copy Process ID"
+msgstr "複製程序 ID"
+
+#: src/views/mainwindow.cpp
+msgid "Quit"
+msgstr "結束"
+
+#: src/views/mainwindow.cpp
+msgid "Force Quit"
+msgstr "強制結束"
+
+#: src/views/mainwindow.cpp
+msgid "About System Monitor"
+msgstr "關於系統監視器"
+
+#: src/views/mainwindow.cpp
+msgid "Hide System Monitor"
+msgstr "隱藏系統監視器"
+
+#: src/views/mainwindow.cpp
+msgid "Quit System Monitor"
+msgstr "結束系統監視器"
+
+#: src/views/mainwindow.cpp
+msgid "Edit"
+msgstr "編輯"
+
+#: src/views/mainwindow.cpp
+msgid "Find"
+msgstr "尋找"
+
+#: src/views/mainwindow.cpp
+msgid "View"
+msgstr "檢視"
+
+#: src/views/mainwindow.cpp
+msgid "Update Every Second"
+msgstr "每秒更新"
+
+#: src/views/mainwindow.cpp
+msgid "Update Every 2 Seconds"
+msgstr "每 2 秒更新"
+
+#: src/views/mainwindow.cpp
+msgid "Update Every 5 Seconds"
+msgstr "每 5 秒更新"
+
+#: src/views/mainwindow.cpp
+msgid "Window"
+msgstr "視窗"
+
+#: src/views/mainwindow.cpp
+msgid "Minimize"
+msgstr "最小化"
+
+#: src/views/mainwindow.cpp
+msgid "Zoom"
+msgstr "縮放"
+
+#: src/views/mainwindow.cpp
+msgid "Shows what your computer is doing."
+msgstr "顯示您的電腦正在做什麼。"
+
+#: src/views/mainwindow.cpp
+#, python-brace-format
+msgid "Force quit {name}?"
+msgstr "要強制結束 {name} 嗎？"
+
+#: src/views/mainwindow.cpp
+#, python-brace-format
+msgid "Quit {name}?"
+msgstr "要結束 {name} 嗎？"
+
+#: src/views/mainwindow.cpp
+msgid "All of its processes will stop immediately. Unsaved work may be lost."
+msgstr "它的所有程序都會立即停止。未儲存的工作可能會遺失。"
+
+#: src/views/mainwindow.cpp
+msgid "The application will be asked to quit. Unsaved work may be lost."
+msgstr "系統將要求應用程式結束。未儲存的工作可能會遺失。"
+
+#: src/views/mainwindow.cpp
+msgid "The process will stop immediately. Unsaved work may be lost."
+msgstr "此程序會立即停止。未儲存的工作可能會遺失。"
+
+#: src/views/mainwindow.cpp
+msgid "The process will be asked to quit. Unsaved work may be lost."
+msgstr "系統將要求此程序結束。未儲存的工作可能會遺失。"
+
+#: src/views/mainwindow.cpp src/views/summarycard.cpp
+msgid "Collecting data…"
+msgstr "正在收集資料…"
+
+#: src/views/mainwindow.cpp
+#, python-brace-format
+msgid "{n} logical processor"
+msgid_plural "{n} logical processors"
+msgstr[0] "{n} 個邏輯處理器"
+
+#: src/views/mainwindow.cpp
+#, python-brace-format
+msgid "Write {rate}"
+msgstr "寫入 {rate}"
+
+#: src/views/processdetails.cpp
+msgid "User"
+msgstr "使用者"
+
+#: src/views/processdetails.cpp src/views/resourcepage.cpp
+msgid "State"
+msgstr "狀態"
+
+#: src/views/processdetails.cpp
+msgid "Threads"
+msgstr "執行緒"
+
+#: src/views/processdetails.cpp
+msgid "Nice value"
+msgstr "Nice 值"
+
+#: src/views/processdetails.cpp
+msgid "Parent process"
+msgstr "父程序"
+
+#: src/views/processdetails.cpp
+msgid "Command"
+msgstr "指令"
+
+#: src/views/processdetails.cpp
+msgid "Application quit"
+msgstr "應用程式已結束"
+
+#: src/views/processdetails.cpp
+msgid "Process exited"
+msgstr "程序已結束"
+
+#: src/views/processdetails.cpp
+msgid "Exited"
+msgstr "已結束"
+
+#: src/views/processdetails.cpp
+#, python-brace-format
+msgid "PID {pid}"
+msgstr "PID {pid}"
+
+#: src/views/processdetails.cpp
+msgid "Application Details"
+msgstr "應用程式詳細資訊"
+
+#: src/views/processdetails.cpp
+msgid "Process Details"
+msgstr "程序詳細資訊"
+
+#: src/views/processespage.cpp
+msgid "Name"
+msgstr "名稱"
+
+#: src/views/processespage.cpp src/views/resourcepage.cpp
+msgid "Read"
+msgstr "讀取"
+
+#: src/views/processespage.cpp src/views/resourcepage.cpp
+msgid "Write"
+msgstr "寫入"
+
+#: src/views/processespage.cpp
+msgid "PID"
+msgstr "PID"
+
+#: src/views/processespage.cpp
+msgid "Applications"
+msgstr "應用程式"
+
+#: src/views/processespage.cpp
+msgid "My Processes"
+msgstr "我的程序"
+
+#: src/views/processespage.cpp
+msgid "All Processes"
+msgstr "所有程序"
+
+#: src/views/processespage.cpp
+msgid "Search processes"
+msgstr "搜尋程序"
+
+#: src/views/processespage.cpp
+msgid "No applications found"
+msgstr "找不到應用程式"
+
+#: src/views/processespage.cpp
+msgid "No processes found"
+msgstr "找不到程序"
+
+#: src/views/processespage.cpp
+msgid "Try a different name, user, or process ID."
+msgstr "請嘗試其他名稱、使用者或程序 ID。"
+
+#: src/views/resourcepage.cpp
+msgid "Logical processors"
+msgstr "邏輯處理器"
+
+#: src/views/resourcepage.cpp
+msgid "In use"
+msgstr "使用中"
+
+#: src/views/resourcepage.cpp
+msgid "Available"
+msgstr "可用"
+
+#: src/views/resourcepage.cpp
+msgid "Cached"
+msgstr "已快取"
+
+#: src/views/resourcepage.cpp
+msgid "Total memory"
+msgstr "記憶體總量"
+
+#: src/views/resourcepage.cpp
+msgid "Swap"
+msgstr "交換空間"
+
+#: src/views/resourcepage.cpp
+msgid "Download"
+msgstr "下載"
+
+#: src/views/resourcepage.cpp
+msgid "Upload"
+msgstr "上傳"
+
+#: src/views/resourcepage.cpp
+msgid "Total received"
+msgstr "總接收量"
+
+#: src/views/resourcepage.cpp
+msgid "Total sent"
+msgstr "總傳送量"
+
+#: src/views/resourcepage.cpp
+msgid "Network interfaces"
+msgstr "網路介面"
+
+#: src/views/resourcepage.cpp
+msgid "Hardware address"
+msgstr "硬體位址"
+
+#: src/views/resourcepage.cpp
+msgid "Device"
+msgstr "裝置"
+
+#: src/views/resourcepage.cpp
+msgid "Capacity"
+msgstr "容量"
+
+#: src/views/resourcepage.cpp
+msgid "Used"
+msgstr "已使用"
+
+#: src/views/resourcepage.cpp
+msgid "File system"
+msgstr "檔案系統"
+
+#: src/views/resourcepage.cpp
+msgid "Driver"
+msgstr "驅動程式"
+
+#: src/views/resourcepage.cpp
+msgid "Activity"
+msgstr "活動"
+
+#: src/views/resourcepage.cpp
+msgid "Temperature"
+msgstr "溫度"
+
+#: src/views/resourcepage.cpp
+msgid "Clock speed"
+msgstr "時脈速度"
+
+#: src/views/resourcepage.cpp
+msgid "Video memory"
+msgstr "顯示記憶體"
+
+#: src/views/resourcepage.cpp
+msgid "Processor activity"
+msgstr "處理器活動"
+
+#: src/views/resourcepage.cpp
+msgid "Memory usage"
+msgstr "記憶體用量"
+
+#: src/views/resourcepage.cpp
+msgid "Network activity"
+msgstr "網路活動"
+
+#: src/views/resourcepage.cpp
+msgid "Disk activity"
+msgstr "磁碟活動"
+
+#: src/views/resourcepage.cpp
+msgid "Graphics activity"
+msgstr "圖形活動"
+
+#: src/views/resourcepage.cpp
+msgid "Graphics temperature"
+msgstr "圖形溫度"
+
+#: src/views/resourcepage.cpp
+#, python-brace-format
+msgid "{used} of {total} in use"
+msgstr "已使用 {used}，共 {total}"
+
+#: src/views/resourcepage.cpp
+msgid "Physical network interfaces"
+msgstr "實體網路介面"
+
+#: src/views/resourcepage.cpp
+msgid "Physical disks"
+msgstr "實體磁碟"
+
+#: src/views/resourcepage.cpp
+#, python-brace-format
+msgid "{n} second"
+msgid_plural "{n} seconds"
+msgstr[0] "{n} 秒"
+
+#: src/views/resourcepage.cpp
+#, python-brace-format
+msgid "CPU {number}"
+msgstr "CPU {number}"
+
+#: src/views/resourcepage.cpp
+msgid "Not configured"
+msgstr "未設定"
+
+#: src/views/resourcepage.cpp
+msgid "Connected"
+msgstr "已連線"
+
+#: src/views/resourcepage.cpp
+msgid "Disconnected"
+msgstr "已中斷連線"
+
+#: src/views/resourcepage.cpp
+msgid "Unknown"
+msgstr "未知"
+
+#: src/views/resourcepage.cpp
+#, python-brace-format
+msgid "{used} of {total}"
+msgstr "{used}／{total}"
+
+#: src/views/resourcepage.cpp
+msgid "Active"
+msgstr "使用中"
+
+#: src/views/resourcepage.cpp
+msgid "Powered off"
+msgstr "已關閉電源"
+
+#: cutefish-system-monitor.desktop
+msgid "View resource usage and manage running processes"
+msgstr "檢視資源用量並管理執行中的程序"
+
+#: cutefish-system-monitor.desktop
+msgid "CPU;Memory;Network;Disk;Processes;"
+msgstr "CPU;Memory;Network;Disk;Processes;處理器;記憶體;網路;磁碟;程序;"

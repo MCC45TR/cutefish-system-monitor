@@ -1,0 +1,538 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: cutefish-system-monitor\n"
+"Report-Msgid-Bugs-To: https://github.com/cutefishos\n"
+"POT-Creation-Date: 2026-11-13 15:22+0800\n"
+"PO-Revision-Date: 2026-11-13 15:22+0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. TRANSLATORS: a browser's helper process, such as "Chromium (Renderer)".
+#: src/monitor.cpp src/processlist.cpp
+#, python-brace-format
+msgid "{name} ({helper})"
+msgstr "{name}({helper})"
+
+#: src/monitor.cpp
+msgid "The process has already exited."
+msgstr "프로세스가 이미 종료되었습니다."
+
+#: src/monitor.cpp
+msgid "The application has already quit."
+msgstr "애플리케이션이 이미 종료되었습니다."
+
+#: src/monitor.cpp
+msgid "This application cannot be quit here."
+msgstr "이 애플리케이션은 여기에서 종료할 수 없습니다."
+
+#: src/monitor.cpp
+msgid "This process cannot be ended here."
+msgstr "이 프로세스는 여기에서 종료할 수 없습니다."
+
+#: src/monitor.cpp
+#, python-brace-format
+msgid "Unable to open the process: {error}"
+msgstr "프로세스를 열 수 없습니다: {error}"
+
+#: src/monitor.cpp
+msgid "You can only end your own processes."
+msgstr "자신의 프로세스만 종료할 수 있습니다."
+
+#: src/monitor.cpp
+#, python-brace-format
+msgid "Unable to end the process: {error}"
+msgstr "프로세스를 종료할 수 없습니다: {error}"
+
+#: src/monitor.cpp
+msgid "B"
+msgstr "B"
+
+#: src/monitor.cpp
+msgid "KiB"
+msgstr "KiB"
+
+#: src/monitor.cpp
+msgid "MiB"
+msgstr "MiB"
+
+#: src/monitor.cpp
+msgid "GiB"
+msgstr "GiB"
+
+#: src/monitor.cpp
+msgid "TiB"
+msgstr "TiB"
+
+#. TRANSLATORS: a size, such as "1.5 MiB".
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{value} {unit}"
+msgstr "{value}{unit}"
+
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{size}/s"
+msgstr "{size}/s"
+
+#: src/procreader.cpp
+msgid "Running"
+msgstr "실행 중"
+
+#: src/procreader.cpp
+msgid "Sleeping"
+msgstr "휴면"
+
+#: src/procreader.cpp
+msgid "Waiting for I/O"
+msgstr "I/O 대기 중"
+
+#: src/procreader.cpp
+msgid "Stopped"
+msgstr "정지됨"
+
+#: src/procreader.cpp
+msgid "Zombie"
+msgstr "좀비"
+
+#: src/procreader.cpp
+msgid "Renderer"
+msgstr "렌더러"
+
+#: src/procreader.cpp
+msgid "Extension"
+msgstr "확장 프로그램"
+
+#: src/procreader.cpp src/views/mainwindow.cpp
+msgid "GPU"
+msgstr "GPU"
+
+#: src/procreader.cpp
+msgid "Zygote"
+msgstr "Zygote"
+
+#: src/procreader.cpp src/views/mainwindow.cpp
+msgid "Network"
+msgstr "네트워크"
+
+#: src/procreader.cpp
+msgid "Audio"
+msgstr "오디오"
+
+#: src/procreader.cpp src/views/resourcepage.cpp
+msgid "Storage"
+msgstr "저장 공간"
+
+#: src/procreader.cpp
+msgid "Video Capture"
+msgstr "비디오 캡처"
+
+#: src/procreader.cpp
+msgid "Utility"
+msgstr "유틸리티"
+
+#: src/procreader.cpp
+msgid "System information is unavailable."
+msgstr "시스템 정보를 사용할 수 없습니다."
+
+#: src/views/chartcard.cpp
+msgid "Now"
+msgstr "지금"
+
+#: src/views/mainwindow.cpp src/views/processdetails.cpp
+#: src/views/summarycard.cpp
+msgid "Processes"
+msgstr "프로세스"
+
+#: src/views/mainwindow.cpp src/views/processdetails.cpp
+#: src/views/processespage.cpp
+msgid "CPU"
+msgstr "CPU"
+
+#: src/views/mainwindow.cpp src/views/processdetails.cpp
+#: src/views/processespage.cpp
+msgid "Memory"
+msgstr "메모리"
+
+#: src/views/mainwindow.cpp
+msgid "Disk"
+msgstr "디스크"
+
+#: src/views/mainwindow.cpp cutefish-system-monitor.desktop
+msgid "System Monitor"
+msgstr "시스템 모니터"
+
+#: src/views/mainwindow.cpp
+msgid "Details"
+msgstr "세부사항"
+
+#: src/views/mainwindow.cpp
+msgid "Copy Process ID"
+msgstr "프로세스 ID 복사"
+
+#: src/views/mainwindow.cpp
+msgid "Quit"
+msgstr "종료"
+
+#: src/views/mainwindow.cpp
+msgid "Force Quit"
+msgstr "강제 종료"
+
+#: src/views/mainwindow.cpp
+msgid "About System Monitor"
+msgstr "시스템 모니터 정보"
+
+#: src/views/mainwindow.cpp
+msgid "Hide System Monitor"
+msgstr "시스템 모니터 숨기기"
+
+#: src/views/mainwindow.cpp
+msgid "Quit System Monitor"
+msgstr "시스템 모니터 종료"
+
+#: src/views/mainwindow.cpp
+msgid "Edit"
+msgstr "편집"
+
+#: src/views/mainwindow.cpp
+msgid "Find"
+msgstr "찾기"
+
+#: src/views/mainwindow.cpp
+msgid "View"
+msgstr "보기"
+
+#: src/views/mainwindow.cpp
+msgid "Update Every Second"
+msgstr "1초마다 업데이트"
+
+#: src/views/mainwindow.cpp
+msgid "Update Every 2 Seconds"
+msgstr "2초마다 업데이트"
+
+#: src/views/mainwindow.cpp
+msgid "Update Every 5 Seconds"
+msgstr "5초마다 업데이트"
+
+#: src/views/mainwindow.cpp
+msgid "Window"
+msgstr "창"
+
+#: src/views/mainwindow.cpp
+msgid "Minimize"
+msgstr "최소화"
+
+#: src/views/mainwindow.cpp
+msgid "Zoom"
+msgstr "확대/축소"
+
+#: src/views/mainwindow.cpp
+msgid "Shows what your computer is doing."
+msgstr "컴퓨터에서 진행 중인 작업을 보여줍니다."
+
+#: src/views/mainwindow.cpp
+#, python-brace-format
+msgid "Force quit {name}?"
+msgstr "{name}을(를) 강제 종료하겠습니까?"
+
+#: src/views/mainwindow.cpp
+#, python-brace-format
+msgid "Quit {name}?"
+msgstr "{name}을(를) 종료하겠습니까?"
+
+#: src/views/mainwindow.cpp
+msgid "All of its processes will stop immediately. Unsaved work may be lost."
+msgstr "모든 프로세스가 즉시 중지됩니다. 저장하지 않은 작업이 사라질 수 있습니다."
+
+#: src/views/mainwindow.cpp
+msgid "The application will be asked to quit. Unsaved work may be lost."
+msgstr "애플리케이션에 종료를 요청합니다. 저장하지 않은 작업이 사라질 수 있습니다."
+
+#: src/views/mainwindow.cpp
+msgid "The process will stop immediately. Unsaved work may be lost."
+msgstr "프로세스가 즉시 중지됩니다. 저장하지 않은 작업이 사라질 수 있습니다."
+
+#: src/views/mainwindow.cpp
+msgid "The process will be asked to quit. Unsaved work may be lost."
+msgstr "프로세스에 종료를 요청합니다. 저장하지 않은 작업이 사라질 수 있습니다."
+
+#: src/views/mainwindow.cpp src/views/summarycard.cpp
+msgid "Collecting data…"
+msgstr "데이터 수집 중…"
+
+#: src/views/mainwindow.cpp
+#, python-brace-format
+msgid "{n} logical processor"
+msgid_plural "{n} logical processors"
+msgstr[0] "논리 프로세서 {n}개"
+
+#: src/views/mainwindow.cpp
+#, python-brace-format
+msgid "Write {rate}"
+msgstr "쓰기 {rate}"
+
+#: src/views/processdetails.cpp
+msgid "User"
+msgstr "사용자"
+
+#: src/views/processdetails.cpp src/views/resourcepage.cpp
+msgid "State"
+msgstr "상태"
+
+#: src/views/processdetails.cpp
+msgid "Threads"
+msgstr "스레드"
+
+#: src/views/processdetails.cpp
+msgid "Nice value"
+msgstr "Nice 값"
+
+#: src/views/processdetails.cpp
+msgid "Parent process"
+msgstr "상위 프로세스"
+
+#: src/views/processdetails.cpp
+msgid "Command"
+msgstr "명령"
+
+#: src/views/processdetails.cpp
+msgid "Application quit"
+msgstr "애플리케이션 종료됨"
+
+#: src/views/processdetails.cpp
+msgid "Process exited"
+msgstr "프로세스 종료됨"
+
+#: src/views/processdetails.cpp
+msgid "Exited"
+msgstr "종료됨"
+
+#: src/views/processdetails.cpp
+#, python-brace-format
+msgid "PID {pid}"
+msgstr "PID {pid}"
+
+#: src/views/processdetails.cpp
+msgid "Application Details"
+msgstr "애플리케이션 세부사항"
+
+#: src/views/processdetails.cpp
+msgid "Process Details"
+msgstr "프로세스 세부사항"
+
+#: src/views/processespage.cpp
+msgid "Name"
+msgstr "이름"
+
+#: src/views/processespage.cpp src/views/resourcepage.cpp
+msgid "Read"
+msgstr "읽기"
+
+#: src/views/processespage.cpp src/views/resourcepage.cpp
+msgid "Write"
+msgstr "쓰기"
+
+#: src/views/processespage.cpp
+msgid "PID"
+msgstr "PID"
+
+#: src/views/processespage.cpp
+msgid "Applications"
+msgstr "애플리케이션"
+
+#: src/views/processespage.cpp
+msgid "My Processes"
+msgstr "내 프로세스"
+
+#: src/views/processespage.cpp
+msgid "All Processes"
+msgstr "모든 프로세스"
+
+#: src/views/processespage.cpp
+msgid "Search processes"
+msgstr "프로세스 검색"
+
+#: src/views/processespage.cpp
+msgid "No applications found"
+msgstr "애플리케이션을 찾을 수 없음"
+
+#: src/views/processespage.cpp
+msgid "No processes found"
+msgstr "프로세스를 찾을 수 없음"
+
+#: src/views/processespage.cpp
+msgid "Try a different name, user, or process ID."
+msgstr "다른 이름, 사용자 또는 프로세스 ID로 시도해 보십시오."
+
+#: src/views/resourcepage.cpp
+msgid "Logical processors"
+msgstr "논리 프로세서"
+
+#: src/views/resourcepage.cpp
+msgid "In use"
+msgstr "사용 중"
+
+#: src/views/resourcepage.cpp
+msgid "Available"
+msgstr "사용 가능"
+
+#: src/views/resourcepage.cpp
+msgid "Cached"
+msgstr "캐시"
+
+#: src/views/resourcepage.cpp
+msgid "Total memory"
+msgstr "전체 메모리"
+
+#: src/views/resourcepage.cpp
+msgid "Swap"
+msgstr "스왑"
+
+#: src/views/resourcepage.cpp
+msgid "Download"
+msgstr "다운로드"
+
+#: src/views/resourcepage.cpp
+msgid "Upload"
+msgstr "업로드"
+
+#: src/views/resourcepage.cpp
+msgid "Total received"
+msgstr "총 수신량"
+
+#: src/views/resourcepage.cpp
+msgid "Total sent"
+msgstr "총 송신량"
+
+#: src/views/resourcepage.cpp
+msgid "Network interfaces"
+msgstr "네트워크 인터페이스"
+
+#: src/views/resourcepage.cpp
+msgid "Hardware address"
+msgstr "하드웨어 주소"
+
+#: src/views/resourcepage.cpp
+msgid "Device"
+msgstr "장치"
+
+#: src/views/resourcepage.cpp
+msgid "Capacity"
+msgstr "용량"
+
+#: src/views/resourcepage.cpp
+msgid "Used"
+msgstr "사용됨"
+
+#: src/views/resourcepage.cpp
+msgid "File system"
+msgstr "파일 시스템"
+
+#: src/views/resourcepage.cpp
+msgid "Driver"
+msgstr "드라이버"
+
+#: src/views/resourcepage.cpp
+msgid "Activity"
+msgstr "활동"
+
+#: src/views/resourcepage.cpp
+msgid "Temperature"
+msgstr "온도"
+
+#: src/views/resourcepage.cpp
+msgid "Clock speed"
+msgstr "클럭 속도"
+
+#: src/views/resourcepage.cpp
+msgid "Video memory"
+msgstr "비디오 메모리"
+
+#: src/views/resourcepage.cpp
+msgid "Processor activity"
+msgstr "프로세서 활동"
+
+#: src/views/resourcepage.cpp
+msgid "Memory usage"
+msgstr "메모리 사용량"
+
+#: src/views/resourcepage.cpp
+msgid "Network activity"
+msgstr "네트워크 활동"
+
+#: src/views/resourcepage.cpp
+msgid "Disk activity"
+msgstr "디스크 활동"
+
+#: src/views/resourcepage.cpp
+msgid "Graphics activity"
+msgstr "그래픽 활동"
+
+#: src/views/resourcepage.cpp
+msgid "Graphics temperature"
+msgstr "그래픽 온도"
+
+#: src/views/resourcepage.cpp
+#, python-brace-format
+msgid "{used} of {total} in use"
+msgstr "{total} 중 {used} 사용 중"
+
+#: src/views/resourcepage.cpp
+msgid "Physical network interfaces"
+msgstr "물리 네트워크 인터페이스"
+
+#: src/views/resourcepage.cpp
+msgid "Physical disks"
+msgstr "물리 디스크"
+
+#: src/views/resourcepage.cpp
+#, python-brace-format
+msgid "{n} second"
+msgid_plural "{n} seconds"
+msgstr[0] "{n}초"
+
+#: src/views/resourcepage.cpp
+#, python-brace-format
+msgid "CPU {number}"
+msgstr "CPU {number}"
+
+#: src/views/resourcepage.cpp
+msgid "Not configured"
+msgstr "구성되지 않음"
+
+#: src/views/resourcepage.cpp
+msgid "Connected"
+msgstr "연결됨"
+
+#: src/views/resourcepage.cpp
+msgid "Disconnected"
+msgstr "연결 끊김"
+
+#: src/views/resourcepage.cpp
+msgid "Unknown"
+msgstr "알 수 없음"
+
+#: src/views/resourcepage.cpp
+#, python-brace-format
+msgid "{used} of {total}"
+msgstr "{used}/{total}"
+
+#: src/views/resourcepage.cpp
+msgid "Active"
+msgstr "활성"
+
+#: src/views/resourcepage.cpp
+msgid "Powered off"
+msgstr "전원 꺼짐"
+
+#: cutefish-system-monitor.desktop
+msgid "View resource usage and manage running processes"
+msgstr "리소스 사용량을 확인하고 실행 중인 프로세스를 관리합니다"
+
+#: cutefish-system-monitor.desktop
+msgid "CPU;Memory;Network;Disk;Processes;"
+msgstr "CPU;메모리;네트워크;디스크;프로세스;작업 관리자;Memory;Network;Disk;Processes;"
