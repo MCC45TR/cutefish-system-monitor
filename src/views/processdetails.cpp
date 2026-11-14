@@ -132,6 +132,7 @@ public:
 
         if (application) {
             m_members = m_plate->addChild<ListView>();
+            m_members->setCornerRadius(Theme::current().bigRadius);
             m_members->setRowHeight(kMemberHeight);
             m_members->createItem = [] { return std::make_unique<MemberRow>(); };
             m_members->bindItem = [this](View* item, size_t row) {

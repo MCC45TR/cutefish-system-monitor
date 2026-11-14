@@ -64,6 +64,7 @@ ResourcePage::ResourcePage(Monitor& monitor, int page)
 {
     setName("resourcePage");
     m_content->setMargins({12, 8, 12, 24});
+    setBottomCornerRadius(Theme::current().windowRadius);
     m_layout->setLayoutHints({.fillWidth = true});
     m_layout->setSpacing(20);
     m_updated = m_monitor.updated.connect([this] { update(); });
