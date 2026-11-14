@@ -400,7 +400,7 @@ TEST(UiTest, ColumnHeadersSort)
     EXPECT_EQ(fixture.monitor.applications().sortColumn(), "name");
 }
 
-TEST(UiTest, WindowShowsItsMenusInTheStatusBar)
+TEST(UiTest, WindowShowsItsMenusInTheMenuBar)
 {
     Fixture fixture;
     MainWindow& window = fixture.window;

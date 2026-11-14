@@ -49,7 +49,7 @@ private:
 
     // The views and menus, all of which show text.
     void buildContent();
-    // The menus the status bar shows while the window is active.
+    // The menus the menu bar shows while the window is active.
     void buildMainMenu();
     void openAbout();
     void retranslate();
