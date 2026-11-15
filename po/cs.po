@@ -1,0 +1,542 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: cutefish-system-monitor\n"
+"Report-Msgid-Bugs-To: https://github.com/cutefishos\n"
+"POT-Creation-Date: 2026-11-13 15:22+0800\n"
+"PO-Revision-Date: 2026-11-13 15:22+0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#. TRANSLATORS: a browser's helper process, such as "Chromium (Renderer)".
+#: src/monitor.cpp src/processlist.cpp
+#, python-brace-format
+msgid "{name} ({helper})"
+msgstr "{name} ({helper})"
+
+#: src/monitor.cpp
+msgid "The process has already exited."
+msgstr "Proces již skončil."
+
+#: src/monitor.cpp
+msgid "The application has already quit."
+msgstr "Aplikace již byla ukončena."
+
+#: src/monitor.cpp
+msgid "This application cannot be quit here."
+msgstr "Tuto aplikaci zde nelze ukončit."
+
+#: src/monitor.cpp
+msgid "This process cannot be ended here."
+msgstr "Tento proces zde nelze ukončit."
+
+#: src/monitor.cpp
+#, python-brace-format
+msgid "Unable to open the process: {error}"
+msgstr "Proces nelze otevřít: {error}"
+
+#: src/monitor.cpp
+msgid "You can only end your own processes."
+msgstr "Ukončit můžete jen své vlastní procesy."
+
+#: src/monitor.cpp
+#, python-brace-format
+msgid "Unable to end the process: {error}"
+msgstr "Proces nelze ukončit: {error}"
+
+#: src/monitor.cpp
+msgid "B"
+msgstr "B"
+
+#: src/monitor.cpp
+msgid "KiB"
+msgstr "KiB"
+
+#: src/monitor.cpp
+msgid "MiB"
+msgstr "MiB"
+
+#: src/monitor.cpp
+msgid "GiB"
+msgstr "GiB"
+
+#: src/monitor.cpp
+msgid "TiB"
+msgstr "TiB"
+
+#. TRANSLATORS: a size, such as "1.5 MiB".
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{value} {unit}"
+msgstr "{value} {unit}"
+
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{size}/s"
+msgstr "{size}/s"
+
+#: src/procreader.cpp
+msgid "Running"
+msgstr "Běží"
+
+#: src/procreader.cpp
+msgid "Sleeping"
+msgstr "Spí"
+
+#: src/procreader.cpp
+msgid "Waiting for I/O"
+msgstr "Čeká na V/V"
+
+#: src/procreader.cpp
+msgid "Stopped"
+msgstr "Zastaven"
+
+#: src/procreader.cpp
+msgid "Zombie"
+msgstr "Zombie"
+
+#: src/procreader.cpp
+msgid "Renderer"
+msgstr "Vykreslování"
+
+#: src/procreader.cpp
+msgid "Extension"
+msgstr "Rozšíření"
+
+#: src/procreader.cpp src/views/mainwindow.cpp
+msgid "GPU"
+msgstr "GPU"
+
+#: src/procreader.cpp
+msgid "Zygote"
+msgstr "Zygote"
+
+#: src/procreader.cpp src/views/mainwindow.cpp
+msgid "Network"
+msgstr "Síť"
+
+#: src/procreader.cpp
+msgid "Audio"
+msgstr "Zvuk"
+
+#: src/procreader.cpp src/views/resourcepage.cpp
+msgid "Storage"
+msgstr "Úložiště"
+
+#: src/procreader.cpp
+msgid "Video Capture"
+msgstr "Záznam videa"
+
+#: src/procreader.cpp
+msgid "Utility"
+msgstr "Nástroj"
+
+#: src/procreader.cpp
+msgid "System information is unavailable."
+msgstr "Informace o systému nejsou k dispozici."
+
+#: src/views/chartcard.cpp
+msgid "Now"
+msgstr "Nyní"
+
+#: src/views/mainwindow.cpp src/views/processdetails.cpp
+#: src/views/summarycard.cpp
+msgid "Processes"
+msgstr "Procesy"
+
+#: src/views/mainwindow.cpp src/views/processdetails.cpp
+#: src/views/processespage.cpp
+msgid "CPU"
+msgstr "CPU"
+
+#: src/views/mainwindow.cpp src/views/processdetails.cpp
+#: src/views/processespage.cpp
+msgid "Memory"
+msgstr "Paměť"
+
+#: src/views/mainwindow.cpp
+msgid "Disk"
+msgstr "Disk"
+
+#: src/views/mainwindow.cpp cutefish-system-monitor.desktop
+msgid "System Monitor"
+msgstr "Sledování systému"
+
+#: src/views/mainwindow.cpp
+msgid "Details"
+msgstr "Podrobnosti"
+
+#: src/views/mainwindow.cpp
+msgid "Copy Process ID"
+msgstr "Kopírovat ID procesu"
+
+#: src/views/mainwindow.cpp
+msgid "Quit"
+msgstr "Ukončit"
+
+#: src/views/mainwindow.cpp
+msgid "Force Quit"
+msgstr "Vynutit ukončení"
+
+#: src/views/mainwindow.cpp
+msgid "About System Monitor"
+msgstr "O aplikaci Sledování systému"
+
+#: src/views/mainwindow.cpp
+msgid "Hide System Monitor"
+msgstr "Skrýt Sledování systému"
+
+#: src/views/mainwindow.cpp
+msgid "Quit System Monitor"
+msgstr "Ukončit Sledování systému"
+
+#: src/views/mainwindow.cpp
+msgid "Edit"
+msgstr "Úpravy"
+
+#: src/views/mainwindow.cpp
+msgid "Find"
+msgstr "Najít"
+
+#: src/views/mainwindow.cpp
+msgid "View"
+msgstr "Zobrazení"
+
+#: src/views/mainwindow.cpp
+msgid "Update Every Second"
+msgstr "Aktualizovat každou sekundu"
+
+#: src/views/mainwindow.cpp
+msgid "Update Every 2 Seconds"
+msgstr "Aktualizovat každé 2 sekundy"
+
+#: src/views/mainwindow.cpp
+msgid "Update Every 5 Seconds"
+msgstr "Aktualizovat každých 5 sekund"
+
+#: src/views/mainwindow.cpp
+msgid "Window"
+msgstr "Okno"
+
+#: src/views/mainwindow.cpp
+msgid "Minimize"
+msgstr "Minimalizovat"
+
+#: src/views/mainwindow.cpp
+msgid "Zoom"
+msgstr "Zvětšit"
+
+#: src/views/mainwindow.cpp
+msgid "Shows what your computer is doing."
+msgstr "Ukazuje, co váš počítač právě dělá."
+
+#: src/views/mainwindow.cpp
+#, python-brace-format
+msgid "Force quit {name}?"
+msgstr "Vynutit ukončení {name}?"
+
+#: src/views/mainwindow.cpp
+#, python-brace-format
+msgid "Quit {name}?"
+msgstr "Ukončit {name}?"
+
+#: src/views/mainwindow.cpp
+msgid "All of its processes will stop immediately. Unsaved work may be lost."
+msgstr "Všechny jeho procesy se okamžitě zastaví. Neuložená práce může být ztracena."
+
+#: src/views/mainwindow.cpp
+msgid "The application will be asked to quit. Unsaved work may be lost."
+msgstr "Aplikace bude požádána o ukončení. Neuložená práce může být ztracena."
+
+#: src/views/mainwindow.cpp
+msgid "The process will stop immediately. Unsaved work may be lost."
+msgstr "Proces se okamžitě zastaví. Neuložená práce může být ztracena."
+
+#: src/views/mainwindow.cpp
+msgid "The process will be asked to quit. Unsaved work may be lost."
+msgstr "Proces bude požádán o ukončení. Neuložená práce může být ztracena."
+
+#: src/views/mainwindow.cpp src/views/summarycard.cpp
+msgid "Collecting data…"
+msgstr "Shromažďování dat…"
+
+#: src/views/mainwindow.cpp
+#, python-brace-format
+msgid "{n} logical processor"
+msgid_plural "{n} logical processors"
+msgstr[0] "{n} logický procesor"
+msgstr[1] "{n} logické procesory"
+msgstr[2] "{n} logických procesorů"
+
+#: src/views/mainwindow.cpp
+#, python-brace-format
+msgid "Write {rate}"
+msgstr "Zápis {rate}"
+
+#: src/views/processdetails.cpp
+msgid "User"
+msgstr "Uživatel"
+
+#: src/views/processdetails.cpp src/views/resourcepage.cpp
+msgid "State"
+msgstr "Stav"
+
+#: src/views/processdetails.cpp
+msgid "Threads"
+msgstr "Vlákna"
+
+#: src/views/processdetails.cpp
+msgid "Nice value"
+msgstr "Hodnota nice"
+
+#: src/views/processdetails.cpp
+msgid "Parent process"
+msgstr "Nadřazený proces"
+
+#: src/views/processdetails.cpp
+msgid "Command"
+msgstr "Příkaz"
+
+#: src/views/processdetails.cpp
+msgid "Application quit"
+msgstr "Aplikace ukončena"
+
+#: src/views/processdetails.cpp
+msgid "Process exited"
+msgstr "Proces skončil"
+
+#: src/views/processdetails.cpp
+msgid "Exited"
+msgstr "Skončil"
+
+#: src/views/processdetails.cpp
+#, python-brace-format
+msgid "PID {pid}"
+msgstr "PID {pid}"
+
+#: src/views/processdetails.cpp
+msgid "Application Details"
+msgstr "Podrobnosti aplikace"
+
+#: src/views/processdetails.cpp
+msgid "Process Details"
+msgstr "Podrobnosti procesu"
+
+#: src/views/processespage.cpp
+msgid "Name"
+msgstr "Název"
+
+#: src/views/processespage.cpp src/views/resourcepage.cpp
+msgid "Read"
+msgstr "Čtení"
+
+#: src/views/processespage.cpp src/views/resourcepage.cpp
+msgid "Write"
+msgstr "Zápis"
+
+#: src/views/processespage.cpp
+msgid "PID"
+msgstr "PID"
+
+#: src/views/processespage.cpp
+msgid "Applications"
+msgstr "Aplikace"
+
+#: src/views/processespage.cpp
+msgid "My Processes"
+msgstr "Moje procesy"
+
+#: src/views/processespage.cpp
+msgid "All Processes"
+msgstr "Všechny procesy"
+
+#: src/views/processespage.cpp
+msgid "Search processes"
+msgstr "Hledat procesy"
+
+#: src/views/processespage.cpp
+msgid "No applications found"
+msgstr "Nenalezeny žádné aplikace"
+
+#: src/views/processespage.cpp
+msgid "No processes found"
+msgstr "Nenalezeny žádné procesy"
+
+#: src/views/processespage.cpp
+msgid "Try a different name, user, or process ID."
+msgstr "Zkuste jiný název, uživatele nebo ID procesu."
+
+#: src/views/resourcepage.cpp
+msgid "Logical processors"
+msgstr "Logické procesory"
+
+#: src/views/resourcepage.cpp
+msgid "In use"
+msgstr "Používáno"
+
+#: src/views/resourcepage.cpp
+msgid "Available"
+msgstr "Dostupné"
+
+#: src/views/resourcepage.cpp
+msgid "Cached"
+msgstr "V mezipaměti"
+
+#: src/views/resourcepage.cpp
+msgid "Total memory"
+msgstr "Celková paměť"
+
+#: src/views/resourcepage.cpp
+msgid "Swap"
+msgstr "Odkládací prostor"
+
+#: src/views/resourcepage.cpp
+msgid "Download"
+msgstr "Stahování"
+
+#: src/views/resourcepage.cpp
+msgid "Upload"
+msgstr "Odesílání"
+
+#: src/views/resourcepage.cpp
+msgid "Total received"
+msgstr "Celkem přijato"
+
+#: src/views/resourcepage.cpp
+msgid "Total sent"
+msgstr "Celkem odesláno"
+
+#: src/views/resourcepage.cpp
+msgid "Network interfaces"
+msgstr "Síťová rozhraní"
+
+#: src/views/resourcepage.cpp
+msgid "Hardware address"
+msgstr "Hardwarová adresa"
+
+#: src/views/resourcepage.cpp
+msgid "Device"
+msgstr "Zařízení"
+
+#: src/views/resourcepage.cpp
+msgid "Capacity"
+msgstr "Kapacita"
+
+#: src/views/resourcepage.cpp
+msgid "Used"
+msgstr "Použito"
+
+#: src/views/resourcepage.cpp
+msgid "File system"
+msgstr "Souborový systém"
+
+#: src/views/resourcepage.cpp
+msgid "Driver"
+msgstr "Ovladač"
+
+#: src/views/resourcepage.cpp
+msgid "Activity"
+msgstr "Aktivita"
+
+#: src/views/resourcepage.cpp
+msgid "Temperature"
+msgstr "Teplota"
+
+#: src/views/resourcepage.cpp
+msgid "Clock speed"
+msgstr "Takt"
+
+#: src/views/resourcepage.cpp
+msgid "Video memory"
+msgstr "Videopaměť"
+
+#: src/views/resourcepage.cpp
+msgid "Processor activity"
+msgstr "Aktivita procesoru"
+
+#: src/views/resourcepage.cpp
+msgid "Memory usage"
+msgstr "Využití paměti"
+
+#: src/views/resourcepage.cpp
+msgid "Network activity"
+msgstr "Síťová aktivita"
+
+#: src/views/resourcepage.cpp
+msgid "Disk activity"
+msgstr "Aktivita disku"
+
+#: src/views/resourcepage.cpp
+msgid "Graphics activity"
+msgstr "Aktivita grafiky"
+
+#: src/views/resourcepage.cpp
+msgid "Graphics temperature"
+msgstr "Teplota grafiky"
+
+#: src/views/resourcepage.cpp
+#, python-brace-format
+msgid "{used} of {total} in use"
+msgstr "Používáno {used} z {total}"
+
+#: src/views/resourcepage.cpp
+msgid "Physical network interfaces"
+msgstr "Fyzická síťová rozhraní"
+
+#: src/views/resourcepage.cpp
+msgid "Physical disks"
+msgstr "Fyzické disky"
+
+#: src/views/resourcepage.cpp
+#, python-brace-format
+msgid "{n} second"
+msgid_plural "{n} seconds"
+msgstr[0] "{n} sekunda"
+msgstr[1] "{n} sekundy"
+msgstr[2] "{n} sekund"
+
+#: src/views/resourcepage.cpp
+#, python-brace-format
+msgid "CPU {number}"
+msgstr "CPU {number}"
+
+#: src/views/resourcepage.cpp
+msgid "Not configured"
+msgstr "Nenakonfigurováno"
+
+#: src/views/resourcepage.cpp
+msgid "Connected"
+msgstr "Připojeno"
+
+#: src/views/resourcepage.cpp
+msgid "Disconnected"
+msgstr "Odpojeno"
+
+#: src/views/resourcepage.cpp
+msgid "Unknown"
+msgstr "Neznámé"
+
+#: src/views/resourcepage.cpp
+#, python-brace-format
+msgid "{used} of {total}"
+msgstr "{used} z {total}"
+
+#: src/views/resourcepage.cpp
+msgid "Active"
+msgstr "Aktivní"
+
+#: src/views/resourcepage.cpp
+msgid "Powered off"
+msgstr "Vypnuto"
+
+#: cutefish-system-monitor.desktop
+msgid "View resource usage and manage running processes"
+msgstr "Zobrazení využití prostředků a správa spuštěných procesů"
+
+#: cutefish-system-monitor.desktop
+msgid "CPU;Memory;Network;Disk;Processes;"
+msgstr "CPU;Procesor;Paměť;Síť;Disk;Procesy;"

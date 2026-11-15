@@ -1,0 +1,538 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: cutefish-system-monitor\n"
+"Report-Msgid-Bugs-To: https://github.com/cutefishos\n"
+"POT-Creation-Date: 2026-11-13 15:22+0800\n"
+"PO-Revision-Date: 2026-11-13 15:22+0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ms\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. TRANSLATORS: a browser's helper process, such as "Chromium (Renderer)".
+#: src/monitor.cpp src/processlist.cpp
+#, python-brace-format
+msgid "{name} ({helper})"
+msgstr "{name} ({helper})"
+
+#: src/monitor.cpp
+msgid "The process has already exited."
+msgstr "Proses telah pun keluar."
+
+#: src/monitor.cpp
+msgid "The application has already quit."
+msgstr "Aplikasi telah pun keluar."
+
+#: src/monitor.cpp
+msgid "This application cannot be quit here."
+msgstr "Aplikasi ini tidak boleh dikeluarkan di sini."
+
+#: src/monitor.cpp
+msgid "This process cannot be ended here."
+msgstr "Proses ini tidak boleh ditamatkan di sini."
+
+#: src/monitor.cpp
+#, python-brace-format
+msgid "Unable to open the process: {error}"
+msgstr "Tidak dapat membuka proses: {error}"
+
+#: src/monitor.cpp
+msgid "You can only end your own processes."
+msgstr "Anda hanya boleh menamatkan proses anda sendiri."
+
+#: src/monitor.cpp
+#, python-brace-format
+msgid "Unable to end the process: {error}"
+msgstr "Tidak dapat menamatkan proses: {error}"
+
+#: src/monitor.cpp
+msgid "B"
+msgstr "B"
+
+#: src/monitor.cpp
+msgid "KiB"
+msgstr "KiB"
+
+#: src/monitor.cpp
+msgid "MiB"
+msgstr "MiB"
+
+#: src/monitor.cpp
+msgid "GiB"
+msgstr "GiB"
+
+#: src/monitor.cpp
+msgid "TiB"
+msgstr "TiB"
+
+#. TRANSLATORS: a size, such as "1.5 MiB".
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{value} {unit}"
+msgstr "{value} {unit}"
+
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{size}/s"
+msgstr "{size}/s"
+
+#: src/procreader.cpp
+msgid "Running"
+msgstr "Berjalan"
+
+#: src/procreader.cpp
+msgid "Sleeping"
+msgstr "Tidur"
+
+#: src/procreader.cpp
+msgid "Waiting for I/O"
+msgstr "Menunggu I/O"
+
+#: src/procreader.cpp
+msgid "Stopped"
+msgstr "Dihentikan"
+
+#: src/procreader.cpp
+msgid "Zombie"
+msgstr "Zombi"
+
+#: src/procreader.cpp
+msgid "Renderer"
+msgstr "Pemapar"
+
+#: src/procreader.cpp
+msgid "Extension"
+msgstr "Sambungan"
+
+#: src/procreader.cpp src/views/mainwindow.cpp
+msgid "GPU"
+msgstr "GPU"
+
+#: src/procreader.cpp
+msgid "Zygote"
+msgstr "Zygote"
+
+#: src/procreader.cpp src/views/mainwindow.cpp
+msgid "Network"
+msgstr "Rangkaian"
+
+#: src/procreader.cpp
+msgid "Audio"
+msgstr "Audio"
+
+#: src/procreader.cpp src/views/resourcepage.cpp
+msgid "Storage"
+msgstr "Storan"
+
+#: src/procreader.cpp
+msgid "Video Capture"
+msgstr "Tangkapan Video"
+
+#: src/procreader.cpp
+msgid "Utility"
+msgstr "Utiliti"
+
+#: src/procreader.cpp
+msgid "System information is unavailable."
+msgstr "Maklumat sistem tidak tersedia."
+
+#: src/views/chartcard.cpp
+msgid "Now"
+msgstr "Sekarang"
+
+#: src/views/mainwindow.cpp src/views/processdetails.cpp
+#: src/views/summarycard.cpp
+msgid "Processes"
+msgstr "Proses"
+
+#: src/views/mainwindow.cpp src/views/processdetails.cpp
+#: src/views/processespage.cpp
+msgid "CPU"
+msgstr "CPU"
+
+#: src/views/mainwindow.cpp src/views/processdetails.cpp
+#: src/views/processespage.cpp
+msgid "Memory"
+msgstr "Memori"
+
+#: src/views/mainwindow.cpp
+msgid "Disk"
+msgstr "Cakera"
+
+#: src/views/mainwindow.cpp cutefish-system-monitor.desktop
+msgid "System Monitor"
+msgstr "Pemantau Sistem"
+
+#: src/views/mainwindow.cpp
+msgid "Details"
+msgstr "Butiran"
+
+#: src/views/mainwindow.cpp
+msgid "Copy Process ID"
+msgstr "Salin ID Proses"
+
+#: src/views/mainwindow.cpp
+msgid "Quit"
+msgstr "Keluar"
+
+#: src/views/mainwindow.cpp
+msgid "Force Quit"
+msgstr "Paksa Keluar"
+
+#: src/views/mainwindow.cpp
+msgid "About System Monitor"
+msgstr "Perihal Pemantau Sistem"
+
+#: src/views/mainwindow.cpp
+msgid "Hide System Monitor"
+msgstr "Sembunyikan Pemantau Sistem"
+
+#: src/views/mainwindow.cpp
+msgid "Quit System Monitor"
+msgstr "Keluar Pemantau Sistem"
+
+#: src/views/mainwindow.cpp
+msgid "Edit"
+msgstr "Edit"
+
+#: src/views/mainwindow.cpp
+msgid "Find"
+msgstr "Cari"
+
+#: src/views/mainwindow.cpp
+msgid "View"
+msgstr "Lihat"
+
+#: src/views/mainwindow.cpp
+msgid "Update Every Second"
+msgstr "Kemas Kini Setiap Saat"
+
+#: src/views/mainwindow.cpp
+msgid "Update Every 2 Seconds"
+msgstr "Kemas Kini Setiap 2 Saat"
+
+#: src/views/mainwindow.cpp
+msgid "Update Every 5 Seconds"
+msgstr "Kemas Kini Setiap 5 Saat"
+
+#: src/views/mainwindow.cpp
+msgid "Window"
+msgstr "Tetingkap"
+
+#: src/views/mainwindow.cpp
+msgid "Minimize"
+msgstr "Minimumkan"
+
+#: src/views/mainwindow.cpp
+msgid "Zoom"
+msgstr "Zum"
+
+#: src/views/mainwindow.cpp
+msgid "Shows what your computer is doing."
+msgstr "Menunjukkan apa yang sedang dilakukan oleh komputer anda."
+
+#: src/views/mainwindow.cpp
+#, python-brace-format
+msgid "Force quit {name}?"
+msgstr "Paksa keluar {name}?"
+
+#: src/views/mainwindow.cpp
+#, python-brace-format
+msgid "Quit {name}?"
+msgstr "Keluar {name}?"
+
+#: src/views/mainwindow.cpp
+msgid "All of its processes will stop immediately. Unsaved work may be lost."
+msgstr "Semua prosesnya akan berhenti serta-merta. Kerja yang belum disimpan mungkin hilang."
+
+#: src/views/mainwindow.cpp
+msgid "The application will be asked to quit. Unsaved work may be lost."
+msgstr "Aplikasi akan diminta untuk keluar. Kerja yang belum disimpan mungkin hilang."
+
+#: src/views/mainwindow.cpp
+msgid "The process will stop immediately. Unsaved work may be lost."
+msgstr "Proses akan berhenti serta-merta. Kerja yang belum disimpan mungkin hilang."
+
+#: src/views/mainwindow.cpp
+msgid "The process will be asked to quit. Unsaved work may be lost."
+msgstr "Proses akan diminta untuk keluar. Kerja yang belum disimpan mungkin hilang."
+
+#: src/views/mainwindow.cpp src/views/summarycard.cpp
+msgid "Collecting data…"
+msgstr "Mengumpul data…"
+
+#: src/views/mainwindow.cpp
+#, python-brace-format
+msgid "{n} logical processor"
+msgid_plural "{n} logical processors"
+msgstr[0] "{n} pemproses logik"
+
+#: src/views/mainwindow.cpp
+#, python-brace-format
+msgid "Write {rate}"
+msgstr "Tulis {rate}"
+
+#: src/views/processdetails.cpp
+msgid "User"
+msgstr "Pengguna"
+
+#: src/views/processdetails.cpp src/views/resourcepage.cpp
+msgid "State"
+msgstr "Keadaan"
+
+#: src/views/processdetails.cpp
+msgid "Threads"
+msgstr "Benang"
+
+#: src/views/processdetails.cpp
+msgid "Nice value"
+msgstr "Nilai nice"
+
+#: src/views/processdetails.cpp
+msgid "Parent process"
+msgstr "Proses induk"
+
+#: src/views/processdetails.cpp
+msgid "Command"
+msgstr "Arahan"
+
+#: src/views/processdetails.cpp
+msgid "Application quit"
+msgstr "Aplikasi telah keluar"
+
+#: src/views/processdetails.cpp
+msgid "Process exited"
+msgstr "Proses telah keluar"
+
+#: src/views/processdetails.cpp
+msgid "Exited"
+msgstr "Telah keluar"
+
+#: src/views/processdetails.cpp
+#, python-brace-format
+msgid "PID {pid}"
+msgstr "PID {pid}"
+
+#: src/views/processdetails.cpp
+msgid "Application Details"
+msgstr "Butiran Aplikasi"
+
+#: src/views/processdetails.cpp
+msgid "Process Details"
+msgstr "Butiran Proses"
+
+#: src/views/processespage.cpp
+msgid "Name"
+msgstr "Nama"
+
+#: src/views/processespage.cpp src/views/resourcepage.cpp
+msgid "Read"
+msgstr "Baca"
+
+#: src/views/processespage.cpp src/views/resourcepage.cpp
+msgid "Write"
+msgstr "Tulis"
+
+#: src/views/processespage.cpp
+msgid "PID"
+msgstr "PID"
+
+#: src/views/processespage.cpp
+msgid "Applications"
+msgstr "Aplikasi"
+
+#: src/views/processespage.cpp
+msgid "My Processes"
+msgstr "Proses Saya"
+
+#: src/views/processespage.cpp
+msgid "All Processes"
+msgstr "Semua Proses"
+
+#: src/views/processespage.cpp
+msgid "Search processes"
+msgstr "Cari proses"
+
+#: src/views/processespage.cpp
+msgid "No applications found"
+msgstr "Tiada aplikasi ditemui"
+
+#: src/views/processespage.cpp
+msgid "No processes found"
+msgstr "Tiada proses ditemui"
+
+#: src/views/processespage.cpp
+msgid "Try a different name, user, or process ID."
+msgstr "Cuba nama, pengguna atau ID proses yang lain."
+
+#: src/views/resourcepage.cpp
+msgid "Logical processors"
+msgstr "Pemproses logik"
+
+#: src/views/resourcepage.cpp
+msgid "In use"
+msgstr "Sedang digunakan"
+
+#: src/views/resourcepage.cpp
+msgid "Available"
+msgstr "Tersedia"
+
+#: src/views/resourcepage.cpp
+msgid "Cached"
+msgstr "Dicache"
+
+#: src/views/resourcepage.cpp
+msgid "Total memory"
+msgstr "Jumlah memori"
+
+#: src/views/resourcepage.cpp
+msgid "Swap"
+msgstr "Swap"
+
+#: src/views/resourcepage.cpp
+msgid "Download"
+msgstr "Muat turun"
+
+#: src/views/resourcepage.cpp
+msgid "Upload"
+msgstr "Muat naik"
+
+#: src/views/resourcepage.cpp
+msgid "Total received"
+msgstr "Jumlah diterima"
+
+#: src/views/resourcepage.cpp
+msgid "Total sent"
+msgstr "Jumlah dihantar"
+
+#: src/views/resourcepage.cpp
+msgid "Network interfaces"
+msgstr "Antara muka rangkaian"
+
+#: src/views/resourcepage.cpp
+msgid "Hardware address"
+msgstr "Alamat perkakasan"
+
+#: src/views/resourcepage.cpp
+msgid "Device"
+msgstr "Peranti"
+
+#: src/views/resourcepage.cpp
+msgid "Capacity"
+msgstr "Kapasiti"
+
+#: src/views/resourcepage.cpp
+msgid "Used"
+msgstr "Digunakan"
+
+#: src/views/resourcepage.cpp
+msgid "File system"
+msgstr "Sistem fail"
+
+#: src/views/resourcepage.cpp
+msgid "Driver"
+msgstr "Pemacu"
+
+#: src/views/resourcepage.cpp
+msgid "Activity"
+msgstr "Aktiviti"
+
+#: src/views/resourcepage.cpp
+msgid "Temperature"
+msgstr "Suhu"
+
+#: src/views/resourcepage.cpp
+msgid "Clock speed"
+msgstr "Kelajuan jam"
+
+#: src/views/resourcepage.cpp
+msgid "Video memory"
+msgstr "Memori video"
+
+#: src/views/resourcepage.cpp
+msgid "Processor activity"
+msgstr "Aktiviti pemproses"
+
+#: src/views/resourcepage.cpp
+msgid "Memory usage"
+msgstr "Penggunaan memori"
+
+#: src/views/resourcepage.cpp
+msgid "Network activity"
+msgstr "Aktiviti rangkaian"
+
+#: src/views/resourcepage.cpp
+msgid "Disk activity"
+msgstr "Aktiviti cakera"
+
+#: src/views/resourcepage.cpp
+msgid "Graphics activity"
+msgstr "Aktiviti grafik"
+
+#: src/views/resourcepage.cpp
+msgid "Graphics temperature"
+msgstr "Suhu grafik"
+
+#: src/views/resourcepage.cpp
+#, python-brace-format
+msgid "{used} of {total} in use"
+msgstr "{used} daripada {total} digunakan"
+
+#: src/views/resourcepage.cpp
+msgid "Physical network interfaces"
+msgstr "Antara muka rangkaian fizikal"
+
+#: src/views/resourcepage.cpp
+msgid "Physical disks"
+msgstr "Cakera fizikal"
+
+#: src/views/resourcepage.cpp
+#, python-brace-format
+msgid "{n} second"
+msgid_plural "{n} seconds"
+msgstr[0] "{n} saat"
+
+#: src/views/resourcepage.cpp
+#, python-brace-format
+msgid "CPU {number}"
+msgstr "CPU {number}"
+
+#: src/views/resourcepage.cpp
+msgid "Not configured"
+msgstr "Tidak dikonfigurasi"
+
+#: src/views/resourcepage.cpp
+msgid "Connected"
+msgstr "Disambungkan"
+
+#: src/views/resourcepage.cpp
+msgid "Disconnected"
+msgstr "Diputuskan"
+
+#: src/views/resourcepage.cpp
+msgid "Unknown"
+msgstr "Tidak diketahui"
+
+#: src/views/resourcepage.cpp
+#, python-brace-format
+msgid "{used} of {total}"
+msgstr "{used} daripada {total}"
+
+#: src/views/resourcepage.cpp
+msgid "Active"
+msgstr "Aktif"
+
+#: src/views/resourcepage.cpp
+msgid "Powered off"
+msgstr "Dimatikan"
+
+#: cutefish-system-monitor.desktop
+msgid "View resource usage and manage running processes"
+msgstr "Lihat penggunaan sumber dan urus proses yang sedang berjalan"
+
+#: cutefish-system-monitor.desktop
+msgid "CPU;Memory;Network;Disk;Processes;"
+msgstr "CPU;Memori;Rangkaian;Cakera;Proses;Memory;Network;Disk;Processes;"

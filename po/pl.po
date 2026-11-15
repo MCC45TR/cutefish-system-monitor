@@ -1,0 +1,542 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: cutefish-system-monitor\n"
+"Report-Msgid-Bugs-To: https://github.com/cutefishos\n"
+"POT-Creation-Date: 2026-11-13 15:22+0800\n"
+"PO-Revision-Date: 2026-11-13 15:22+0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#. TRANSLATORS: a browser's helper process, such as "Chromium (Renderer)".
+#: src/monitor.cpp src/processlist.cpp
+#, python-brace-format
+msgid "{name} ({helper})"
+msgstr "{name} ({helper})"
+
+#: src/monitor.cpp
+msgid "The process has already exited."
+msgstr "Proces już zakończył działanie."
+
+#: src/monitor.cpp
+msgid "The application has already quit."
+msgstr "Aplikacja już zakończyła działanie."
+
+#: src/monitor.cpp
+msgid "This application cannot be quit here."
+msgstr "Tej aplikacji nie można tutaj zakończyć."
+
+#: src/monitor.cpp
+msgid "This process cannot be ended here."
+msgstr "Tego procesu nie można tutaj zakończyć."
+
+#: src/monitor.cpp
+#, python-brace-format
+msgid "Unable to open the process: {error}"
+msgstr "Nie można otworzyć procesu: {error}"
+
+#: src/monitor.cpp
+msgid "You can only end your own processes."
+msgstr "Możesz kończyć tylko własne procesy."
+
+#: src/monitor.cpp
+#, python-brace-format
+msgid "Unable to end the process: {error}"
+msgstr "Nie można zakończyć procesu: {error}"
+
+#: src/monitor.cpp
+msgid "B"
+msgstr "B"
+
+#: src/monitor.cpp
+msgid "KiB"
+msgstr "KiB"
+
+#: src/monitor.cpp
+msgid "MiB"
+msgstr "MiB"
+
+#: src/monitor.cpp
+msgid "GiB"
+msgstr "GiB"
+
+#: src/monitor.cpp
+msgid "TiB"
+msgstr "TiB"
+
+#. TRANSLATORS: a size, such as "1.5 MiB".
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{value} {unit}"
+msgstr "{value} {unit}"
+
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{size}/s"
+msgstr "{size}/s"
+
+#: src/procreader.cpp
+msgid "Running"
+msgstr "Uruchomiony"
+
+#: src/procreader.cpp
+msgid "Sleeping"
+msgstr "Uśpiony"
+
+#: src/procreader.cpp
+msgid "Waiting for I/O"
+msgstr "Oczekuje na we/wy"
+
+#: src/procreader.cpp
+msgid "Stopped"
+msgstr "Zatrzymany"
+
+#: src/procreader.cpp
+msgid "Zombie"
+msgstr "Zombie"
+
+#: src/procreader.cpp
+msgid "Renderer"
+msgstr "Renderowanie"
+
+#: src/procreader.cpp
+msgid "Extension"
+msgstr "Rozszerzenie"
+
+#: src/procreader.cpp src/views/mainwindow.cpp
+msgid "GPU"
+msgstr "GPU"
+
+#: src/procreader.cpp
+msgid "Zygote"
+msgstr "Zygote"
+
+#: src/procreader.cpp src/views/mainwindow.cpp
+msgid "Network"
+msgstr "Sieć"
+
+#: src/procreader.cpp
+msgid "Audio"
+msgstr "Dźwięk"
+
+#: src/procreader.cpp src/views/resourcepage.cpp
+msgid "Storage"
+msgstr "Pamięć masowa"
+
+#: src/procreader.cpp
+msgid "Video Capture"
+msgstr "Przechwytywanie wideo"
+
+#: src/procreader.cpp
+msgid "Utility"
+msgstr "Narzędzie"
+
+#: src/procreader.cpp
+msgid "System information is unavailable."
+msgstr "Informacje o systemie są niedostępne."
+
+#: src/views/chartcard.cpp
+msgid "Now"
+msgstr "Teraz"
+
+#: src/views/mainwindow.cpp src/views/processdetails.cpp
+#: src/views/summarycard.cpp
+msgid "Processes"
+msgstr "Procesy"
+
+#: src/views/mainwindow.cpp src/views/processdetails.cpp
+#: src/views/processespage.cpp
+msgid "CPU"
+msgstr "CPU"
+
+#: src/views/mainwindow.cpp src/views/processdetails.cpp
+#: src/views/processespage.cpp
+msgid "Memory"
+msgstr "Pamięć"
+
+#: src/views/mainwindow.cpp
+msgid "Disk"
+msgstr "Dysk"
+
+#: src/views/mainwindow.cpp cutefish-system-monitor.desktop
+msgid "System Monitor"
+msgstr "Monitor systemu"
+
+#: src/views/mainwindow.cpp
+msgid "Details"
+msgstr "Szczegóły"
+
+#: src/views/mainwindow.cpp
+msgid "Copy Process ID"
+msgstr "Kopiuj identyfikator procesu"
+
+#: src/views/mainwindow.cpp
+msgid "Quit"
+msgstr "Zakończ"
+
+#: src/views/mainwindow.cpp
+msgid "Force Quit"
+msgstr "Wymuś zamknięcie"
+
+#: src/views/mainwindow.cpp
+msgid "About System Monitor"
+msgstr "O programie Monitor systemu"
+
+#: src/views/mainwindow.cpp
+msgid "Hide System Monitor"
+msgstr "Ukryj Monitor systemu"
+
+#: src/views/mainwindow.cpp
+msgid "Quit System Monitor"
+msgstr "Zakończ Monitor systemu"
+
+#: src/views/mainwindow.cpp
+msgid "Edit"
+msgstr "Edycja"
+
+#: src/views/mainwindow.cpp
+msgid "Find"
+msgstr "Znajdź"
+
+#: src/views/mainwindow.cpp
+msgid "View"
+msgstr "Widok"
+
+#: src/views/mainwindow.cpp
+msgid "Update Every Second"
+msgstr "Odświeżaj co sekundę"
+
+#: src/views/mainwindow.cpp
+msgid "Update Every 2 Seconds"
+msgstr "Odświeżaj co 2 sekundy"
+
+#: src/views/mainwindow.cpp
+msgid "Update Every 5 Seconds"
+msgstr "Odświeżaj co 5 sekund"
+
+#: src/views/mainwindow.cpp
+msgid "Window"
+msgstr "Okno"
+
+#: src/views/mainwindow.cpp
+msgid "Minimize"
+msgstr "Minimalizuj"
+
+#: src/views/mainwindow.cpp
+msgid "Zoom"
+msgstr "Powiększ okno"
+
+#: src/views/mainwindow.cpp
+msgid "Shows what your computer is doing."
+msgstr "Pokazuje, czym zajmuje się Twój komputer."
+
+#: src/views/mainwindow.cpp
+#, python-brace-format
+msgid "Force quit {name}?"
+msgstr "Wymusić zamknięcie {name}?"
+
+#: src/views/mainwindow.cpp
+#, python-brace-format
+msgid "Quit {name}?"
+msgstr "Zakończyć {name}?"
+
+#: src/views/mainwindow.cpp
+msgid "All of its processes will stop immediately. Unsaved work may be lost."
+msgstr "Wszystkie jej procesy zostaną natychmiast zatrzymane. Niezapisana praca może zostać utracona."
+
+#: src/views/mainwindow.cpp
+msgid "The application will be asked to quit. Unsaved work may be lost."
+msgstr "Aplikacja zostanie poproszona o zakończenie działania. Niezapisana praca może zostać utracona."
+
+#: src/views/mainwindow.cpp
+msgid "The process will stop immediately. Unsaved work may be lost."
+msgstr "Proces zostanie natychmiast zatrzymany. Niezapisana praca może zostać utracona."
+
+#: src/views/mainwindow.cpp
+msgid "The process will be asked to quit. Unsaved work may be lost."
+msgstr "Proces zostanie poproszony o zakończenie działania. Niezapisana praca może zostać utracona."
+
+#: src/views/mainwindow.cpp src/views/summarycard.cpp
+msgid "Collecting data…"
+msgstr "Zbieranie danych…"
+
+#: src/views/mainwindow.cpp
+#, python-brace-format
+msgid "{n} logical processor"
+msgid_plural "{n} logical processors"
+msgstr[0] "{n} procesor logiczny"
+msgstr[1] "{n} procesory logiczne"
+msgstr[2] "{n} procesorów logicznych"
+
+#: src/views/mainwindow.cpp
+#, python-brace-format
+msgid "Write {rate}"
+msgstr "Zapis {rate}"
+
+#: src/views/processdetails.cpp
+msgid "User"
+msgstr "Użytkownik"
+
+#: src/views/processdetails.cpp src/views/resourcepage.cpp
+msgid "State"
+msgstr "Stan"
+
+#: src/views/processdetails.cpp
+msgid "Threads"
+msgstr "Wątki"
+
+#: src/views/processdetails.cpp
+msgid "Nice value"
+msgstr "Wartość nice"
+
+#: src/views/processdetails.cpp
+msgid "Parent process"
+msgstr "Proces nadrzędny"
+
+#: src/views/processdetails.cpp
+msgid "Command"
+msgstr "Polecenie"
+
+#: src/views/processdetails.cpp
+msgid "Application quit"
+msgstr "Aplikacja zakończyła działanie"
+
+#: src/views/processdetails.cpp
+msgid "Process exited"
+msgstr "Proces zakończył działanie"
+
+#: src/views/processdetails.cpp
+msgid "Exited"
+msgstr "Zakończony"
+
+#: src/views/processdetails.cpp
+#, python-brace-format
+msgid "PID {pid}"
+msgstr "PID {pid}"
+
+#: src/views/processdetails.cpp
+msgid "Application Details"
+msgstr "Szczegóły aplikacji"
+
+#: src/views/processdetails.cpp
+msgid "Process Details"
+msgstr "Szczegóły procesu"
+
+#: src/views/processespage.cpp
+msgid "Name"
+msgstr "Nazwa"
+
+#: src/views/processespage.cpp src/views/resourcepage.cpp
+msgid "Read"
+msgstr "Odczyt"
+
+#: src/views/processespage.cpp src/views/resourcepage.cpp
+msgid "Write"
+msgstr "Zapis"
+
+#: src/views/processespage.cpp
+msgid "PID"
+msgstr "PID"
+
+#: src/views/processespage.cpp
+msgid "Applications"
+msgstr "Aplikacje"
+
+#: src/views/processespage.cpp
+msgid "My Processes"
+msgstr "Moje procesy"
+
+#: src/views/processespage.cpp
+msgid "All Processes"
+msgstr "Wszystkie procesy"
+
+#: src/views/processespage.cpp
+msgid "Search processes"
+msgstr "Szukaj procesów"
+
+#: src/views/processespage.cpp
+msgid "No applications found"
+msgstr "Nie znaleziono aplikacji"
+
+#: src/views/processespage.cpp
+msgid "No processes found"
+msgstr "Nie znaleziono procesów"
+
+#: src/views/processespage.cpp
+msgid "Try a different name, user, or process ID."
+msgstr "Spróbuj innej nazwy, użytkownika lub identyfikatora procesu."
+
+#: src/views/resourcepage.cpp
+msgid "Logical processors"
+msgstr "Procesory logiczne"
+
+#: src/views/resourcepage.cpp
+msgid "In use"
+msgstr "W użyciu"
+
+#: src/views/resourcepage.cpp
+msgid "Available"
+msgstr "Dostępne"
+
+#: src/views/resourcepage.cpp
+msgid "Cached"
+msgstr "W pamięci podręcznej"
+
+#: src/views/resourcepage.cpp
+msgid "Total memory"
+msgstr "Pamięć całkowita"
+
+#: src/views/resourcepage.cpp
+msgid "Swap"
+msgstr "Swap"
+
+#: src/views/resourcepage.cpp
+msgid "Download"
+msgstr "Pobieranie"
+
+#: src/views/resourcepage.cpp
+msgid "Upload"
+msgstr "Wysyłanie"
+
+#: src/views/resourcepage.cpp
+msgid "Total received"
+msgstr "Łącznie odebrano"
+
+#: src/views/resourcepage.cpp
+msgid "Total sent"
+msgstr "Łącznie wysłano"
+
+#: src/views/resourcepage.cpp
+msgid "Network interfaces"
+msgstr "Interfejsy sieciowe"
+
+#: src/views/resourcepage.cpp
+msgid "Hardware address"
+msgstr "Adres sprzętowy"
+
+#: src/views/resourcepage.cpp
+msgid "Device"
+msgstr "Urządzenie"
+
+#: src/views/resourcepage.cpp
+msgid "Capacity"
+msgstr "Pojemność"
+
+#: src/views/resourcepage.cpp
+msgid "Used"
+msgstr "Użyte"
+
+#: src/views/resourcepage.cpp
+msgid "File system"
+msgstr "System plików"
+
+#: src/views/resourcepage.cpp
+msgid "Driver"
+msgstr "Sterownik"
+
+#: src/views/resourcepage.cpp
+msgid "Activity"
+msgstr "Aktywność"
+
+#: src/views/resourcepage.cpp
+msgid "Temperature"
+msgstr "Temperatura"
+
+#: src/views/resourcepage.cpp
+msgid "Clock speed"
+msgstr "Taktowanie"
+
+#: src/views/resourcepage.cpp
+msgid "Video memory"
+msgstr "Pamięć wideo"
+
+#: src/views/resourcepage.cpp
+msgid "Processor activity"
+msgstr "Aktywność procesora"
+
+#: src/views/resourcepage.cpp
+msgid "Memory usage"
+msgstr "Użycie pamięci"
+
+#: src/views/resourcepage.cpp
+msgid "Network activity"
+msgstr "Aktywność sieci"
+
+#: src/views/resourcepage.cpp
+msgid "Disk activity"
+msgstr "Aktywność dysku"
+
+#: src/views/resourcepage.cpp
+msgid "Graphics activity"
+msgstr "Aktywność grafiki"
+
+#: src/views/resourcepage.cpp
+msgid "Graphics temperature"
+msgstr "Temperatura grafiki"
+
+#: src/views/resourcepage.cpp
+#, python-brace-format
+msgid "{used} of {total} in use"
+msgstr "W użyciu {used} z {total}"
+
+#: src/views/resourcepage.cpp
+msgid "Physical network interfaces"
+msgstr "Fizyczne interfejsy sieciowe"
+
+#: src/views/resourcepage.cpp
+msgid "Physical disks"
+msgstr "Dyski fizyczne"
+
+#: src/views/resourcepage.cpp
+#, python-brace-format
+msgid "{n} second"
+msgid_plural "{n} seconds"
+msgstr[0] "{n} sekunda"
+msgstr[1] "{n} sekundy"
+msgstr[2] "{n} sekund"
+
+#: src/views/resourcepage.cpp
+#, python-brace-format
+msgid "CPU {number}"
+msgstr "CPU {number}"
+
+#: src/views/resourcepage.cpp
+msgid "Not configured"
+msgstr "Nieskonfigurowany"
+
+#: src/views/resourcepage.cpp
+msgid "Connected"
+msgstr "Połączony"
+
+#: src/views/resourcepage.cpp
+msgid "Disconnected"
+msgstr "Rozłączony"
+
+#: src/views/resourcepage.cpp
+msgid "Unknown"
+msgstr "Nieznany"
+
+#: src/views/resourcepage.cpp
+#, python-brace-format
+msgid "{used} of {total}"
+msgstr "{used} z {total}"
+
+#: src/views/resourcepage.cpp
+msgid "Active"
+msgstr "Aktywny"
+
+#: src/views/resourcepage.cpp
+msgid "Powered off"
+msgstr "Wyłączony"
+
+#: cutefish-system-monitor.desktop
+msgid "View resource usage and manage running processes"
+msgstr "Wyświetlaj użycie zasobów i zarządzaj uruchomionymi procesami"
+
+#: cutefish-system-monitor.desktop
+msgid "CPU;Memory;Network;Disk;Processes;"
+msgstr "CPU;Procesor;Pamięć;RAM;Sieć;Dysk;Procesy;Menedżer zadań;"
