@@ -1,0 +1,538 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: cutefish-system-monitor\n"
+"Report-Msgid-Bugs-To: https://github.com/cutefishos\n"
+"POT-Creation-Date: 2026-11-13 15:22+0800\n"
+"PO-Revision-Date: 2026-11-13 15:22+0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. TRANSLATORS: a browser's helper process, such as "Chromium (Renderer)".
+#: src/monitor.cpp src/processlist.cpp
+#, python-brace-format
+msgid "{name} ({helper})"
+msgstr "{name} ({helper})"
+
+#: src/monitor.cpp
+msgid "The process has already exited."
+msgstr "Tiến trình đã kết thúc."
+
+#: src/monitor.cpp
+msgid "The application has already quit."
+msgstr "Ứng dụng đã thoát."
+
+#: src/monitor.cpp
+msgid "This application cannot be quit here."
+msgstr "Không thể thoát ứng dụng này tại đây."
+
+#: src/monitor.cpp
+msgid "This process cannot be ended here."
+msgstr "Không thể kết thúc tiến trình này tại đây."
+
+#: src/monitor.cpp
+#, python-brace-format
+msgid "Unable to open the process: {error}"
+msgstr "Không thể mở tiến trình: {error}"
+
+#: src/monitor.cpp
+msgid "You can only end your own processes."
+msgstr "Bạn chỉ có thể kết thúc các tiến trình của chính mình."
+
+#: src/monitor.cpp
+#, python-brace-format
+msgid "Unable to end the process: {error}"
+msgstr "Không thể kết thúc tiến trình: {error}"
+
+#: src/monitor.cpp
+msgid "B"
+msgstr "B"
+
+#: src/monitor.cpp
+msgid "KiB"
+msgstr "KiB"
+
+#: src/monitor.cpp
+msgid "MiB"
+msgstr "MiB"
+
+#: src/monitor.cpp
+msgid "GiB"
+msgstr "GiB"
+
+#: src/monitor.cpp
+msgid "TiB"
+msgstr "TiB"
+
+#. TRANSLATORS: a size, such as "1.5 MiB".
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{value} {unit}"
+msgstr "{value} {unit}"
+
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{size}/s"
+msgstr "{size}/s"
+
+#: src/procreader.cpp
+msgid "Running"
+msgstr "Đang chạy"
+
+#: src/procreader.cpp
+msgid "Sleeping"
+msgstr "Đang ngủ"
+
+#: src/procreader.cpp
+msgid "Waiting for I/O"
+msgstr "Đang chờ I/O"
+
+#: src/procreader.cpp
+msgid "Stopped"
+msgstr "Đã dừng"
+
+#: src/procreader.cpp
+msgid "Zombie"
+msgstr "Zombie"
+
+#: src/procreader.cpp
+msgid "Renderer"
+msgstr "Kết xuất"
+
+#: src/procreader.cpp
+msgid "Extension"
+msgstr "Tiện ích mở rộng"
+
+#: src/procreader.cpp src/views/mainwindow.cpp
+msgid "GPU"
+msgstr "GPU"
+
+#: src/procreader.cpp
+msgid "Zygote"
+msgstr "Zygote"
+
+#: src/procreader.cpp src/views/mainwindow.cpp
+msgid "Network"
+msgstr "Mạng"
+
+#: src/procreader.cpp
+msgid "Audio"
+msgstr "Âm thanh"
+
+#: src/procreader.cpp src/views/resourcepage.cpp
+msgid "Storage"
+msgstr "Lưu trữ"
+
+#: src/procreader.cpp
+msgid "Video Capture"
+msgstr "Quay video"
+
+#: src/procreader.cpp
+msgid "Utility"
+msgstr "Tiện ích"
+
+#: src/procreader.cpp
+msgid "System information is unavailable."
+msgstr "Không có thông tin hệ thống."
+
+#: src/views/chartcard.cpp
+msgid "Now"
+msgstr "Bây giờ"
+
+#: src/views/mainwindow.cpp src/views/processdetails.cpp
+#: src/views/summarycard.cpp
+msgid "Processes"
+msgstr "Tiến trình"
+
+#: src/views/mainwindow.cpp src/views/processdetails.cpp
+#: src/views/processespage.cpp
+msgid "CPU"
+msgstr "CPU"
+
+#: src/views/mainwindow.cpp src/views/processdetails.cpp
+#: src/views/processespage.cpp
+msgid "Memory"
+msgstr "Bộ nhớ"
+
+#: src/views/mainwindow.cpp
+msgid "Disk"
+msgstr "Ổ đĩa"
+
+#: src/views/mainwindow.cpp cutefish-system-monitor.desktop
+msgid "System Monitor"
+msgstr "Giám sát hệ thống"
+
+#: src/views/mainwindow.cpp
+msgid "Details"
+msgstr "Chi tiết"
+
+#: src/views/mainwindow.cpp
+msgid "Copy Process ID"
+msgstr "Sao chép ID tiến trình"
+
+#: src/views/mainwindow.cpp
+msgid "Quit"
+msgstr "Thoát"
+
+#: src/views/mainwindow.cpp
+msgid "Force Quit"
+msgstr "Buộc thoát"
+
+#: src/views/mainwindow.cpp
+msgid "About System Monitor"
+msgstr "Giới thiệu về Giám sát hệ thống"
+
+#: src/views/mainwindow.cpp
+msgid "Hide System Monitor"
+msgstr "Ẩn Giám sát hệ thống"
+
+#: src/views/mainwindow.cpp
+msgid "Quit System Monitor"
+msgstr "Thoát Giám sát hệ thống"
+
+#: src/views/mainwindow.cpp
+msgid "Edit"
+msgstr "Sửa"
+
+#: src/views/mainwindow.cpp
+msgid "Find"
+msgstr "Tìm"
+
+#: src/views/mainwindow.cpp
+msgid "View"
+msgstr "Xem"
+
+#: src/views/mainwindow.cpp
+msgid "Update Every Second"
+msgstr "Cập nhật mỗi giây"
+
+#: src/views/mainwindow.cpp
+msgid "Update Every 2 Seconds"
+msgstr "Cập nhật mỗi 2 giây"
+
+#: src/views/mainwindow.cpp
+msgid "Update Every 5 Seconds"
+msgstr "Cập nhật mỗi 5 giây"
+
+#: src/views/mainwindow.cpp
+msgid "Window"
+msgstr "Cửa sổ"
+
+#: src/views/mainwindow.cpp
+msgid "Minimize"
+msgstr "Thu nhỏ"
+
+#: src/views/mainwindow.cpp
+msgid "Zoom"
+msgstr "Phóng to"
+
+#: src/views/mainwindow.cpp
+msgid "Shows what your computer is doing."
+msgstr "Cho biết máy tính của bạn đang làm gì."
+
+#: src/views/mainwindow.cpp
+#, python-brace-format
+msgid "Force quit {name}?"
+msgstr "Buộc thoát {name}?"
+
+#: src/views/mainwindow.cpp
+#, python-brace-format
+msgid "Quit {name}?"
+msgstr "Thoát {name}?"
+
+#: src/views/mainwindow.cpp
+msgid "All of its processes will stop immediately. Unsaved work may be lost."
+msgstr "Mọi tiến trình của ứng dụng sẽ dừng ngay lập tức. Công việc chưa lưu có thể bị mất."
+
+#: src/views/mainwindow.cpp
+msgid "The application will be asked to quit. Unsaved work may be lost."
+msgstr "Ứng dụng sẽ được yêu cầu thoát. Công việc chưa lưu có thể bị mất."
+
+#: src/views/mainwindow.cpp
+msgid "The process will stop immediately. Unsaved work may be lost."
+msgstr "Tiến trình sẽ dừng ngay lập tức. Công việc chưa lưu có thể bị mất."
+
+#: src/views/mainwindow.cpp
+msgid "The process will be asked to quit. Unsaved work may be lost."
+msgstr "Tiến trình sẽ được yêu cầu thoát. Công việc chưa lưu có thể bị mất."
+
+#: src/views/mainwindow.cpp src/views/summarycard.cpp
+msgid "Collecting data…"
+msgstr "Đang thu thập dữ liệu…"
+
+#: src/views/mainwindow.cpp
+#, python-brace-format
+msgid "{n} logical processor"
+msgid_plural "{n} logical processors"
+msgstr[0] "{n} bộ xử lý logic"
+
+#: src/views/mainwindow.cpp
+#, python-brace-format
+msgid "Write {rate}"
+msgstr "Ghi {rate}"
+
+#: src/views/processdetails.cpp
+msgid "User"
+msgstr "Người dùng"
+
+#: src/views/processdetails.cpp src/views/resourcepage.cpp
+msgid "State"
+msgstr "Trạng thái"
+
+#: src/views/processdetails.cpp
+msgid "Threads"
+msgstr "Luồng"
+
+#: src/views/processdetails.cpp
+msgid "Nice value"
+msgstr "Giá trị nice"
+
+#: src/views/processdetails.cpp
+msgid "Parent process"
+msgstr "Tiến trình cha"
+
+#: src/views/processdetails.cpp
+msgid "Command"
+msgstr "Lệnh"
+
+#: src/views/processdetails.cpp
+msgid "Application quit"
+msgstr "Ứng dụng đã thoát"
+
+#: src/views/processdetails.cpp
+msgid "Process exited"
+msgstr "Tiến trình đã kết thúc"
+
+#: src/views/processdetails.cpp
+msgid "Exited"
+msgstr "Đã kết thúc"
+
+#: src/views/processdetails.cpp
+#, python-brace-format
+msgid "PID {pid}"
+msgstr "PID {pid}"
+
+#: src/views/processdetails.cpp
+msgid "Application Details"
+msgstr "Chi tiết ứng dụng"
+
+#: src/views/processdetails.cpp
+msgid "Process Details"
+msgstr "Chi tiết tiến trình"
+
+#: src/views/processespage.cpp
+msgid "Name"
+msgstr "Tên"
+
+#: src/views/processespage.cpp src/views/resourcepage.cpp
+msgid "Read"
+msgstr "Đọc"
+
+#: src/views/processespage.cpp src/views/resourcepage.cpp
+msgid "Write"
+msgstr "Ghi"
+
+#: src/views/processespage.cpp
+msgid "PID"
+msgstr "PID"
+
+#: src/views/processespage.cpp
+msgid "Applications"
+msgstr "Ứng dụng"
+
+#: src/views/processespage.cpp
+msgid "My Processes"
+msgstr "Tiến trình của tôi"
+
+#: src/views/processespage.cpp
+msgid "All Processes"
+msgstr "Tất cả tiến trình"
+
+#: src/views/processespage.cpp
+msgid "Search processes"
+msgstr "Tìm tiến trình"
+
+#: src/views/processespage.cpp
+msgid "No applications found"
+msgstr "Không tìm thấy ứng dụng nào"
+
+#: src/views/processespage.cpp
+msgid "No processes found"
+msgstr "Không tìm thấy tiến trình nào"
+
+#: src/views/processespage.cpp
+msgid "Try a different name, user, or process ID."
+msgstr "Hãy thử tên, người dùng hoặc ID tiến trình khác."
+
+#: src/views/resourcepage.cpp
+msgid "Logical processors"
+msgstr "Bộ xử lý logic"
+
+#: src/views/resourcepage.cpp
+msgid "In use"
+msgstr "Đang dùng"
+
+#: src/views/resourcepage.cpp
+msgid "Available"
+msgstr "Khả dụng"
+
+#: src/views/resourcepage.cpp
+msgid "Cached"
+msgstr "Đã lưu đệm"
+
+#: src/views/resourcepage.cpp
+msgid "Total memory"
+msgstr "Tổng bộ nhớ"
+
+#: src/views/resourcepage.cpp
+msgid "Swap"
+msgstr "Bộ nhớ hoán đổi"
+
+#: src/views/resourcepage.cpp
+msgid "Download"
+msgstr "Tải xuống"
+
+#: src/views/resourcepage.cpp
+msgid "Upload"
+msgstr "Tải lên"
+
+#: src/views/resourcepage.cpp
+msgid "Total received"
+msgstr "Tổng đã nhận"
+
+#: src/views/resourcepage.cpp
+msgid "Total sent"
+msgstr "Tổng đã gửi"
+
+#: src/views/resourcepage.cpp
+msgid "Network interfaces"
+msgstr "Giao diện mạng"
+
+#: src/views/resourcepage.cpp
+msgid "Hardware address"
+msgstr "Địa chỉ phần cứng"
+
+#: src/views/resourcepage.cpp
+msgid "Device"
+msgstr "Thiết bị"
+
+#: src/views/resourcepage.cpp
+msgid "Capacity"
+msgstr "Dung lượng"
+
+#: src/views/resourcepage.cpp
+msgid "Used"
+msgstr "Đã dùng"
+
+#: src/views/resourcepage.cpp
+msgid "File system"
+msgstr "Hệ thống tệp"
+
+#: src/views/resourcepage.cpp
+msgid "Driver"
+msgstr "Trình điều khiển"
+
+#: src/views/resourcepage.cpp
+msgid "Activity"
+msgstr "Hoạt động"
+
+#: src/views/resourcepage.cpp
+msgid "Temperature"
+msgstr "Nhiệt độ"
+
+#: src/views/resourcepage.cpp
+msgid "Clock speed"
+msgstr "Xung nhịp"
+
+#: src/views/resourcepage.cpp
+msgid "Video memory"
+msgstr "Bộ nhớ video"
+
+#: src/views/resourcepage.cpp
+msgid "Processor activity"
+msgstr "Hoạt động của bộ xử lý"
+
+#: src/views/resourcepage.cpp
+msgid "Memory usage"
+msgstr "Mức sử dụng bộ nhớ"
+
+#: src/views/resourcepage.cpp
+msgid "Network activity"
+msgstr "Hoạt động mạng"
+
+#: src/views/resourcepage.cpp
+msgid "Disk activity"
+msgstr "Hoạt động ổ đĩa"
+
+#: src/views/resourcepage.cpp
+msgid "Graphics activity"
+msgstr "Hoạt động đồ họa"
+
+#: src/views/resourcepage.cpp
+msgid "Graphics temperature"
+msgstr "Nhiệt độ đồ họa"
+
+#: src/views/resourcepage.cpp
+#, python-brace-format
+msgid "{used} of {total} in use"
+msgstr "Đang dùng {used}/{total}"
+
+#: src/views/resourcepage.cpp
+msgid "Physical network interfaces"
+msgstr "Giao diện mạng vật lý"
+
+#: src/views/resourcepage.cpp
+msgid "Physical disks"
+msgstr "Ổ đĩa vật lý"
+
+#: src/views/resourcepage.cpp
+#, python-brace-format
+msgid "{n} second"
+msgid_plural "{n} seconds"
+msgstr[0] "{n} giây"
+
+#: src/views/resourcepage.cpp
+#, python-brace-format
+msgid "CPU {number}"
+msgstr "CPU {number}"
+
+#: src/views/resourcepage.cpp
+msgid "Not configured"
+msgstr "Chưa cấu hình"
+
+#: src/views/resourcepage.cpp
+msgid "Connected"
+msgstr "Đã kết nối"
+
+#: src/views/resourcepage.cpp
+msgid "Disconnected"
+msgstr "Đã ngắt kết nối"
+
+#: src/views/resourcepage.cpp
+msgid "Unknown"
+msgstr "Không xác định"
+
+#: src/views/resourcepage.cpp
+#, python-brace-format
+msgid "{used} of {total}"
+msgstr "{used}/{total}"
+
+#: src/views/resourcepage.cpp
+msgid "Active"
+msgstr "Đang hoạt động"
+
+#: src/views/resourcepage.cpp
+msgid "Powered off"
+msgstr "Đã tắt nguồn"
+
+#: cutefish-system-monitor.desktop
+msgid "View resource usage and manage running processes"
+msgstr "Xem mức sử dụng tài nguyên và quản lý các tiến trình đang chạy"
+
+#: cutefish-system-monitor.desktop
+msgid "CPU;Memory;Network;Disk;Processes;"
+msgstr "CPU;Bộ nhớ;Mạng;Ổ đĩa;Tiến trình;Bộ xử lý;Memory;Processes;"
