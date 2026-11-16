@@ -171,7 +171,7 @@ MainWindow::MainWindow(Monitor& monitor)
     : m_monitor(monitor)
     , m_toast(&m_window)
 {
-    m_window.resize({1040, 700});
+    m_window.resize({907, 600});
     m_window.setMinimumSize({840, 600});
     m_window.setRestoresSize("Main");
     buildContent();
