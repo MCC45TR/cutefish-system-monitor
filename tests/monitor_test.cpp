@@ -615,6 +615,45 @@ TEST(ProcReaderTest, SampledScopesAndPss)
     EXPECT_EQ(snapshot.processes[2].memory, 20u * 1024);
 }
 
+TEST(ProcReaderTest, DetailsExtras)
+{
+    EXPECT_EQ(ProcReader::cgroupUnit("0::/user.slice/user-1000.slice/user@1000.service/app.slice/"
+                                     "app-cutefish-cutefish\\x2dterminal-2091752.scope\n"),
+              "app-cutefish-cutefish\\x2dterminal-2091752.scope");
+    EXPECT_EQ(ProcReader::cgroupUnit("12:cpu:/legacy\n0::/init.scope\n"), "init.scope");
+    EXPECT_EQ(ProcReader::cgroupUnit("0::/\n"), "");
+    EXPECT_EQ(ProcReader::cgroupUnit({}), "");
+    EXPECT_EQ(ProcReader::bootTime("cpu 1 2 3 4\nintr 5\nbtime 1763500000\nprocesses 9\n"), 1763500000);
+    EXPECT_EQ(ProcReader::bootTime("cpu 1 2 3 4\n"), 0);
+    EXPECT_EQ(ProcReader::bootTime("btime soon\n"), 0);
+
+    TemporaryDirectory directory;
+    const std::string proc = directory.path() + "/proc";
+    ASSERT_TRUE(writeFile(proc + "/100/stat", processStat(100, "viewer", 0, 1000)));
+    ASSERT_TRUE(writeFile(proc + "/100/cgroup", "0::/user.slice/app.slice/app-org.example.Viewer-100.scope\n"));
+    for (const char* descriptor : {"0", "1", "2", "7"})
+        ASSERT_TRUE(writeFile(proc + "/100/fd/" + descriptor, {}));
+    ProcessExtras extras = ProcReader::readExtras(proc, 100, 1000);
+    EXPECT_EQ(extras.openFiles, 4);
+    EXPECT_EQ(extras.unit, "app-org.example.Viewer-100.scope");
+
+    // Another user's descriptors cannot be listed; a reused PID tells nothing.
+    fs::remove_all(proc + "/100/fd");
+    extras = ProcReader::readExtras(proc, 100, 1000);
+    EXPECT_EQ(extras.openFiles, -1);
+    EXPECT_EQ(extras.unit, "app-org.example.Viewer-100.scope");
+    extras = ProcReader::readExtras(proc, 100, 2000);
+    EXPECT_EQ(extras.openFiles, -1);
+    EXPECT_EQ(extras.unit, "");
+
+    // The test's own descriptors, through the real files.
+    ProcessRecord self;
+    ASSERT_TRUE(ProcReader::parseProcess(readFile("/proc/self/stat"), &self, 1));
+    extras = ProcReader::readExtras("/proc", getpid(), self.startTicks);
+    EXPECT_GE(extras.openFiles, 3);
+    EXPECT_GT(ProcReader::bootTime(readFile("/proc/stat")), 0);
+}
+
 TEST_F(MonitorTest, ApplicationGroups)
 {
     const std::string program = ownExecutable();
@@ -918,4 +957,15 @@ TEST(FormatTest, NumbersAsTheLocaleWritesThem)
     EXPECT_EQ(Monitor::formatPercent(99.96), "100.0%");
     EXPECT_EQ(Monitor::formatTemperature(41.5), "42 °C");
     EXPECT_EQ(Monitor::formatBytes(1023.5), "1,024 B");
+}
+
+TEST(FormatTest, Durations)
+{
+    EXPECT_EQ(Monitor::formatDuration(-5), "0 s");
+    EXPECT_EQ(Monitor::formatDuration(59), "59 s");
+    EXPECT_EQ(Monitor::formatDuration(60), "1 min");
+    EXPECT_EQ(Monitor::formatDuration(3599), "59 min");
+    EXPECT_EQ(Monitor::formatDuration(3600 + 5 * 60 + 30), "1 h 5 min");
+    EXPECT_EQ(Monitor::formatDuration(86400 - 1), "23 h 59 min");
+    EXPECT_EQ(Monitor::formatDuration(3 * 86400 + 4 * 3600 + 59), "3 d 4 h");
 }

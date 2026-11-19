@@ -58,6 +58,7 @@ public:
 
     void setText(std::string text);
     void setValue(std::string value);
+    void setValueElide(cutefish::ui::Label::Elide elide);
     // Drawn below every visible row but the card's last.
     void setSeparatorVisible(bool visible);
 

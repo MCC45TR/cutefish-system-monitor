@@ -8,6 +8,7 @@
 
 #include <algorithm>
 #include <climits>
+#include <dirent.h>
 #include <pwd.h>
 #include <sys/stat.h>
 #include <sys/utsname.h>
@@ -337,6 +338,49 @@ bool ProcReader::parsePss(std::string_view rollup, uint64_t* pss)
         return valid;
     }
     return false;
+}
+
+std::string ProcReader::cgroupUnit(std::string_view cgroup)
+{
+    for (const std::string_view line : split(cgroup, '\n')) {
+        if (!line.starts_with("0::"))
+            continue;
+        const std::string_view path = line.substr(3);
+        const size_t slash = path.rfind('/');
+        return validUtf8(slash == std::string_view::npos ? path : path.substr(slash + 1));
+    }
+    return {};
+}
+
+int64_t ProcReader::bootTime(std::string_view stat)
+{
+    for (const std::string_view line : split(stat, '\n')) {
+        if (!line.starts_with("btime "))
+            continue;
+        int64_t seconds = 0;
+        return parseNumber(field(splitFields(line), 1), &seconds) ? seconds : 0;
+    }
+    return 0;
+}
+
+ProcessExtras ProcReader::readExtras(const std::string& procRoot, int pid, uint64_t startTicks)
+{
+    const std::string path = procRoot + '/' + std::to_string(pid);
+    ProcessExtras extras;
+    if (DIR* directory = opendir((path + "/fd").c_str())) {
+        extras.openFiles = 0;
+        while (const dirent* entry = readdir(directory)) {
+            if (entry->d_name[0] != '.')
+                ++extras.openFiles;
+        }
+        closedir(directory);
+    }
+    extras.unit = cgroupUnit(readFile(path + "/cgroup"));
+
+    ProcessRecord verified;
+    if (!parseProcess(readFile(path + "/stat"), &verified, 1) || verified.startTicks != startTicks)
+        return {};
+    return extras;
 }
 
 void ProcReader::readIdentity(const std::string& path, ProcessRecord* process) const

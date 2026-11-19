@@ -432,3 +432,20 @@ std::string Monitor::formatTemperature(double celsius)
 {
     return cutefish::base::Locale::system().toString(celsius, 0) + " °C";
 }
+
+std::string Monitor::formatDuration(int64_t seconds)
+{
+    seconds = std::max<int64_t>(0, seconds);
+    const std::string days = std::to_string(seconds / 86400);
+    const std::string hours = std::to_string(seconds / 3600 % 24);
+    const std::string minutes = std::to_string(seconds / 60 % 60);
+    if (seconds >= 86400)
+        // TRANSLATORS: days and hours, such as "3 d 4 h".
+        return format(tr("{days} d {hours} h"), {{"days", days}, {"hours", hours}});
+    if (seconds >= 3600)
+        // TRANSLATORS: hours and minutes, such as "2 h 5 min".
+        return format(tr("{hours} h {minutes} min"), {{"hours", hours}, {"minutes", minutes}});
+    if (seconds >= 60)
+        return format(tr("{minutes} min"), {{"minutes", minutes}});
+    return format(tr("{seconds} s"), {{"seconds", std::to_string(seconds)}});
+}

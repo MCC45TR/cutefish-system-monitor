@@ -22,6 +22,15 @@ struct CpuCounters
     uint64_t idle = 0;
 };
 
+// What the details of one process read beyond its sample.
+struct ProcessExtras
+{
+    // -1 when the descriptors cannot be listed, as another user's cannot.
+    int openFiles = -1;
+    // The last component of its cgroup, such as a launcher's scope.
+    std::string unit;
+};
+
 struct Snapshot
 {
     bool available = false;
@@ -47,6 +56,11 @@ public:
     static std::string helperName(const std::string& type);
     static std::string scopeApplication(std::string_view cgroup);
     static bool parsePss(std::string_view rollup, uint64_t* pss);
+    static std::string cgroupUnit(std::string_view cgroup);
+    // Seconds since the epoch, from btime; 0 when it is missing.
+    static int64_t bootTime(std::string_view stat);
+    // Empty when the PID no longer belongs to the process that started then.
+    static ProcessExtras readExtras(const std::string& procRoot, int pid, uint64_t startTicks);
     static double cpuUsage(const CpuCounters& current, const CpuCounters& previous);
     static std::string stateName(const std::string& state);
 
