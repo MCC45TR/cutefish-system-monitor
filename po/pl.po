@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cutefish-system-monitor\n"
 "Report-Msgid-Bugs-To: https://github.com/cutefishos\n"
-"POT-Creation-Date: 2026-11-13 15:22+0800\n"
+"POT-Creation-Date: 2026-11-19 20:08+0800\n"
 "PO-Revision-Date: 2026-11-13 15:22+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -79,6 +79,28 @@ msgstr "{value} {unit}"
 msgid "{size}/s"
 msgstr "{size}/s"
 
+#. TRANSLATORS: days and hours, such as "3 d 4 h".
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{days} d {hours} h"
+msgstr "{days} dn. {hours} godz."
+
+#. TRANSLATORS: hours and minutes, such as "2 h 5 min".
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{hours} h {minutes} min"
+msgstr "{hours} godz. {minutes} min"
+
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{minutes} min"
+msgstr "{minutes} min"
+
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{seconds} s"
+msgstr "{seconds} s"
+
 #: src/procreader.cpp
 msgid "Running"
 msgstr "Uruchomiony"
@@ -143,8 +165,7 @@ msgstr "Informacje o systemie są niedostępne."
 msgid "Now"
 msgstr "Teraz"
 
-#: src/views/mainwindow.cpp src/views/processdetails.cpp
-#: src/views/summarycard.cpp
+#: src/views/mainwindow.cpp src/views/summarycard.cpp
 msgid "Processes"
 msgstr "Procesy"
 
@@ -278,28 +299,56 @@ msgid "Write {rate}"
 msgstr "Zapis {rate}"
 
 #: src/views/processdetails.cpp
-msgid "User"
-msgstr "Użytkownik"
+msgid "Command"
+msgstr "Polecenie"
 
-#: src/views/processdetails.cpp src/views/resourcepage.cpp
-msgid "State"
-msgstr "Stan"
+#: src/views/processdetails.cpp src/views/processespage.cpp
+msgid "Name"
+msgstr "Nazwa"
+
+#: src/views/processdetails.cpp src/views/processespage.cpp
+msgid "PID"
+msgstr "PID"
+
+#: src/views/processdetails.cpp
+msgid "Resident memory"
+msgstr "Pamięć rezydentna"
+
+#: src/views/processdetails.cpp
+msgid "Disk read"
+msgstr "Odczyt z dysku"
+
+#: src/views/processdetails.cpp
+msgid "Disk write"
+msgstr "Zapis na dysk"
 
 #: src/views/processdetails.cpp
 msgid "Threads"
 msgstr "Wątki"
 
 #: src/views/processdetails.cpp
-msgid "Nice value"
-msgstr "Wartość nice"
+msgid "Running time"
+msgstr "Czas działania"
+
+#: src/views/processdetails.cpp
+msgid "Open files"
+msgstr "Otwarte pliki"
 
 #: src/views/processdetails.cpp
 msgid "Parent process"
 msgstr "Proces nadrzędny"
 
 #: src/views/processdetails.cpp
-msgid "Command"
-msgstr "Polecenie"
+msgid "Nice value"
+msgstr "Wartość nice"
+
+#: src/views/processdetails.cpp
+msgid "Unit"
+msgstr "Jednostka"
+
+#: src/views/processdetails.cpp
+msgid "Executable"
+msgstr "Plik wykonywalny"
 
 #: src/views/processdetails.cpp
 msgid "Application quit"
@@ -310,13 +359,34 @@ msgid "Process exited"
 msgstr "Proces zakończył działanie"
 
 #: src/views/processdetails.cpp
-msgid "Exited"
-msgstr "Zakończony"
-
-#: src/views/processdetails.cpp
 #, python-brace-format
 msgid "PID {pid}"
 msgstr "PID {pid}"
+
+#: src/views/processdetails.cpp
+#, python-brace-format
+msgid "{count} process"
+msgid_plural "{count} processes"
+msgstr[0] "{count} proces"
+msgstr[1] "{count} procesy"
+msgstr[2] "{count} procesów"
+
+#. TRANSLATORS: a disk rate and the amount since the process started, such as "1.2 MiB/s, 340.5 MiB in total".
+#: src/views/processdetails.cpp
+#, python-brace-format
+msgid "{rate}, {total} in total"
+msgstr "{rate}, łącznie {total}"
+
+#: src/views/processdetails.cpp
+#, python-brace-format
+msgid "{name} ({pid})"
+msgstr "{name} ({pid})"
+
+#. TRANSLATORS: how long a process has run and when it started, such as "2 h 5 min, since 14:03".
+#: src/views/processdetails.cpp
+#, python-brace-format
+msgid "{duration}, since {time}"
+msgstr "{duration}, od {time}"
 
 #: src/views/processdetails.cpp
 msgid "Application Details"
@@ -326,10 +396,6 @@ msgstr "Szczegóły aplikacji"
 msgid "Process Details"
 msgstr "Szczegóły procesu"
 
-#: src/views/processespage.cpp
-msgid "Name"
-msgstr "Nazwa"
-
 #: src/views/processespage.cpp src/views/resourcepage.cpp
 msgid "Read"
 msgstr "Odczyt"
@@ -337,10 +403,6 @@ msgstr "Odczyt"
 #: src/views/processespage.cpp src/views/resourcepage.cpp
 msgid "Write"
 msgstr "Zapis"
-
-#: src/views/processespage.cpp
-msgid "PID"
-msgstr "PID"
 
 #: src/views/processespage.cpp
 msgid "Applications"
@@ -413,6 +475,10 @@ msgstr "Łącznie wysłano"
 #: src/views/resourcepage.cpp
 msgid "Network interfaces"
 msgstr "Interfejsy sieciowe"
+
+#: src/views/resourcepage.cpp
+msgid "State"
+msgstr "Stan"
 
 #: src/views/resourcepage.cpp
 msgid "Hardware address"
@@ -540,3 +606,9 @@ msgstr "Wyświetlaj użycie zasobów i zarządzaj uruchomionymi procesami"
 #: cutefish-system-monitor.desktop
 msgid "CPU;Memory;Network;Disk;Processes;"
 msgstr "CPU;Procesor;Pamięć;RAM;Sieć;Dysk;Procesy;Menedżer zadań;"
+
+#~ msgid "User"
+#~ msgstr "Użytkownik"
+
+#~ msgid "Exited"
+#~ msgstr "Zakończony"

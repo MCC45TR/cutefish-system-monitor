@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cutefish-system-monitor\n"
 "Report-Msgid-Bugs-To: https://github.com/cutefishos\n"
-"POT-Creation-Date: 2026-11-13 15:22+0800\n"
+"POT-Creation-Date: 2026-11-19 20:08+0800\n"
 "PO-Revision-Date: 2026-11-13 15:22+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -79,6 +79,28 @@ msgstr "{value} {unit}"
 msgid "{size}/s"
 msgstr "{size}/s"
 
+#. TRANSLATORS: days and hours, such as "3 d 4 h".
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{days} d {hours} h"
+msgstr "{days} 天 {hours} 小时"
+
+#. TRANSLATORS: hours and minutes, such as "2 h 5 min".
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{hours} h {minutes} min"
+msgstr "{hours} 小时 {minutes} 分钟"
+
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{minutes} min"
+msgstr "{minutes} 分钟"
+
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{seconds} s"
+msgstr "{seconds} 秒"
+
 #: src/procreader.cpp
 msgid "Running"
 msgstr "运行中"
@@ -143,8 +165,7 @@ msgstr "系统信息不可用。"
 msgid "Now"
 msgstr "现在"
 
-#: src/views/mainwindow.cpp src/views/processdetails.cpp
-#: src/views/summarycard.cpp
+#: src/views/mainwindow.cpp src/views/summarycard.cpp
 msgid "Processes"
 msgstr "进程"
 
@@ -276,28 +297,56 @@ msgid "Write {rate}"
 msgstr "写入 {rate}"
 
 #: src/views/processdetails.cpp
-msgid "User"
-msgstr "用户"
+msgid "Command"
+msgstr "命令"
 
-#: src/views/processdetails.cpp src/views/resourcepage.cpp
-msgid "State"
-msgstr "状态"
+#: src/views/processdetails.cpp src/views/processespage.cpp
+msgid "Name"
+msgstr "名称"
+
+#: src/views/processdetails.cpp src/views/processespage.cpp
+msgid "PID"
+msgstr "PID"
+
+#: src/views/processdetails.cpp
+msgid "Resident memory"
+msgstr "常驻内存"
+
+#: src/views/processdetails.cpp
+msgid "Disk read"
+msgstr "磁盘读取"
+
+#: src/views/processdetails.cpp
+msgid "Disk write"
+msgstr "磁盘写入"
 
 #: src/views/processdetails.cpp
 msgid "Threads"
 msgstr "线程"
 
 #: src/views/processdetails.cpp
-msgid "Nice value"
-msgstr "Nice 值"
+msgid "Running time"
+msgstr "运行时间"
+
+#: src/views/processdetails.cpp
+msgid "Open files"
+msgstr "打开的文件"
 
 #: src/views/processdetails.cpp
 msgid "Parent process"
 msgstr "父进程"
 
 #: src/views/processdetails.cpp
-msgid "Command"
-msgstr "命令"
+msgid "Nice value"
+msgstr "Nice 值"
+
+#: src/views/processdetails.cpp
+msgid "Unit"
+msgstr "单元"
+
+#: src/views/processdetails.cpp
+msgid "Executable"
+msgstr "可执行文件"
 
 #: src/views/processdetails.cpp
 msgid "Application quit"
@@ -308,13 +357,32 @@ msgid "Process exited"
 msgstr "进程已退出"
 
 #: src/views/processdetails.cpp
-msgid "Exited"
-msgstr "已退出"
-
-#: src/views/processdetails.cpp
 #, python-brace-format
 msgid "PID {pid}"
 msgstr "PID {pid}"
+
+#: src/views/processdetails.cpp
+#, python-brace-format
+msgid "{count} process"
+msgid_plural "{count} processes"
+msgstr[0] "{count} 个进程"
+
+#. TRANSLATORS: a disk rate and the amount since the process started, such as "1.2 MiB/s, 340.5 MiB in total".
+#: src/views/processdetails.cpp
+#, python-brace-format
+msgid "{rate}, {total} in total"
+msgstr "{rate}，共 {total}"
+
+#: src/views/processdetails.cpp
+#, python-brace-format
+msgid "{name} ({pid})"
+msgstr "{name}（{pid}）"
+
+#. TRANSLATORS: how long a process has run and when it started, such as "2 h 5 min, since 14:03".
+#: src/views/processdetails.cpp
+#, python-brace-format
+msgid "{duration}, since {time}"
+msgstr "{duration}，始于 {time}"
 
 #: src/views/processdetails.cpp
 msgid "Application Details"
@@ -324,10 +392,6 @@ msgstr "应用程序详细信息"
 msgid "Process Details"
 msgstr "进程详细信息"
 
-#: src/views/processespage.cpp
-msgid "Name"
-msgstr "名称"
-
 #: src/views/processespage.cpp src/views/resourcepage.cpp
 msgid "Read"
 msgstr "读取"
@@ -335,10 +399,6 @@ msgstr "读取"
 #: src/views/processespage.cpp src/views/resourcepage.cpp
 msgid "Write"
 msgstr "写入"
-
-#: src/views/processespage.cpp
-msgid "PID"
-msgstr "PID"
 
 #: src/views/processespage.cpp
 msgid "Applications"
@@ -411,6 +471,10 @@ msgstr "总发送量"
 #: src/views/resourcepage.cpp
 msgid "Network interfaces"
 msgstr "网络接口"
+
+#: src/views/resourcepage.cpp
+msgid "State"
+msgstr "状态"
 
 #: src/views/resourcepage.cpp
 msgid "Hardware address"
@@ -536,3 +600,9 @@ msgstr "查看资源使用情况并管理正在运行的进程"
 #: cutefish-system-monitor.desktop
 msgid "CPU;Memory;Network;Disk;Processes;"
 msgstr "CPU;Memory;Network;Disk;Processes;处理器;内存;网络;磁盘;进程;任务管理器;"
+
+#~ msgid "User"
+#~ msgstr "用户"
+
+#~ msgid "Exited"
+#~ msgstr "已退出"

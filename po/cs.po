@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cutefish-system-monitor\n"
 "Report-Msgid-Bugs-To: https://github.com/cutefishos\n"
-"POT-Creation-Date: 2026-11-13 15:22+0800\n"
+"POT-Creation-Date: 2026-11-19 20:08+0800\n"
 "PO-Revision-Date: 2026-11-13 15:22+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -79,6 +79,28 @@ msgstr "{value} {unit}"
 msgid "{size}/s"
 msgstr "{size}/s"
 
+#. TRANSLATORS: days and hours, such as "3 d 4 h".
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{days} d {hours} h"
+msgstr "{days} d {hours} h"
+
+#. TRANSLATORS: hours and minutes, such as "2 h 5 min".
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{hours} h {minutes} min"
+msgstr "{hours} h {minutes} min"
+
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{minutes} min"
+msgstr "{minutes} min"
+
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{seconds} s"
+msgstr "{seconds} s"
+
 #: src/procreader.cpp
 msgid "Running"
 msgstr "Běží"
@@ -143,8 +165,7 @@ msgstr "Informace o systému nejsou k dispozici."
 msgid "Now"
 msgstr "Nyní"
 
-#: src/views/mainwindow.cpp src/views/processdetails.cpp
-#: src/views/summarycard.cpp
+#: src/views/mainwindow.cpp src/views/summarycard.cpp
 msgid "Processes"
 msgstr "Procesy"
 
@@ -278,28 +299,56 @@ msgid "Write {rate}"
 msgstr "Zápis {rate}"
 
 #: src/views/processdetails.cpp
-msgid "User"
-msgstr "Uživatel"
+msgid "Command"
+msgstr "Příkaz"
 
-#: src/views/processdetails.cpp src/views/resourcepage.cpp
-msgid "State"
-msgstr "Stav"
+#: src/views/processdetails.cpp src/views/processespage.cpp
+msgid "Name"
+msgstr "Název"
+
+#: src/views/processdetails.cpp src/views/processespage.cpp
+msgid "PID"
+msgstr "PID"
+
+#: src/views/processdetails.cpp
+msgid "Resident memory"
+msgstr "Rezidentní paměť"
+
+#: src/views/processdetails.cpp
+msgid "Disk read"
+msgstr "Čtení z disku"
+
+#: src/views/processdetails.cpp
+msgid "Disk write"
+msgstr "Zápis na disk"
 
 #: src/views/processdetails.cpp
 msgid "Threads"
 msgstr "Vlákna"
 
 #: src/views/processdetails.cpp
-msgid "Nice value"
-msgstr "Hodnota nice"
+msgid "Running time"
+msgstr "Doba běhu"
+
+#: src/views/processdetails.cpp
+msgid "Open files"
+msgstr "Otevřené soubory"
 
 #: src/views/processdetails.cpp
 msgid "Parent process"
 msgstr "Nadřazený proces"
 
 #: src/views/processdetails.cpp
-msgid "Command"
-msgstr "Příkaz"
+msgid "Nice value"
+msgstr "Hodnota nice"
+
+#: src/views/processdetails.cpp
+msgid "Unit"
+msgstr "Jednotka"
+
+#: src/views/processdetails.cpp
+msgid "Executable"
+msgstr "Spustitelný soubor"
 
 #: src/views/processdetails.cpp
 msgid "Application quit"
@@ -310,13 +359,34 @@ msgid "Process exited"
 msgstr "Proces skončil"
 
 #: src/views/processdetails.cpp
-msgid "Exited"
-msgstr "Skončil"
-
-#: src/views/processdetails.cpp
 #, python-brace-format
 msgid "PID {pid}"
 msgstr "PID {pid}"
+
+#: src/views/processdetails.cpp
+#, python-brace-format
+msgid "{count} process"
+msgid_plural "{count} processes"
+msgstr[0] "{count} proces"
+msgstr[1] "{count} procesy"
+msgstr[2] "{count} procesů"
+
+#. TRANSLATORS: a disk rate and the amount since the process started, such as "1.2 MiB/s, 340.5 MiB in total".
+#: src/views/processdetails.cpp
+#, python-brace-format
+msgid "{rate}, {total} in total"
+msgstr "{rate}, celkem {total}"
+
+#: src/views/processdetails.cpp
+#, python-brace-format
+msgid "{name} ({pid})"
+msgstr "{name} ({pid})"
+
+#. TRANSLATORS: how long a process has run and when it started, such as "2 h 5 min, since 14:03".
+#: src/views/processdetails.cpp
+#, python-brace-format
+msgid "{duration}, since {time}"
+msgstr "{duration}, od {time}"
 
 #: src/views/processdetails.cpp
 msgid "Application Details"
@@ -326,10 +396,6 @@ msgstr "Podrobnosti aplikace"
 msgid "Process Details"
 msgstr "Podrobnosti procesu"
 
-#: src/views/processespage.cpp
-msgid "Name"
-msgstr "Název"
-
 #: src/views/processespage.cpp src/views/resourcepage.cpp
 msgid "Read"
 msgstr "Čtení"
@@ -337,10 +403,6 @@ msgstr "Čtení"
 #: src/views/processespage.cpp src/views/resourcepage.cpp
 msgid "Write"
 msgstr "Zápis"
-
-#: src/views/processespage.cpp
-msgid "PID"
-msgstr "PID"
 
 #: src/views/processespage.cpp
 msgid "Applications"
@@ -413,6 +475,10 @@ msgstr "Celkem odesláno"
 #: src/views/resourcepage.cpp
 msgid "Network interfaces"
 msgstr "Síťová rozhraní"
+
+#: src/views/resourcepage.cpp
+msgid "State"
+msgstr "Stav"
 
 #: src/views/resourcepage.cpp
 msgid "Hardware address"
@@ -540,3 +606,9 @@ msgstr "Zobrazení využití prostředků a správa spuštěných procesů"
 #: cutefish-system-monitor.desktop
 msgid "CPU;Memory;Network;Disk;Processes;"
 msgstr "CPU;Procesor;Paměť;Síť;Disk;Procesy;"
+
+#~ msgid "User"
+#~ msgstr "Uživatel"
+
+#~ msgid "Exited"
+#~ msgstr "Skončil"

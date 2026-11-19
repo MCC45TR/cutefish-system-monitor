@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cutefish-system-monitor\n"
 "Report-Msgid-Bugs-To: https://github.com/cutefishos\n"
-"POT-Creation-Date: 2026-11-13 15:22+0800\n"
+"POT-Creation-Date: 2026-11-19 20:08+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -80,6 +80,28 @@ msgstr ""
 msgid "{size}/s"
 msgstr ""
 
+#. TRANSLATORS: days and hours, such as "3 d 4 h".
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{days} d {hours} h"
+msgstr ""
+
+#. TRANSLATORS: hours and minutes, such as "2 h 5 min".
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{hours} h {minutes} min"
+msgstr ""
+
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{minutes} min"
+msgstr ""
+
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{seconds} s"
+msgstr ""
+
 #: src/procreader.cpp
 msgid "Running"
 msgstr ""
@@ -144,8 +166,7 @@ msgstr ""
 msgid "Now"
 msgstr ""
 
-#: src/views/mainwindow.cpp src/views/processdetails.cpp
-#: src/views/summarycard.cpp
+#: src/views/mainwindow.cpp src/views/summarycard.cpp
 msgid "Processes"
 msgstr ""
 
@@ -278,11 +299,27 @@ msgid "Write {rate}"
 msgstr ""
 
 #: src/views/processdetails.cpp
-msgid "User"
+msgid "Command"
 msgstr ""
 
-#: src/views/processdetails.cpp src/views/resourcepage.cpp
-msgid "State"
+#: src/views/processdetails.cpp src/views/processespage.cpp
+msgid "Name"
+msgstr ""
+
+#: src/views/processdetails.cpp src/views/processespage.cpp
+msgid "PID"
+msgstr ""
+
+#: src/views/processdetails.cpp
+msgid "Resident memory"
+msgstr ""
+
+#: src/views/processdetails.cpp
+msgid "Disk read"
+msgstr ""
+
+#: src/views/processdetails.cpp
+msgid "Disk write"
 msgstr ""
 
 #: src/views/processdetails.cpp
@@ -290,7 +327,11 @@ msgid "Threads"
 msgstr ""
 
 #: src/views/processdetails.cpp
-msgid "Nice value"
+msgid "Running time"
+msgstr ""
+
+#: src/views/processdetails.cpp
+msgid "Open files"
 msgstr ""
 
 #: src/views/processdetails.cpp
@@ -298,7 +339,15 @@ msgid "Parent process"
 msgstr ""
 
 #: src/views/processdetails.cpp
-msgid "Command"
+msgid "Nice value"
+msgstr ""
+
+#: src/views/processdetails.cpp
+msgid "Unit"
+msgstr ""
+
+#: src/views/processdetails.cpp
+msgid "Executable"
 msgstr ""
 
 #: src/views/processdetails.cpp
@@ -310,12 +359,32 @@ msgid "Process exited"
 msgstr ""
 
 #: src/views/processdetails.cpp
-msgid "Exited"
+#, python-brace-format
+msgid "PID {pid}"
 msgstr ""
 
 #: src/views/processdetails.cpp
 #, python-brace-format
-msgid "PID {pid}"
+msgid "{count} process"
+msgid_plural "{count} processes"
+msgstr[0] ""
+msgstr[1] ""
+
+#. TRANSLATORS: a disk rate and the amount since the process started, such as "1.2 MiB/s, 340.5 MiB in total".
+#: src/views/processdetails.cpp
+#, python-brace-format
+msgid "{rate}, {total} in total"
+msgstr ""
+
+#: src/views/processdetails.cpp
+#, python-brace-format
+msgid "{name} ({pid})"
+msgstr ""
+
+#. TRANSLATORS: how long a process has run and when it started, such as "2 h 5 min, since 14:03".
+#: src/views/processdetails.cpp
+#, python-brace-format
+msgid "{duration}, since {time}"
 msgstr ""
 
 #: src/views/processdetails.cpp
@@ -326,20 +395,12 @@ msgstr ""
 msgid "Process Details"
 msgstr ""
 
-#: src/views/processespage.cpp
-msgid "Name"
-msgstr ""
-
 #: src/views/processespage.cpp src/views/resourcepage.cpp
 msgid "Read"
 msgstr ""
 
 #: src/views/processespage.cpp src/views/resourcepage.cpp
 msgid "Write"
-msgstr ""
-
-#: src/views/processespage.cpp
-msgid "PID"
 msgstr ""
 
 #: src/views/processespage.cpp
@@ -412,6 +473,10 @@ msgstr ""
 
 #: src/views/resourcepage.cpp
 msgid "Network interfaces"
+msgstr ""
+
+#: src/views/resourcepage.cpp
+msgid "State"
 msgstr ""
 
 #: src/views/resourcepage.cpp
