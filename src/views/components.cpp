@@ -99,6 +99,11 @@ void InfoRow::setValue(std::string value)
     requestLayout();
 }
 
+void InfoRow::setValueElide(Label::Elide elide)
+{
+    m_value->setElide(elide);
+}
+
 void InfoRow::setSeparatorVisible(bool visible)
 {
     if (m_separator == visible)

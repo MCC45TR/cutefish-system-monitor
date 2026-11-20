@@ -92,6 +92,8 @@ public:
     static std::string formatRate(double bytes);
     static std::string formatPercent(double percent);
     static std::string formatTemperature(double celsius);
+    // Abbreviated to its two largest units, such as "2 h 5 min".
+    static std::string formatDuration(int64_t seconds);
 
     // After every published sample, and after the interval changed.
     cutefish::base::Signal<> updated;

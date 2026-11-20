@@ -17,8 +17,11 @@
 #include "ui/dialog_window.h"
 #include "ui/header_button.h"
 #include "ui/keys.h"
+#include "ui/label.h"
+#include "ui/list_view.h"
 #include "ui/segmented_control.h"
 #include "ui/test_input.h"
+#include "ui/text_area.h"
 #include "ui/text_field.h"
 #include "ui/theme.h"
 #include "ui/window.h"
@@ -269,6 +272,24 @@ TEST(UiTest, ApplicationView)
     window.openDetails();
     ASSERT_NE(window.details(), nullptr);
     EXPECT_EQ(window.selectedProcess()->members.size(), 1u);
+
+    // The application's processes in a card sized to them, its last card.
+    Window* dialog = window.details()->window();
+    ASSERT_NE(dialog, nullptr);
+    dialog->setScale(1.5);
+    dialog->grab();
+    View* root = dialog->contentView();
+    auto* members = static_cast<ListView*>(find(root, "detailsMembers"));
+    ASSERT_NE(members, nullptr);
+    EXPECT_EQ(members->rowCount(), 1u);
+    // The column titles over one row of 36.
+    EXPECT_EQ(windowRect(members->parent()).height, 28 + 36);
+    EXPECT_EQ(find(root, "detailsProcess"), nullptr);
+    EXPECT_EQ(windowRect(members->parent()).x, 16);
+    EXPECT_EQ(windowRect(members->parent()).right(), 480 - 16);
+    EXPECT_NEAR(dialog->size().height - windowRect(members->parent()).bottom(), 16, 1);
+    // Seven rows of processes at most.
+    EXPECT_LE(dialog->size().height, 626);
 }
 
 TEST(UiTest, LanguageChangeKeepsWhereTheUserWas)
@@ -458,8 +479,33 @@ TEST(UiTest, DetailsSize)
     ASSERT_NE(dialog, nullptr);
     dialog->setScale(1.5);
     dialog->grab();
-    EXPECT_EQ(dialog->size().height, 612);
+    // As tall as its content: 644 at most, with three lines of command.
     EXPECT_EQ(dialog->size().width, 480);
+    EXPECT_LE(dialog->size().height, 644);
+    View* root = dialog->contentView();
+    View* activity = find(root, "detailsActivity");
+    View* process = find(root, "detailsProcess");
+    ASSERT_TRUE(activity && process);
+    EXPECT_EQ(find(root, "detailsMembers"), nullptr);
+    // Every card keeps the dialog's 16 to its sides, 12 below the 40 header
+    // row and between them, and the last one ends 16 above the bottom.
+    for (const View* card : {activity, process}) {
+        EXPECT_EQ(windowRect(card).x, 16);
+        EXPECT_EQ(windowRect(card).right(), 480 - 16);
+    }
+    // CPU, memory and five more rows of 36.
+    EXPECT_EQ(windowRect(activity).height, 7 * 36);
+    EXPECT_NEAR(windowRect(activity).y, 42 + 8 + 40 + 12, 0.5);
+    EXPECT_NEAR(windowRect(process).y - windowRect(activity).bottom(), 12, 0.5);
+    EXPECT_NEAR(dialog->size().height - windowRect(process).bottom(), 16, 1);
+
+    auto* command = static_cast<TextArea*>(find(root, "detailsCommand"));
+    ASSERT_NE(command, nullptr);
+    EXPECT_NE(command->text().find(std::filesystem::path(ownProgram()).filename().string()), std::string::npos);
+    EXPECT_GT(windowRect(command).height, 0);
+    auto* subtitle = static_cast<Label*>(find(root, "detailsSubtitle"));
+    ASSERT_NE(subtitle, nullptr);
+    EXPECT_EQ(subtitle->text().rfind("PID " + std::to_string(getpid()), 0), 0u);
 }
 
 // Whether the strip holds anything but one colour, as a shown scroll bar does.

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cutefish-system-monitor\n"
 "Report-Msgid-Bugs-To: https://github.com/cutefishos\n"
-"POT-Creation-Date: 2026-11-13 15:22+0800\n"
+"POT-Creation-Date: 2026-11-19 20:08+0800\n"
 "PO-Revision-Date: 2026-11-13 15:22+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -79,6 +79,28 @@ msgstr "{value} {unit}"
 msgid "{size}/s"
 msgstr "{size}/s"
 
+#. TRANSLATORS: days and hours, such as "3 d 4 h".
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{days} d {hours} h"
+msgstr "{days} ngày {hours} giờ"
+
+#. TRANSLATORS: hours and minutes, such as "2 h 5 min".
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{hours} h {minutes} min"
+msgstr "{hours} giờ {minutes} phút"
+
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{minutes} min"
+msgstr "{minutes} phút"
+
+#: src/monitor.cpp
+#, python-brace-format
+msgid "{seconds} s"
+msgstr "{seconds} giây"
+
 #: src/procreader.cpp
 msgid "Running"
 msgstr "Đang chạy"
@@ -143,8 +165,7 @@ msgstr "Không có thông tin hệ thống."
 msgid "Now"
 msgstr "Bây giờ"
 
-#: src/views/mainwindow.cpp src/views/processdetails.cpp
-#: src/views/summarycard.cpp
+#: src/views/mainwindow.cpp src/views/summarycard.cpp
 msgid "Processes"
 msgstr "Tiến trình"
 
@@ -276,28 +297,56 @@ msgid "Write {rate}"
 msgstr "Ghi {rate}"
 
 #: src/views/processdetails.cpp
-msgid "User"
-msgstr "Người dùng"
+msgid "Command"
+msgstr "Lệnh"
 
-#: src/views/processdetails.cpp src/views/resourcepage.cpp
-msgid "State"
-msgstr "Trạng thái"
+#: src/views/processdetails.cpp src/views/processespage.cpp
+msgid "Name"
+msgstr "Tên"
+
+#: src/views/processdetails.cpp src/views/processespage.cpp
+msgid "PID"
+msgstr "PID"
+
+#: src/views/processdetails.cpp
+msgid "Resident memory"
+msgstr "Bộ nhớ thường trú"
+
+#: src/views/processdetails.cpp
+msgid "Disk read"
+msgstr "Đọc đĩa"
+
+#: src/views/processdetails.cpp
+msgid "Disk write"
+msgstr "Ghi đĩa"
 
 #: src/views/processdetails.cpp
 msgid "Threads"
 msgstr "Luồng"
 
 #: src/views/processdetails.cpp
-msgid "Nice value"
-msgstr "Giá trị nice"
+msgid "Running time"
+msgstr "Thời gian chạy"
+
+#: src/views/processdetails.cpp
+msgid "Open files"
+msgstr "Tệp đang mở"
 
 #: src/views/processdetails.cpp
 msgid "Parent process"
 msgstr "Tiến trình cha"
 
 #: src/views/processdetails.cpp
-msgid "Command"
-msgstr "Lệnh"
+msgid "Nice value"
+msgstr "Giá trị nice"
+
+#: src/views/processdetails.cpp
+msgid "Unit"
+msgstr "Unit"
+
+#: src/views/processdetails.cpp
+msgid "Executable"
+msgstr "Tệp thực thi"
 
 #: src/views/processdetails.cpp
 msgid "Application quit"
@@ -308,13 +357,32 @@ msgid "Process exited"
 msgstr "Tiến trình đã kết thúc"
 
 #: src/views/processdetails.cpp
-msgid "Exited"
-msgstr "Đã kết thúc"
-
-#: src/views/processdetails.cpp
 #, python-brace-format
 msgid "PID {pid}"
 msgstr "PID {pid}"
+
+#: src/views/processdetails.cpp
+#, python-brace-format
+msgid "{count} process"
+msgid_plural "{count} processes"
+msgstr[0] "{count} tiến trình"
+
+#. TRANSLATORS: a disk rate and the amount since the process started, such as "1.2 MiB/s, 340.5 MiB in total".
+#: src/views/processdetails.cpp
+#, python-brace-format
+msgid "{rate}, {total} in total"
+msgstr "{rate}, tổng {total}"
+
+#: src/views/processdetails.cpp
+#, python-brace-format
+msgid "{name} ({pid})"
+msgstr "{name} ({pid})"
+
+#. TRANSLATORS: how long a process has run and when it started, such as "2 h 5 min, since 14:03".
+#: src/views/processdetails.cpp
+#, python-brace-format
+msgid "{duration}, since {time}"
+msgstr "{duration}, từ {time}"
 
 #: src/views/processdetails.cpp
 msgid "Application Details"
@@ -324,10 +392,6 @@ msgstr "Chi tiết ứng dụng"
 msgid "Process Details"
 msgstr "Chi tiết tiến trình"
 
-#: src/views/processespage.cpp
-msgid "Name"
-msgstr "Tên"
-
 #: src/views/processespage.cpp src/views/resourcepage.cpp
 msgid "Read"
 msgstr "Đọc"
@@ -335,10 +399,6 @@ msgstr "Đọc"
 #: src/views/processespage.cpp src/views/resourcepage.cpp
 msgid "Write"
 msgstr "Ghi"
-
-#: src/views/processespage.cpp
-msgid "PID"
-msgstr "PID"
 
 #: src/views/processespage.cpp
 msgid "Applications"
@@ -411,6 +471,10 @@ msgstr "Tổng đã gửi"
 #: src/views/resourcepage.cpp
 msgid "Network interfaces"
 msgstr "Giao diện mạng"
+
+#: src/views/resourcepage.cpp
+msgid "State"
+msgstr "Trạng thái"
 
 #: src/views/resourcepage.cpp
 msgid "Hardware address"
@@ -536,3 +600,9 @@ msgstr "Xem mức sử dụng tài nguyên và quản lý các tiến trình đa
 #: cutefish-system-monitor.desktop
 msgid "CPU;Memory;Network;Disk;Processes;"
 msgstr "CPU;Bộ nhớ;Mạng;Ổ đĩa;Tiến trình;Bộ xử lý;Memory;Processes;"
+
+#~ msgid "User"
+#~ msgstr "Người dùng"
+
+#~ msgid "Exited"
+#~ msgstr "Đã kết thúc"
