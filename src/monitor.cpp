@@ -27,10 +27,10 @@ using cutefish::i18n::trNoop;
 // looked up again if they return; titles some programs set make the set unbounded.
 static constexpr uint64_t kRetainedSamples = 60;
 
-Monitor::Monitor(ApplicationLookup lookup, std::string preferences)
+Monitor::Monitor(ApplicationLookup lookup, std::string preferences, std::shared_ptr<ProcReader> reader)
     : m_lookup(std::move(lookup))
     , m_preferences(std::move(preferences))
-    , m_reader(std::make_shared<ProcReader>())
+    , m_reader(reader ? std::move(reader) : std::make_shared<ProcReader>())
 {
     m_metrics.memory = ProcReader::parseMemory({});
     const Preferences saved = m_preferences.empty() ? Preferences() : Preferences::load(m_preferences);
@@ -109,16 +109,31 @@ void Monitor::acceptSample(Snapshot snapshot)
         m_history.upload.push_back(m_metrics.upload);
         m_history.diskRead.push_back(m_metrics.diskRead);
         m_history.diskWrite.push_back(m_metrics.diskWrite);
-        m_history.gpuPercent.push_back(m_metrics.gpuPercent);
-        m_history.gpuTemperature.push_back(m_metrics.gpuTemperature);
+        // A GPU listed later starts with an idle past.
+        std::vector<GpuHistory> gpus;
+        for (const Gpu& gpu : m_metrics.gpus) {
+            const auto known = std::find_if(m_history.gpus.begin(), m_history.gpus.end(),
+                                            [&gpu](const GpuHistory& history) { return history.id == gpu.id; });
+            GpuHistory history = known == m_history.gpus.end() ? GpuHistory() : std::move(*known);
+            history.id = gpu.id;
+            history.percent.resize(m_history.timestamps.size() - 1);
+            history.temperature.resize(m_history.timestamps.size() - 1);
+            history.percent.push_back(gpu.busy);
+            history.temperature.push_back(std::max(0.0, gpu.temperature));
+            gpus.push_back(std::move(history));
+        }
+        m_history.gpus = std::move(gpus);
 
         // Retain the sample before the visible window to interpolate its left edge.
         const int64_t cutoff = timestamp - historyDuration() * 1000;
         while (m_history.timestamps.size() > 2 && m_history.timestamps[1] < cutoff) {
             for (auto* series : {&m_history.cpuPercent, &m_history.memoryPercent, &m_history.download,
-                                 &m_history.upload, &m_history.diskRead, &m_history.diskWrite,
-                                 &m_history.gpuPercent, &m_history.gpuTemperature})
+                                 &m_history.upload, &m_history.diskRead, &m_history.diskWrite})
                 series->erase(series->begin());
+            for (GpuHistory& gpu : m_history.gpus) {
+                gpu.percent.erase(gpu.percent.begin());
+                gpu.temperature.erase(gpu.temperature.begin());
+            }
             m_history.timestamps.erase(m_history.timestamps.begin());
         }
     }
@@ -431,6 +446,11 @@ std::string Monitor::formatPercent(double percent)
 std::string Monitor::formatTemperature(double celsius)
 {
     return cutefish::base::Locale::system().toString(celsius, 0) + " °C";
+}
+
+std::string Monitor::formatPower(double watts)
+{
+    return cutefish::base::Locale::system().toString(watts, 1) + " W";
 }
 
 std::string Monitor::formatDuration(int64_t seconds)

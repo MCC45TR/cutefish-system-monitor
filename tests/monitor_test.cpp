@@ -234,6 +234,31 @@ TEST_F(MonitorTest, IntervalPreservesHistory)
     EXPECT_EQ(timestamps.front(), history.timestamps.front());
 }
 
+TEST_F(MonitorTest, HistoryPerGpu)
+{
+    TemporaryDirectory directory;
+    const std::string sys = directory.path() + "/sys";
+    ASSERT_TRUE(writeFile(sys + "/class/drm/card0/device/gpu_busy_percent", "20\n"));
+    ASSERT_TRUE(writeFile(sys + "/class/drm/card1/device/boot_vga", "1\n"));
+    ASSERT_TRUE(writeFile(sys + "/class/drm/card1/device/gpu_busy_percent", "80\n"));
+    ASSERT_TRUE(writeFile(sys + "/class/drm/card1/device/hwmon/hwmon0/temp1_input", "45000\n"));
+
+    Monitor monitor({}, {}, std::make_shared<ProcReader>("/proc", sys));
+    ASSERT_TRUE(runUntil([&] { return monitor.history().timestamps.size() >= 2; }));
+    const History& history = monitor.history();
+    ASSERT_EQ(history.gpus.size(), 2u);
+    EXPECT_EQ(history.gpus[0].id, "card1");
+    EXPECT_EQ(history.gpus[1].id, "card0");
+    for (const GpuHistory& gpu : history.gpus) {
+        EXPECT_EQ(gpu.percent.size(), history.timestamps.size());
+        EXPECT_EQ(gpu.temperature.size(), history.timestamps.size());
+    }
+    EXPECT_EQ(history.gpus[0].percent.back(), 80.0);
+    EXPECT_EQ(history.gpus[0].temperature.back(), 45.0);
+    EXPECT_EQ(history.gpus[1].percent.back(), 20.0);
+    EXPECT_EQ(history.gpus[1].temperature.back(), 0.0);
+}
+
 TEST_F(MonitorTest, RememberedPreferences)
 {
     TemporaryDirectory directory;
@@ -276,6 +301,7 @@ TEST(FormatTest, NumbersAsTheLocaleWritesThem)
     EXPECT_EQ(Monitor::formatPercent(0.15), "0.1%");
     EXPECT_EQ(Monitor::formatPercent(99.96), "100.0%");
     EXPECT_EQ(Monitor::formatTemperature(41.5), "42 °C");
+    EXPECT_EQ(Monitor::formatPower(14.52), "14.5 W");
     EXPECT_EQ(Monitor::formatBytes(1023.5), "1,024 B");
 }
 

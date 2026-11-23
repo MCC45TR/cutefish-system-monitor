@@ -21,13 +21,14 @@ add_library(monitor-backend STATIC
     src/gpureader.cpp
     src/monitor.cpp
     src/networkreader.cpp
+    src/nvmlreader.cpp
     src/preferences.cpp
     src/processlist.cpp
     src/procreader.cpp
     src/textutil.cpp
 )
 target_include_directories(monitor-backend PUBLIC src)
-target_link_libraries(monitor-backend PUBLIC Cutefish::ToolkitBase PRIVATE PkgConfig::ICU)
+target_link_libraries(monitor-backend PUBLIC Cutefish::ToolkitBase PRIVATE PkgConfig::ICU ${CMAKE_DL_LIBS})
 
 # The glyphs, built in.
 file(GLOB SYSTEM_MONITOR_ICONS CONFIGURE_DEPENDS ${PROJECT_SOURCE_DIR}/icons/*.svg)

@@ -52,6 +52,8 @@ struct Volume
 
 struct Gpu
 {
+    // The card's DRM name, such as "card1", which stays while the card is there.
+    std::string id;
     std::string name;
     std::string driver;
     bool active = false;
@@ -59,11 +61,21 @@ struct Gpu
     int busy = 0;
     bool hasTemperature = false;
     double temperature = -1;
+    // Clocks in MHz.
     bool hasFrequency = false;
     double frequency = 0;
+    bool hasMemoryFrequency = false;
+    double memoryFrequency = 0;
     bool hasVram = false;
     uint64_t vramUsed = 0;
     uint64_t vramTotal = 0;
+    bool hasEncoder = false;
+    int encoder = 0;
+    bool hasDecoder = false;
+    int decoder = 0;
+    // Watts.
+    bool hasPower = false;
+    double power = 0;
 };
 
 struct Processor

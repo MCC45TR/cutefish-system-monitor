@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cutefish-system-monitor\n"
 "Report-Msgid-Bugs-To: https://github.com/cutefishos\n"
-"POT-Creation-Date: 2026-11-19 20:08+0800\n"
+"POT-Creation-Date: 2026-11-23 23:43+0800\n"
 "PO-Revision-Date: 2026-11-13 12:00+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -183,6 +183,12 @@ msgstr "Memória"
 msgid "Disk"
 msgstr "Disco"
 
+#. TRANSLATORS: one of several GPUs in the sidebar, such as "GPU 2".
+#: src/views/mainwindow.cpp
+#, python-brace-format
+msgid "GPU {number}"
+msgstr "GPU {number}"
+
 #: src/views/mainwindow.cpp cutefish-system-monitor.desktop
 msgid "System Monitor"
 msgstr "Monitor do sistema"
@@ -228,18 +234,6 @@ msgid "View"
 msgstr "Visualizar"
 
 #: src/views/mainwindow.cpp
-msgid "Update Every Second"
-msgstr "Atualizar a cada segundo"
-
-#: src/views/mainwindow.cpp
-msgid "Update Every 2 Seconds"
-msgstr "Atualizar a cada 2 segundos"
-
-#: src/views/mainwindow.cpp
-msgid "Update Every 5 Seconds"
-msgstr "Atualizar a cada 5 segundos"
-
-#: src/views/mainwindow.cpp
 msgid "Window"
 msgstr "Janela"
 
@@ -250,6 +244,18 @@ msgstr "Minimizar"
 #: src/views/mainwindow.cpp
 msgid "Zoom"
 msgstr "Zoom"
+
+#: src/views/mainwindow.cpp
+msgid "Update Every Second"
+msgstr "Atualizar a cada segundo"
+
+#: src/views/mainwindow.cpp
+msgid "Update Every 2 Seconds"
+msgstr "Atualizar a cada 2 segundos"
+
+#: src/views/mainwindow.cpp
+msgid "Update Every 5 Seconds"
+msgstr "Atualizar a cada 5 segundos"
 
 #: src/views/mainwindow.cpp
 msgid "Shows what your computer is doing."
@@ -296,6 +302,10 @@ msgstr[1] "{n} processadores lógicos"
 #, python-brace-format
 msgid "Write {rate}"
 msgstr "Gravação {rate}"
+
+#: src/views/mainwindow.cpp src/views/resourcepage.cpp
+msgid "Powered off"
+msgstr "Desligada"
 
 #: src/views/processdetails.cpp
 msgid "Command"
@@ -507,6 +517,14 @@ msgid "Activity"
 msgstr "Atividade"
 
 #: src/views/resourcepage.cpp
+msgid "Video encoder"
+msgstr "Codificador de vídeo"
+
+#: src/views/resourcepage.cpp
+msgid "Video decoder"
+msgstr "Decodificador de vídeo"
+
+#: src/views/resourcepage.cpp
 msgid "Temperature"
 msgstr "Temperatura"
 
@@ -515,8 +533,16 @@ msgid "Clock speed"
 msgstr "Velocidade do clock"
 
 #: src/views/resourcepage.cpp
+msgid "Memory clock"
+msgstr "Clock da memória"
+
+#: src/views/resourcepage.cpp
 msgid "Video memory"
 msgstr "Memória de vídeo"
+
+#: src/views/resourcepage.cpp
+msgid "Power"
+msgstr "Consumo de energia"
 
 #: src/views/resourcepage.cpp
 msgid "Processor activity"
@@ -591,10 +617,6 @@ msgstr "{used} de {total}"
 #: src/views/resourcepage.cpp
 msgid "Active"
 msgstr "Ativa"
-
-#: src/views/resourcepage.cpp
-msgid "Powered off"
-msgstr "Desligada"
 
 #: cutefish-system-monitor.desktop
 msgid "View resource usage and manage running processes"

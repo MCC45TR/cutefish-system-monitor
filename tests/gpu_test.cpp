@@ -2,7 +2,169 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 #include "testsupport.h"
+#include "nvmlreader.h"
 #include "procreader.h"
+
+#include <cstdio>
+#include <cstring>
+
+// The NVIDIA library's stand-in: what it reports, and how often it was asked.
+struct FakeNvml
+{
+    struct Utilization
+    {
+        unsigned int gpu;
+        unsigned int memory;
+    };
+    struct Memory
+    {
+        unsigned long long total;
+        unsigned long long free;
+        unsigned long long used;
+    };
+
+    static inline int loads = 0;
+    static inline int inits = 0;
+    static inline int calls = 0;
+    static inline std::string busId;
+    static inline bool initFails = false;
+    static inline bool knowsCard = true;
+    static inline bool hasPower = true;
+
+    static void reset()
+    {
+        loads = inits = calls = 0;
+        busId.clear();
+        initFails = false;
+        knowsCard = true;
+        hasPower = true;
+    }
+
+    static int init()
+    {
+        ++inits;
+        return initFails ? 1 : 0;
+    }
+    static int shutdown() { return 0; }
+    static int handle(const char* id, void** device)
+    {
+        ++calls;
+        busId = id;
+        if (!knowsCard)
+            return 6;
+        *device = &calls;
+        return 0;
+    }
+    static int name(void*, char* name, unsigned int length)
+    {
+        ++calls;
+        std::snprintf(name, length, "NVIDIA GeForce RTX 4050 Laptop GPU");
+        return 0;
+    }
+    static int utilization(void*, Utilization* utilization)
+    {
+        ++calls;
+        *utilization = {63, 20};
+        return 0;
+    }
+    static int encoder(void*, unsigned int* value, unsigned int* period)
+    {
+        ++calls;
+        *value = 12;
+        *period = 167000;
+        return 0;
+    }
+    static int decoder(void*, unsigned int* value, unsigned int* period)
+    {
+        ++calls;
+        *value = 340;
+        *period = 167000;
+        return 0;
+    }
+    static int memory(void*, Memory* memory)
+    {
+        ++calls;
+        *memory = {6ull << 30, 5ull << 30, 1ull << 30};
+        return 0;
+    }
+    static int temperature(void*, int sensor, unsigned int* value)
+    {
+        ++calls;
+        if (sensor != 0)
+            return 2;
+        *value = 55;
+        return 0;
+    }
+    static int clock(void*, int type, unsigned int* value)
+    {
+        ++calls;
+        if (type == 0)
+            *value = 1755;
+        else if (type == 2)
+            *value = 8001;
+        else
+            return 2;
+        return 0;
+    }
+    static int power(void*, unsigned int* milliwatts)
+    {
+        ++calls;
+        *milliwatts = 14520;
+        return 0;
+    }
+
+    static NvmlLoader loader()
+    {
+        return [] {
+            ++loads;
+            return NvmlSymbols([](const char* symbol) -> void* {
+                const std::string name = symbol;
+                if (name == "nvmlInit_v2")
+                    return reinterpret_cast<void*>(&init);
+                if (name == "nvmlShutdown")
+                    return reinterpret_cast<void*>(&shutdown);
+                if (name == "nvmlDeviceGetHandleByPciBusId_v2")
+                    return reinterpret_cast<void*>(&handle);
+                if (name == "nvmlDeviceGetName")
+                    return reinterpret_cast<void*>(&FakeNvml::name);
+                if (name == "nvmlDeviceGetUtilizationRates")
+                    return reinterpret_cast<void*>(&utilization);
+                if (name == "nvmlDeviceGetEncoderUtilization")
+                    return reinterpret_cast<void*>(&encoder);
+                if (name == "nvmlDeviceGetDecoderUtilization")
+                    return reinterpret_cast<void*>(&decoder);
+                if (name == "nvmlDeviceGetMemoryInfo")
+                    return reinterpret_cast<void*>(&FakeNvml::memory);
+                if (name == "nvmlDeviceGetTemperature")
+                    return reinterpret_cast<void*>(&temperature);
+                if (name == "nvmlDeviceGetClockInfo")
+                    return reinterpret_cast<void*>(&clock);
+                if (name == "nvmlDeviceGetPowerUsage" && hasPower)
+                    return reinterpret_cast<void*>(&power);
+                return nullptr;
+            });
+        };
+    }
+};
+
+// A card the NVIDIA driver runs, with its DRM nodes and no counters of its own in sysfs.
+static void addNvidiaCard(const std::string& sys, const std::string& status)
+{
+    const std::string device = sys + "/class/drm/card1/device";
+    fs::create_directories(device + "/drm/card1");
+    fs::create_directories(device + "/drm/renderD129");
+    ASSERT_TRUE(writeFile(device + "/uevent", "DRIVER=nvidia\nPCI_CLASS=30000\nPCI_SLOT_NAME=0000:01:00.0\n"));
+    ASSERT_TRUE(writeFile(device + "/power/runtime_status", status));
+    fs::create_directories(sys + "/bus/pci/drivers/nvidia");
+    fs::create_symlink(sys + "/bus/pci/drivers/nvidia", device + "/driver");
+}
+
+static Metrics sampleGpus(GpuReader& reader)
+{
+    Metrics metrics;
+    reader.sample(&metrics, {}, 1);
+    return metrics;
+}
 
 TEST(GpuTest, GpuAccounting)
 {
@@ -142,4 +304,179 @@ TEST(GpuTest, DrmClientAccounting)
     metrics = reader.sample().metrics;
     EXPECT_TRUE(metrics.gpuHasBusy);
     EXPECT_EQ(metrics.gpuPercent, 0.0);
+}
+
+TEST(GpuTest, NvidiaThroughLibrary)
+{
+    FakeNvml::reset();
+    TemporaryDirectory directory;
+    const std::string proc = directory.path() + "/proc";
+    const std::string sys = directory.path() + "/sys";
+    fs::create_directories(proc);
+    addNvidiaCard(sys, "suspended\n");
+    GpuReader reader(proc, sys, FakeNvml::loader());
+
+    // A card suspended from the start is listed powered off, and the library is not even opened.
+    Metrics metrics = sampleGpus(reader);
+    ASSERT_EQ(metrics.gpus.size(), 1u);
+    EXPECT_FALSE(metrics.gpus[0].active);
+    EXPECT_TRUE(metrics.gpus[0].hasBusy);
+    EXPECT_EQ(metrics.gpus[0].driver, "nvidia");
+    EXPECT_EQ(FakeNvml::loads, 0);
+
+    // Once it is awake, everything comes from the library, converted to the monitor's units.
+    ASSERT_TRUE(writeFile(sys + "/class/drm/card1/device/power/runtime_status", "active\n"));
+    metrics = sampleGpus(reader);
+    EXPECT_EQ(FakeNvml::loads, 1);
+    EXPECT_EQ(FakeNvml::inits, 1);
+    EXPECT_EQ(FakeNvml::busId, "0000:01:00.0");
+    ASSERT_EQ(metrics.gpus.size(), 1u);
+    Gpu gpu = metrics.gpus[0];
+    EXPECT_EQ(gpu.id, "card1");
+    EXPECT_EQ(gpu.name, "NVIDIA GeForce RTX 4050 Laptop GPU");
+    EXPECT_TRUE(gpu.active);
+    EXPECT_TRUE(gpu.hasBusy);
+    EXPECT_EQ(gpu.busy, 63);
+    EXPECT_TRUE(gpu.hasEncoder);
+    EXPECT_EQ(gpu.encoder, 12);
+    EXPECT_TRUE(gpu.hasDecoder);
+    EXPECT_EQ(gpu.decoder, 100);
+    EXPECT_TRUE(gpu.hasVram);
+    EXPECT_EQ(gpu.vramUsed, 1ull << 30);
+    EXPECT_EQ(gpu.vramTotal, 6ull << 30);
+    EXPECT_TRUE(gpu.hasTemperature);
+    EXPECT_EQ(gpu.temperature, 55.0);
+    EXPECT_TRUE(gpu.hasFrequency);
+    EXPECT_EQ(gpu.frequency, 1755.0);
+    EXPECT_TRUE(gpu.hasMemoryFrequency);
+    EXPECT_EQ(gpu.memoryFrequency, 8001.0);
+    EXPECT_TRUE(gpu.hasPower);
+    EXPECT_DOUBLE_EQ(gpu.power, 14.52);
+    EXPECT_TRUE(metrics.gpuHasBusy);
+    EXPECT_EQ(metrics.gpuPercent, 63.0);
+
+    // Suspended again, the card is not asked anything; it keeps its rows and its name.
+    ASSERT_TRUE(writeFile(sys + "/class/drm/card1/device/power/runtime_status", "suspended\n"));
+    const int calls = FakeNvml::calls;
+    metrics = sampleGpus(reader);
+    EXPECT_EQ(FakeNvml::calls, calls);
+    ASSERT_EQ(metrics.gpus.size(), 1u);
+    gpu = metrics.gpus[0];
+    EXPECT_FALSE(gpu.active);
+    EXPECT_EQ(gpu.name, "NVIDIA GeForce RTX 4050 Laptop GPU");
+    EXPECT_TRUE(gpu.hasPower);
+    EXPECT_EQ(gpu.busy, 0);
+    EXPECT_EQ(gpu.temperature, -1.0);
+    EXPECT_EQ(gpu.power, 0.0);
+
+    ASSERT_TRUE(writeFile(sys + "/class/drm/card1/device/power/runtime_status", "active\n"));
+    sampleGpus(reader);
+    EXPECT_EQ(FakeNvml::loads, 1);
+    EXPECT_EQ(FakeNvml::inits, 1);
+}
+
+TEST(GpuTest, NvidiaWithoutLibrary)
+{
+    FakeNvml::reset();
+    TemporaryDirectory directory;
+    const std::string proc = directory.path() + "/proc";
+    const std::string sys = directory.path() + "/sys";
+    fs::create_directories(proc);
+    addNvidiaCard(sys, "active\n");
+
+    // Without the library the card has nothing to show, as before; it is not tried again.
+    int loads = 0;
+    GpuReader missing(proc, sys, [&loads] {
+        ++loads;
+        return NvmlSymbols();
+    });
+    for (int sample = 0; sample < 3; ++sample)
+        EXPECT_TRUE(sampleGpus(missing).gpus.empty());
+    EXPECT_EQ(loads, 1);
+
+    // Nor when it cannot be initialised, or does not know the card.
+    FakeNvml::initFails = true;
+    GpuReader failing(proc, sys, FakeNvml::loader());
+    EXPECT_TRUE(sampleGpus(failing).gpus.empty());
+    EXPECT_TRUE(sampleGpus(failing).gpus.empty());
+    EXPECT_EQ(FakeNvml::inits, 1);
+
+    FakeNvml::reset();
+    FakeNvml::knowsCard = false;
+    GpuReader unknown(proc, sys, FakeNvml::loader());
+    EXPECT_TRUE(sampleGpus(unknown).gpus.empty());
+    const int calls = FakeNvml::calls;
+    EXPECT_TRUE(sampleGpus(unknown).gpus.empty());
+    EXPECT_EQ(FakeNvml::calls, calls);
+
+    // A function the library lacks leaves only its row out.
+    FakeNvml::reset();
+    FakeNvml::hasPower = false;
+    GpuReader partial(proc, sys, FakeNvml::loader());
+    const Metrics metrics = sampleGpus(partial);
+    ASSERT_EQ(metrics.gpus.size(), 1u);
+    EXPECT_FALSE(metrics.gpus[0].hasPower);
+    EXPECT_TRUE(metrics.gpus[0].hasBusy);
+
+    // A library file that is not there fails once.
+    NvmlReader absent(NvmlReader::library(directory.path() + "/libnvidia-ml.so.1"));
+    Gpu gpu;
+    EXPECT_FALSE(absent.sample("0000:01:00.0", &gpu));
+    EXPECT_TRUE(absent.failed());
+    EXPECT_FALSE(gpu.hasBusy);
+}
+
+TEST(GpuTest, HwmonPowerAndMemoryClock)
+{
+    TemporaryDirectory directory;
+    const std::string proc = directory.path() + "/proc";
+    const std::string sys = directory.path() + "/sys";
+    fs::create_directories(proc);
+    const std::string first = sys + "/class/drm/card0/device";
+    ASSERT_TRUE(writeFile(first + "/boot_vga", "1\n"));
+    ASSERT_TRUE(writeFile(first + "/gpu_busy_percent", "5\n"));
+    ASSERT_TRUE(writeFile(first + "/hwmon/hwmon2/power1_average", "15250000\n"));
+    ASSERT_TRUE(writeFile(first + "/hwmon/hwmon2/power1_input", "99000000\n"));
+    ASSERT_TRUE(writeFile(first + "/hwmon/hwmon2/freq2_input", "1000000000\n"));
+    const std::string second = sys + "/class/drm/card1/device";
+    ASSERT_TRUE(writeFile(second + "/gpu_busy_percent", "0\n"));
+    ASSERT_TRUE(writeFile(second + "/hwmon/hwmon3/power1_input", "7500000\n"));
+    const std::string third = sys + "/class/drm/card2/device";
+    ASSERT_TRUE(writeFile(third + "/gpu_busy_percent", "0\n"));
+    ASSERT_TRUE(writeFile(third + "/hwmon/hwmon4/temp1_input", "40000\n"));
+    ASSERT_TRUE(writeFile(third + "/power/runtime_status", "suspended\n"));
+    ASSERT_TRUE(writeFile(third + "/hwmon/hwmon4/power1_input", "7500000\n"));
+
+    GpuReader reader(proc, sys);
+    const Metrics metrics = sampleGpus(reader);
+    ASSERT_EQ(metrics.gpus.size(), 3u);
+
+    // The average is preferred where both are there; microwatts become watts, hertz megahertz.
+    const Gpu& averaged = metrics.gpus[0];
+    EXPECT_EQ(averaged.id, "card0");
+    EXPECT_TRUE(averaged.hasPower);
+    EXPECT_DOUBLE_EQ(averaged.power, 15.25);
+    EXPECT_TRUE(averaged.hasMemoryFrequency);
+    EXPECT_EQ(averaged.memoryFrequency, 1000.0);
+    EXPECT_FALSE(averaged.hasEncoder);
+    EXPECT_FALSE(averaged.hasDecoder);
+
+    const Gpu& instant = metrics.gpus[1];
+    EXPECT_TRUE(instant.hasPower);
+    EXPECT_DOUBLE_EQ(instant.power, 7.5);
+    EXPECT_FALSE(instant.hasMemoryFrequency);
+
+    const Gpu& suspended = metrics.gpus[2];
+    EXPECT_FALSE(suspended.active);
+    EXPECT_TRUE(suspended.hasPower);
+    EXPECT_EQ(suspended.power, 0.0);
+
+    // Without a hardware monitor, neither is shown.
+    const std::string bare = directory.path() + "/bare";
+    ASSERT_TRUE(writeFile(bare + "/class/drm/card0/device/gpu_busy_percent", "5\n"));
+    GpuReader plain(proc, bare);
+    const Metrics none = sampleGpus(plain);
+    ASSERT_EQ(none.gpus.size(), 1u);
+    EXPECT_FALSE(none.gpus[0].hasPower);
+    EXPECT_FALSE(none.gpus[0].hasMemoryFrequency);
 }

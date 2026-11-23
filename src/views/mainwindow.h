@@ -11,6 +11,7 @@
 #include "ui/window.h"
 
 #include <memory>
+#include <string>
 
 class Monitor;
 class ProcessDetails;
@@ -51,6 +52,13 @@ private:
     void buildContent();
     // The menus the menu bar shows while the window is active.
     void buildMainMenu();
+    // The View menu's pages and intervals, as they are now.
+    void fillViewMenu(cutefish::ui::Menu* view);
+    // The processes, the four resources, then one page per GPU (at least one).
+    int pageCount() const;
+    std::string pageTitle(int page) const;
+    // One sidebar card per GPU.
+    void updateGpuCards();
     void openAbout();
     void retranslate();
     void update();
