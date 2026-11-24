@@ -7,6 +7,7 @@
 #include "monitor.h"
 #include "processdetails.h"
 #include "processlist.h"
+#include "procreader.h"
 #include "resourcepage.h"
 
 #include "base/event_loop.h"
@@ -28,10 +29,12 @@
 
 #include <gtest/gtest.h>
 
+#include <algorithm>
 #include <cmath>
 #include <ctime>
 #include <typeinfo>
 #include <filesystem>
+#include <fstream>
 #include <unistd.h>
 #include <cstdio>
 #include <sys/wait.h>
@@ -90,8 +93,8 @@ PointF center(const View* view)
 // A window with its first sample in, at the given size.
 struct Fixture
 {
-    explicit Fixture(SizeF size = {1040, 700}, ApplicationLookup lookup = {})
-        : monitor(std::move(lookup))
+    explicit Fixture(SizeF size = {1040, 700}, ApplicationLookup lookup = {}, std::shared_ptr<ProcReader> reader = {})
+        : monitor(std::move(lookup), {}, std::move(reader))
         , window(monitor)
     {
         window.window().setScale(1.5);
@@ -106,6 +109,56 @@ struct Fixture
 
     Monitor monitor;
     MainWindow window;
+};
+
+// The texts of the visible labels under the view.
+void visibleTexts(const View* view, std::vector<std::string>* texts)
+{
+    if (!view->isVisible())
+        return;
+    if (const auto* label = dynamic_cast<const Label*>(view))
+        texts->push_back(label->text());
+    for (const auto& child : view->children())
+        visibleTexts(child.get(), texts);
+}
+
+bool showsText(const View* view, const std::string& text)
+{
+    std::vector<std::string> texts;
+    if (view)
+        visibleTexts(view, &texts);
+    return std::find(texts.begin(), texts.end(), text) != texts.end();
+}
+
+// A /sys holding only graphics cards, each a file tree of name, activity and power.
+class GpuSysFixture
+{
+public:
+    GpuSysFixture()
+    {
+        std::string pattern = (std::filesystem::temp_directory_path() / "monitor-ui-test-XXXXXX").string();
+        m_path = mkdtemp(pattern.data());
+    }
+    ~GpuSysFixture() { std::filesystem::remove_all(m_path); }
+
+    void addCard(const std::string& card, const std::string& name, int busy, bool primary)
+    {
+        const std::string device = m_path + "/class/drm/" + card + "/device";
+        write(device + "/product_name", name + "\n");
+        write(device + "/gpu_busy_percent", std::to_string(busy) + "\n");
+        write(device + "/boot_vga", primary ? "1\n" : "0\n");
+        write(device + "/hwmon/hwmon0/power1_input", "9000000\n");
+    }
+    std::shared_ptr<ProcReader> reader() const { return std::make_shared<ProcReader>("/proc", m_path); }
+
+private:
+    static void write(const std::string& path, const std::string& contents)
+    {
+        std::filesystem::create_directories(std::filesystem::path(path).parent_path());
+        std::ofstream(path) << contents;
+    }
+
+    std::string m_path;
 };
 
 std::string ownProgram()
@@ -622,6 +675,69 @@ TEST(UiTest, TabOrder)
     EXPECT_EQ(stops[first + 3], "processSearch");
     for (size_t i = first + 4; i < first + 10 && i < stops.size(); ++i)
         EXPECT_EQ(stops[i].substr(0, 13), "processTable/") << i;
+}
+
+TEST(UiTest, OneCardPerGpu)
+{
+    GpuSysFixture single;
+    single.addCard("card0", "Only Graphics", 25, true);
+    {
+        Fixture fixture({1040, 700}, {}, single.reader());
+        ASSERT_EQ(fixture.monitor.metrics().gpus.size(), 1u);
+        EXPECT_TRUE(showsText(fixture.view("gpuSummary"), "GPU"));
+        EXPECT_EQ(fixture.view("gpuSummary2"), nullptr);
+        fixture.window.setCurrentPage(5);
+        fixture.layout();
+        EXPECT_TRUE(showsText(fixture.view("pageTitle"), "GPU"));
+        // The rows a card has no source for stay hidden.
+        EXPECT_TRUE(showsText(fixture.view("resourcePage"), "Power"));
+        EXPECT_TRUE(showsText(fixture.view("resourcePage"), "9.0 W"));
+        EXPECT_FALSE(showsText(fixture.view("resourcePage"), "Video encoder"));
+        EXPECT_FALSE(showsText(fixture.view("resourcePage"), "Memory clock"));
+    }
+
+    // Several GPUs are numbered in their order, the boot display's first, and each has a page of its own.
+    GpuSysFixture several;
+    several.addCard("card0", "Discrete Graphics", 70, false);
+    several.addCard("card1", "Integrated Graphics", 40, true);
+    Fixture fixture({1040, 700}, {}, several.reader());
+    MainWindow& window = fixture.window;
+    ASSERT_EQ(fixture.monitor.metrics().gpus.size(), 2u);
+    ASSERT_EQ(fixture.monitor.history().gpus.size(), 2u);
+    EXPECT_EQ(fixture.monitor.history().gpus[1].id, "card0");
+    View* first = fixture.view("gpuSummary");
+    View* second = fixture.view("gpuSummary2");
+    ASSERT_TRUE(first && second);
+    EXPECT_TRUE(showsText(first, "GPU 1"));
+    EXPECT_TRUE(showsText(first, "40.0%"));
+    EXPECT_TRUE(showsText(second, "GPU 2"));
+    EXPECT_TRUE(showsText(second, "70.0%"));
+
+    TestInput::setKeyboardFocus(window.window(), true);
+    second->setFocus(FocusReason::Keyboard);
+    TestInput::typeKey(window.window(), key::Space);
+    fixture.layout();
+    EXPECT_EQ(window.currentPage(), 6);
+    EXPECT_TRUE(showsText(fixture.view("pageTitle"), "GPU 2"));
+    View* page = fixture.view("resourcePage");
+    EXPECT_TRUE(showsText(page, "Discrete Graphics"));
+    EXPECT_TRUE(showsText(page, "70.0%"));
+    EXPECT_FALSE(showsText(page, "Integrated Graphics"));
+
+    TestInput::typeKey(window.window(), key::Escape);
+    Menu* view = window.window().mainMenu()->submenu(2);
+    ASSERT_TRUE(view);
+    view->popup(&window.window(), {300, 100});
+    ASSERT_TRUE(view->isOpen());
+    // Processes, CPU, Memory, Network, Disk, GPU 1, then GPU 2.
+    for (int row = 0; row < 7; ++row)
+        TestInput::typeKey(*view->window(), key::Down);
+    TestInput::typeKey(*view->window(), key::Return);
+    EXPECT_EQ(window.currentPage(), 6);
+    view->close();
+    fixture.layout();
+    EXPECT_TRUE(showsText(fixture.view("pageTitle"), "GPU 2"));
+    EXPECT_TRUE(showsText(fixture.view("resourcePage"), "Discrete Graphics"));
 }
 
 int main(int argc, char** argv)

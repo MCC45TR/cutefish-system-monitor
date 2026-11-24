@@ -13,6 +13,7 @@ class InfoRow;
 class ListCard;
 class Monitor;
 class SectionLabel;
+struct Gpu;
 
 namespace cutefish::ui {
 class Column;
@@ -23,7 +24,7 @@ class ProgressBar;
 } // namespace cutefish::ui
 
 // A resource's chart and details: CPU (1), memory (2), network (3), disks (4)
-// or GPUs (5).
+// or one GPU (5 and on, in the order of Metrics::gpus).
 class ResourcePage : public cutefish::ui::ScrollView
 {
 public:
@@ -47,6 +48,8 @@ private:
     struct Tile;
 
     void rebuild();
+    // The page's GPU, while it is listed.
+    const Gpu* gpu() const;
     void update();
     void updateChart();
     Section addSection(cutefish::ui::View* parent, size_t rows);

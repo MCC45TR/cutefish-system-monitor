@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cutefish-system-monitor\n"
 "Report-Msgid-Bugs-To: https://github.com/cutefishos\n"
-"POT-Creation-Date: 2026-11-19 20:08+0800\n"
+"POT-Creation-Date: 2026-11-23 23:43+0800\n"
 "PO-Revision-Date: 2026-11-13 15:22+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -183,6 +183,12 @@ msgstr "Bộ nhớ"
 msgid "Disk"
 msgstr "Ổ đĩa"
 
+#. TRANSLATORS: one of several GPUs in the sidebar, such as "GPU 2".
+#: src/views/mainwindow.cpp
+#, python-brace-format
+msgid "GPU {number}"
+msgstr "GPU {number}"
+
 #: src/views/mainwindow.cpp cutefish-system-monitor.desktop
 msgid "System Monitor"
 msgstr "Giám sát hệ thống"
@@ -228,18 +234,6 @@ msgid "View"
 msgstr "Xem"
 
 #: src/views/mainwindow.cpp
-msgid "Update Every Second"
-msgstr "Cập nhật mỗi giây"
-
-#: src/views/mainwindow.cpp
-msgid "Update Every 2 Seconds"
-msgstr "Cập nhật mỗi 2 giây"
-
-#: src/views/mainwindow.cpp
-msgid "Update Every 5 Seconds"
-msgstr "Cập nhật mỗi 5 giây"
-
-#: src/views/mainwindow.cpp
 msgid "Window"
 msgstr "Cửa sổ"
 
@@ -250,6 +244,18 @@ msgstr "Thu nhỏ"
 #: src/views/mainwindow.cpp
 msgid "Zoom"
 msgstr "Phóng to"
+
+#: src/views/mainwindow.cpp
+msgid "Update Every Second"
+msgstr "Cập nhật mỗi giây"
+
+#: src/views/mainwindow.cpp
+msgid "Update Every 2 Seconds"
+msgstr "Cập nhật mỗi 2 giây"
+
+#: src/views/mainwindow.cpp
+msgid "Update Every 5 Seconds"
+msgstr "Cập nhật mỗi 5 giây"
 
 #: src/views/mainwindow.cpp
 msgid "Shows what your computer is doing."
@@ -295,6 +301,10 @@ msgstr[0] "{n} bộ xử lý logic"
 #, python-brace-format
 msgid "Write {rate}"
 msgstr "Ghi {rate}"
+
+#: src/views/mainwindow.cpp src/views/resourcepage.cpp
+msgid "Powered off"
+msgstr "Đã tắt nguồn"
 
 #: src/views/processdetails.cpp
 msgid "Command"
@@ -505,6 +515,14 @@ msgid "Activity"
 msgstr "Hoạt động"
 
 #: src/views/resourcepage.cpp
+msgid "Video encoder"
+msgstr "Bộ mã hóa video"
+
+#: src/views/resourcepage.cpp
+msgid "Video decoder"
+msgstr "Bộ giải mã video"
+
+#: src/views/resourcepage.cpp
 msgid "Temperature"
 msgstr "Nhiệt độ"
 
@@ -513,8 +531,16 @@ msgid "Clock speed"
 msgstr "Xung nhịp"
 
 #: src/views/resourcepage.cpp
+msgid "Memory clock"
+msgstr "Xung nhịp bộ nhớ"
+
+#: src/views/resourcepage.cpp
 msgid "Video memory"
 msgstr "Bộ nhớ video"
+
+#: src/views/resourcepage.cpp
+msgid "Power"
+msgstr "Công suất"
 
 #: src/views/resourcepage.cpp
 msgid "Processor activity"
@@ -588,10 +614,6 @@ msgstr "{used}/{total}"
 #: src/views/resourcepage.cpp
 msgid "Active"
 msgstr "Đang hoạt động"
-
-#: src/views/resourcepage.cpp
-msgid "Powered off"
-msgstr "Đã tắt nguồn"
 
 #: cutefish-system-monitor.desktop
 msgid "View resource usage and manage running processes"

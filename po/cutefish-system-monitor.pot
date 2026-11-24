@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cutefish-system-monitor\n"
 "Report-Msgid-Bugs-To: https://github.com/cutefishos\n"
-"POT-Creation-Date: 2026-11-19 20:08+0800\n"
+"POT-Creation-Date: 2026-11-23 23:43+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -184,6 +184,12 @@ msgstr ""
 msgid "Disk"
 msgstr ""
 
+#. TRANSLATORS: one of several GPUs in the sidebar, such as "GPU 2".
+#: src/views/mainwindow.cpp
+#, python-brace-format
+msgid "GPU {number}"
+msgstr ""
+
 #: src/views/mainwindow.cpp cutefish-system-monitor.desktop
 msgid "System Monitor"
 msgstr ""
@@ -229,18 +235,6 @@ msgid "View"
 msgstr ""
 
 #: src/views/mainwindow.cpp
-msgid "Update Every Second"
-msgstr ""
-
-#: src/views/mainwindow.cpp
-msgid "Update Every 2 Seconds"
-msgstr ""
-
-#: src/views/mainwindow.cpp
-msgid "Update Every 5 Seconds"
-msgstr ""
-
-#: src/views/mainwindow.cpp
 msgid "Window"
 msgstr ""
 
@@ -250,6 +244,18 @@ msgstr ""
 
 #: src/views/mainwindow.cpp
 msgid "Zoom"
+msgstr ""
+
+#: src/views/mainwindow.cpp
+msgid "Update Every Second"
+msgstr ""
+
+#: src/views/mainwindow.cpp
+msgid "Update Every 2 Seconds"
+msgstr ""
+
+#: src/views/mainwindow.cpp
+msgid "Update Every 5 Seconds"
 msgstr ""
 
 #: src/views/mainwindow.cpp
@@ -296,6 +302,10 @@ msgstr[1] ""
 #: src/views/mainwindow.cpp
 #, python-brace-format
 msgid "Write {rate}"
+msgstr ""
+
+#: src/views/mainwindow.cpp src/views/resourcepage.cpp
+msgid "Powered off"
 msgstr ""
 
 #: src/views/processdetails.cpp
@@ -508,6 +518,14 @@ msgid "Activity"
 msgstr ""
 
 #: src/views/resourcepage.cpp
+msgid "Video encoder"
+msgstr ""
+
+#: src/views/resourcepage.cpp
+msgid "Video decoder"
+msgstr ""
+
+#: src/views/resourcepage.cpp
 msgid "Temperature"
 msgstr ""
 
@@ -516,7 +534,15 @@ msgid "Clock speed"
 msgstr ""
 
 #: src/views/resourcepage.cpp
+msgid "Memory clock"
+msgstr ""
+
+#: src/views/resourcepage.cpp
 msgid "Video memory"
+msgstr ""
+
+#: src/views/resourcepage.cpp
+msgid "Power"
 msgstr ""
 
 #: src/views/resourcepage.cpp
@@ -591,10 +617,6 @@ msgstr ""
 
 #: src/views/resourcepage.cpp
 msgid "Active"
-msgstr ""
-
-#: src/views/resourcepage.cpp
-msgid "Powered off"
 msgstr ""
 
 #: cutefish-system-monitor.desktop

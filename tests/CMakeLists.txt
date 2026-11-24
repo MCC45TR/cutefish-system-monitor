@@ -5,8 +5,10 @@ find_package(GTest REQUIRED)
 include(GoogleTest)
 
 add_executable(system-monitor-tests
+    gpu_test.cpp
     main.cpp
     monitor_test.cpp
+    procreader_test.cpp
 )
 target_link_libraries(system-monitor-tests PRIVATE monitor-backend GTest::gtest)
 # The application tests group every running copy of this binary.

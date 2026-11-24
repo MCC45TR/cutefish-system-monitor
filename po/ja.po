@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cutefish-system-monitor\n"
 "Report-Msgid-Bugs-To: https://github.com/cutefishos\n"
-"POT-Creation-Date: 2026-11-19 20:08+0800\n"
+"POT-Creation-Date: 2026-11-23 23:43+0800\n"
 "PO-Revision-Date: 2026-10-19 22:12+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -183,6 +183,12 @@ msgstr "メモリ"
 msgid "Disk"
 msgstr "ディスク"
 
+#. TRANSLATORS: one of several GPUs in the sidebar, such as "GPU 2".
+#: src/views/mainwindow.cpp
+#, python-brace-format
+msgid "GPU {number}"
+msgstr "GPU {number}"
+
 #: src/views/mainwindow.cpp cutefish-system-monitor.desktop
 msgid "System Monitor"
 msgstr "システムモニタ"
@@ -228,18 +234,6 @@ msgid "View"
 msgstr "表示"
 
 #: src/views/mainwindow.cpp
-msgid "Update Every Second"
-msgstr "1 秒ごとに更新"
-
-#: src/views/mainwindow.cpp
-msgid "Update Every 2 Seconds"
-msgstr "2 秒ごとに更新"
-
-#: src/views/mainwindow.cpp
-msgid "Update Every 5 Seconds"
-msgstr "5 秒ごとに更新"
-
-#: src/views/mainwindow.cpp
 msgid "Window"
 msgstr "ウインドウ"
 
@@ -250,6 +244,18 @@ msgstr "最小化"
 #: src/views/mainwindow.cpp
 msgid "Zoom"
 msgstr "ズーム"
+
+#: src/views/mainwindow.cpp
+msgid "Update Every Second"
+msgstr "1 秒ごとに更新"
+
+#: src/views/mainwindow.cpp
+msgid "Update Every 2 Seconds"
+msgstr "2 秒ごとに更新"
+
+#: src/views/mainwindow.cpp
+msgid "Update Every 5 Seconds"
+msgstr "5 秒ごとに更新"
 
 #: src/views/mainwindow.cpp
 msgid "Shows what your computer is doing."
@@ -295,6 +301,10 @@ msgstr[0] "論理プロセッサ {n} 個"
 #, python-brace-format
 msgid "Write {rate}"
 msgstr "書き込み {rate}"
+
+#: src/views/mainwindow.cpp src/views/resourcepage.cpp
+msgid "Powered off"
+msgstr "電源オフ"
 
 #: src/views/processdetails.cpp
 msgid "Command"
@@ -505,6 +515,14 @@ msgid "Activity"
 msgstr "使用率"
 
 #: src/views/resourcepage.cpp
+msgid "Video encoder"
+msgstr "ビデオエンコーダ"
+
+#: src/views/resourcepage.cpp
+msgid "Video decoder"
+msgstr "ビデオデコーダ"
+
+#: src/views/resourcepage.cpp
 msgid "Temperature"
 msgstr "温度"
 
@@ -513,8 +531,16 @@ msgid "Clock speed"
 msgstr "クロック周波数"
 
 #: src/views/resourcepage.cpp
+msgid "Memory clock"
+msgstr "メモリクロック"
+
+#: src/views/resourcepage.cpp
 msgid "Video memory"
 msgstr "ビデオメモリ"
+
+#: src/views/resourcepage.cpp
+msgid "Power"
+msgstr "消費電力"
 
 #: src/views/resourcepage.cpp
 msgid "Processor activity"
@@ -588,10 +614,6 @@ msgstr "{total} 中 {used}"
 #: src/views/resourcepage.cpp
 msgid "Active"
 msgstr "アクティブ"
-
-#: src/views/resourcepage.cpp
-msgid "Powered off"
-msgstr "電源オフ"
 
 #: cutefish-system-monitor.desktop
 msgid "View resource usage and manage running processes"

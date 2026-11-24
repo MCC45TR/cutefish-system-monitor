@@ -17,6 +17,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <iterator>
 
 using namespace cutefish::ui;
 using cutefish::i18n::format;
@@ -184,31 +185,39 @@ void ResourcePage::rebuild()
         m_built[0] = metrics.disks.size();
         m_built[1] = metrics.volumes.size();
         break;
-    case 5:
-        for (size_t i = 0; i < metrics.gpus.size(); ++i) {
-            Section section = addSection(m_layout, 6);
+    default:
+        if (gpu()) {
             const char* texts[] = {trNoop("Driver"), trNoop("State"), trNoop("Activity"),
-                                   trNoop("Temperature"), trNoop("Clock speed"), trNoop("Video memory")};
-            for (size_t row = 0; row < 6; ++row)
+                                   trNoop("Video encoder"), trNoop("Video decoder"), trNoop("Temperature"),
+                                   trNoop("Clock speed"), trNoop("Memory clock"), trNoop("Video memory"),
+                                   trNoop("Power")};
+            Section section = addSection(m_layout, std::size(texts));
+            for (size_t row = 0; row < std::size(texts); ++row)
                 section.rows[row]->setText(tr(texts[row]));
             m_sections.push_back(section);
         }
         m_built[0] = metrics.gpus.size();
         break;
-    default:
-        break;
     }
     update();
+}
+
+const Gpu* ResourcePage::gpu() const
+{
+    const std::vector<Gpu>& gpus = m_monitor.metrics().gpus;
+    return m_page >= 5 && size_t(m_page - 5) < gpus.size() ? &gpus[size_t(m_page - 5)] : nullptr;
 }
 
 void ResourcePage::updateChart()
 {
     const Metrics& metrics = m_monitor.metrics();
     const History& history = m_monitor.history();
-    const bool temperature = m_page == 5 && !metrics.gpuHasBusy;
+    const Gpu* gpu = this->gpu();
+    const bool temperature = gpu && !gpu->hasBusy;
+    const int kind = std::min(m_page, 5);
     static const char* const titles[] = {"", trNoop("Processor activity"), trNoop("Memory usage"), trNoop("Network activity"),
                                           trNoop("Disk activity"), trNoop("Graphics activity")};
-    m_chart->setTitle(temperature ? tr("Graphics temperature") : tr(titles[m_page]));
+    m_chart->setTitle(temperature ? tr("Graphics temperature") : tr(titles[kind]));
     std::string value;
     std::string subtitle;
     std::vector<double> primary;
@@ -238,18 +247,24 @@ void ResourcePage::updateChart()
         secondary = history.diskWrite;
         break;
     default:
-        value = temperature ? Monitor::formatTemperature(metrics.gpuTemperature)
-                            : Monitor::formatPercent(metrics.gpuPercent);
-        subtitle = metrics.gpuName;
-        primary = temperature ? history.gpuTemperature : history.gpuPercent;
+        if (!gpu)
+            break;
+        value = temperature ? Monitor::formatTemperature(std::max(0.0, gpu->temperature))
+                            : Monitor::formatPercent(gpu->busy);
+        subtitle = gpu->name;
+        // The history lists the GPUs in the same order.
+        if (size_t(m_page - 5) < history.gpus.size()) {
+            const GpuHistory& series = history.gpus[size_t(m_page - 5)];
+            primary = temperature ? series.temperature : series.percent;
+        }
         break;
     }
     static const Color colors[] = {accent::blue, accent::blue, accent::purple, accent::green, accent::orange,
                                    accent::pink};
-    m_chart->setColors(colors[m_page], m_page == 3 ? accent::blue : accent::purple);
+    m_chart->setColors(colors[kind], m_page == 3 ? accent::blue : accent::purple);
     m_chart->setValue(value);
     m_chart->setSubtitle(subtitle);
-    m_chart->setMaximum(m_page <= 2 || m_page == 5 ? 100 : 0);
+    m_chart->setMaximum(m_page <= 2 || m_page >= 5 ? 100 : 0);
     m_chart->setScaleLabel(temperature ? Monitor::formatTemperature(100) : std::string());
     m_chart->setLegends(m_page == 3 ? tr("Download") : m_page == 4 ? tr("Read") : "",
                         m_page == 3 ? tr("Upload") : m_page == 4 ? tr("Write") : "");
@@ -264,7 +279,7 @@ void ResourcePage::update()
     const bool changed = (m_page == 1 && metrics.cores.size() != m_built[0])
                          || (m_page == 3 && metrics.interfaces.size() != m_built[0])
                          || (m_page == 4 && (metrics.disks.size() != m_built[0] || metrics.volumes.size() != m_built[1]))
-                         || (m_page == 5 && metrics.gpus.size() != m_built[0]);
+                         || (m_page >= 5 && metrics.gpus.size() != m_built[0]);
     if (changed) {
         rebuild();
         return;
@@ -330,28 +345,36 @@ void ResourcePage::update()
             m_volumes[i].rows[2]->setValue(volume.type.empty() ? "—" : volume.type);
         }
         break;
-    case 5:
-        for (size_t i = 0; i < m_sections.size(); ++i) {
-            const Gpu& gpu = metrics.gpus[i];
-            Section& section = m_sections[i];
-            section.title->setText(gpu.name);
-            section.rows[0]->setValue(gpu.driver.empty() ? "—" : gpu.driver);
-            section.rows[1]->setValue(gpu.active ? tr("Active") : tr("Powered off"));
-            section.rows[2]->setValue(Monitor::formatPercent(gpu.busy));
-            section.rows[2]->setVisible(gpu.hasBusy);
-            section.rows[3]->setValue(gpu.active && gpu.temperature >= 0 ? Monitor::formatTemperature(gpu.temperature)
-                                                                         : "—");
-            section.rows[3]->setVisible(gpu.hasTemperature);
-            section.rows[4]->setValue(gpu.active ? std::to_string(std::lround(gpu.frequency)) + " MHz" : "—");
-            section.rows[4]->setVisible(gpu.hasFrequency);
-            section.rows[5]->setValue(gpu.active ? Monitor::formatBytes(double(gpu.vramUsed)) + " / "
-                                                       + Monitor::formatBytes(double(gpu.vramTotal))
-                                                 : "—");
-            section.rows[5]->setVisible(gpu.hasVram);
+    default:
+        if (const Gpu* gpu = this->gpu(); gpu && !m_sections.empty()) {
+            Section& section = m_sections.front();
+            const auto clock = [gpu](double megahertz) {
+                return gpu->active ? std::to_string(std::lround(megahertz)) + " MHz" : "—";
+            };
+            section.title->setText(gpu->name);
+            section.rows[0]->setValue(gpu->driver.empty() ? "—" : gpu->driver);
+            section.rows[1]->setValue(gpu->active ? tr("Active") : tr("Powered off"));
+            section.rows[2]->setValue(Monitor::formatPercent(gpu->busy));
+            section.rows[2]->setVisible(gpu->hasBusy);
+            section.rows[3]->setValue(gpu->active ? Monitor::formatPercent(gpu->encoder) : "—");
+            section.rows[3]->setVisible(gpu->hasEncoder);
+            section.rows[4]->setValue(gpu->active ? Monitor::formatPercent(gpu->decoder) : "—");
+            section.rows[4]->setVisible(gpu->hasDecoder);
+            section.rows[5]->setValue(gpu->active && gpu->temperature >= 0 ? Monitor::formatTemperature(gpu->temperature)
+                                                                           : "—");
+            section.rows[5]->setVisible(gpu->hasTemperature);
+            section.rows[6]->setValue(clock(gpu->frequency));
+            section.rows[6]->setVisible(gpu->hasFrequency);
+            section.rows[7]->setValue(clock(gpu->memoryFrequency));
+            section.rows[7]->setVisible(gpu->hasMemoryFrequency);
+            section.rows[8]->setValue(gpu->active ? Monitor::formatBytes(double(gpu->vramUsed)) + " / "
+                                                        + Monitor::formatBytes(double(gpu->vramTotal))
+                                                  : "—");
+            section.rows[8]->setVisible(gpu->hasVram);
+            section.rows[9]->setValue(gpu->active ? Monitor::formatPower(gpu->power) : "—");
+            section.rows[9]->setVisible(gpu->hasPower);
             section.card->updateSeparators();
         }
-        break;
-    default:
         break;
     }
 }

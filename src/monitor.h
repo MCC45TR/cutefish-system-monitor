@@ -40,6 +40,14 @@ struct ApplicationLookup
     std::function<std::optional<DesktopApplication>(const std::string& id)> byId;
 };
 
+// A GPU's activity and temperature, as History keeps them.
+struct GpuHistory
+{
+    std::string id;
+    std::vector<double> percent;
+    std::vector<double> temperature;
+};
+
 // The last minute of the system-wide measurements, one value per sample.
 struct History
 {
@@ -51,15 +59,17 @@ struct History
     std::vector<double> upload;
     std::vector<double> diskRead;
     std::vector<double> diskWrite;
-    std::vector<double> gpuPercent;
-    std::vector<double> gpuTemperature;
+    // One per GPU, in the order of Metrics::gpus.
+    std::vector<GpuHistory> gpus;
 };
 
 class Monitor
 {
 public:
-    // Reads and writes its preferences in the file, when one is given.
-    explicit Monitor(ApplicationLookup lookup = {}, std::string preferences = {});
+    // Reads and writes its preferences in the file, when one is given; samples
+    // the system's /proc and /sys unless given a reader.
+    explicit Monitor(ApplicationLookup lookup = {}, std::string preferences = {},
+                     std::shared_ptr<ProcReader> reader = {});
     ~Monitor();
 
     const Metrics& metrics() const { return m_metrics; }
@@ -92,6 +102,7 @@ public:
     static std::string formatRate(double bytes);
     static std::string formatPercent(double percent);
     static std::string formatTemperature(double celsius);
+    static std::string formatPower(double watts);
     // Abbreviated to its two largest units, such as "2 h 5 min".
     static std::string formatDuration(int64_t seconds);
 

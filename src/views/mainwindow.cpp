@@ -37,7 +37,16 @@ static constexpr double kHeaderHeight = 48;
 // The title and window buttons end on this line; content spacing is measured from it.
 static constexpr double kHeaderBaseline = 28;
 static const char* const kPageTitles[] = {trNoop("Processes"), trNoop("CPU"), trNoop("Memory"),
-                                          trNoop("Network"), trNoop("Disk"), trNoop("GPU")};
+                                          trNoop("Network"), trNoop("Disk")};
+
+// Several GPUs are told apart by number, in the order they are listed.
+static std::string gpuTitle(size_t index, size_t count)
+{
+    if (count <= 1)
+        return tr("GPU");
+    // TRANSLATORS: one of several GPUs in the sidebar, such as "GPU 2".
+    return format(tr("GPU {number}"), {{"number", std::to_string(index + 1)}});
+}
 
 static std::vector<double> sumSeries(const std::vector<double>& first, const std::vector<double>& second)
 {
@@ -96,7 +105,7 @@ public:
         header->setContentUnderButtons(true);
 
         sidebar = addChild<ScrollView>();
-        auto* column = sidebar->setContent<Column>();
+        column = sidebar->setContent<Column>();
         column->setMargins({12, 4, 12, 16});
         column->setSpacing(12);
         processesButton = column->addChild<ProcessesButton>();
@@ -105,8 +114,7 @@ public:
         memory = column->addChild<SummaryCard>(tr("Memory"), "memory", accent::purple);
         network = column->addChild<SummaryCard>(tr("Network"), "network", accent::green);
         disk = column->addChild<SummaryCard>(tr("Disk"), "disk", accent::orange);
-        gpu = column->addChild<SummaryCard>(tr("GPU"), "gpu", accent::pink);
-        for (SummaryCard* card : {cpu, memory, network, disk, gpu})
+        for (SummaryCard* card : {cpu, memory, network, disk})
             card->setLayoutHints({.fillWidth = true});
         sidebar->setName("resourceSidebar");
         processesButton->setName("processesNavigation");
@@ -114,12 +122,10 @@ public:
         memory->setName("memorySummary");
         network->setName("networkSummary");
         disk->setName("diskSummary");
-        gpu->setName("gpuSummary");
         network->setMaximum(0);
         network->setScaleFloor(1024 * 1024);
         disk->setMaximum(0);
         disk->setScaleFloor(1024 * 1024);
-        gpu->setVisible(false);
 
         pages = addChild<View>();
         pages->setClipsChildren(true);
@@ -132,12 +138,14 @@ public:
     WindowHeader* header;
     HeaderContent* content;
     ScrollView* sidebar;
+    Column* column;
     ProcessesButton* processesButton;
     SummaryCard* cpu;
     SummaryCard* memory;
     SummaryCard* network;
     SummaryCard* disk;
-    SummaryCard* gpu;
+    // One per GPU, in the order of Metrics::gpus, after the others.
+    std::vector<SummaryCard*> gpus;
     // The resource page's viewport, under the header.
     View* pages;
     ProcessesPage* processes = nullptr;
@@ -209,7 +217,7 @@ void MainWindow::buildContent()
 
     m_root->processesButton->onClicked = [this] { setCurrentPage(0); };
     int page = 1;
-    for (SummaryCard* card : {m_root->cpu, m_root->memory, m_root->network, m_root->disk, m_root->gpu}) {
+    for (SummaryCard* card : {m_root->cpu, m_root->memory, m_root->network, m_root->disk}) {
         card->onClicked = [this, page] { setCurrentPage(page); };
         ++page;
     }
@@ -251,21 +259,9 @@ void MainWindow::buildMainMenu()
     edit->setItemKeyEquivalent(find, "f", ControlModifier);
 
     Menu* view = m_mainMenu->addSubmenu(tr("View"));
-    for (int page = 0; page < 6; ++page)
-        view->addItem(tr(kPageTitles[page]), [this, page] { setCurrentPage(page); });
-    view->addSeparator();
-    static constexpr int kIntervals[] = {1000, 2000, 5000};
-    const size_t firstInterval = 7;
-    view->addItem(tr("Update Every Second"), [this] { m_monitor.setInterval(kIntervals[0]); });
-    view->addItem(tr("Update Every 2 Seconds"), [this] { m_monitor.setInterval(kIntervals[1]); });
-    view->addItem(tr("Update Every 5 Seconds"), [this] { m_monitor.setInterval(kIntervals[2]); });
-    view->onAboutToShow = [this, view, firstInterval] {
-        for (int page = 0; page < 6; ++page)
-            view->setItemChecked(size_t(page), page == m_page);
-        view->setItemEnabled(5, m_monitor.metrics().gpuAvailable);
-        for (size_t i = 0; i < 3; ++i)
-            view->setItemChecked(firstInterval + i, m_monitor.interval() == kIntervals[i]);
-    };
+    fillViewMenu(view);
+    // The GPUs may have changed since.
+    view->onAboutToShow = [this, view] { fillViewMenu(view); };
 
     Menu* windowMenu = m_mainMenu->addSubmenu(tr("Window"));
     windowMenu->setRole(MenuRole::Windows);
@@ -273,6 +269,55 @@ void MainWindow::buildMainMenu()
     windowMenu->addItem(tr("Zoom"), [this] { m_window.setMaximized(!m_window.states().maximized); });
 
     m_window.setMainMenu(m_mainMenu.get());
+}
+
+void MainWindow::fillViewMenu(Menu* view)
+{
+    view->clear();
+    for (int page = 0; page < pageCount(); ++page) {
+        const size_t item = view->addItem(pageTitle(page), [this, page] { setCurrentPage(page); });
+        view->setItemChecked(item, page == m_page);
+    }
+    view->setItemEnabled(5, !m_monitor.metrics().gpus.empty());
+    view->addSeparator();
+    static constexpr int kIntervals[] = {1000, 2000, 5000};
+    const size_t firstInterval = view->addItem(tr("Update Every Second"), [this] { m_monitor.setInterval(kIntervals[0]); });
+    view->addItem(tr("Update Every 2 Seconds"), [this] { m_monitor.setInterval(kIntervals[1]); });
+    view->addItem(tr("Update Every 5 Seconds"), [this] { m_monitor.setInterval(kIntervals[2]); });
+    for (size_t i = 0; i < 3; ++i)
+        view->setItemChecked(firstInterval + i, m_monitor.interval() == kIntervals[i]);
+}
+
+int MainWindow::pageCount() const
+{
+    return 5 + int(std::max<size_t>(1, m_monitor.metrics().gpus.size()));
+}
+
+std::string MainWindow::pageTitle(int page) const
+{
+    if (page < 5)
+        return tr(kPageTitles[page]);
+    return gpuTitle(size_t(page - 5), m_monitor.metrics().gpus.size());
+}
+
+void MainWindow::updateGpuCards()
+{
+    const size_t count = m_monitor.metrics().gpus.size();
+    if (m_root->gpus.size() == count)
+        return;
+    for (SummaryCard* card : m_root->gpus)
+        m_root->column->takeChild(card);
+    m_root->gpus.clear();
+    for (size_t index = 0; index < count; ++index) {
+        auto* card = m_root->column->addChild<SummaryCard>(gpuTitle(index, count), "gpu", accent::pink);
+        card->setLayoutHints({.fillWidth = true});
+        card->setName(index == 0 ? std::string("gpuSummary") : "gpuSummary" + std::to_string(index + 1));
+        const int page = 5 + int(index);
+        card->onClicked = [this, page] { setCurrentPage(page); };
+        m_root->gpus.push_back(card);
+    }
+    // The header's title and the range of pages follow the count.
+    setCurrentPage(m_page);
 }
 
 void MainWindow::openAbout()
@@ -317,12 +362,14 @@ MainWindow::~MainWindow() = default;
 
 void MainWindow::setCurrentPage(int page)
 {
-    page = std::clamp(page, 0, 5);
+    page = std::clamp(page, 0, pageCount() - 1);
     m_page = page;
-    m_root->content->pageTitle()->setText(tr(kPageTitles[page]));
+    m_root->content->pageTitle()->setText(pageTitle(page));
     m_root->processesButton->setSelected(page == 0);
     int index = 1;
-    for (SummaryCard* card : {m_root->cpu, m_root->memory, m_root->network, m_root->disk, m_root->gpu})
+    for (SummaryCard* card : {m_root->cpu, m_root->memory, m_root->network, m_root->disk})
+        card->setSelected(page == index++);
+    for (SummaryCard* card : m_root->gpus)
         card->setSelected(page == index++);
     m_processes->setVisible(page == 0);
     // As the Qt version's Loader: made when a resource page opens, gone on the process list.
@@ -414,12 +461,20 @@ void MainWindow::update()
         sumSeries(history.download, history.upload));
     set(m_root->disk, Monitor::formatRate(metrics.diskRead), format(tr("Write {rate}"), {{"rate", Monitor::formatRate(metrics.diskWrite)}}),
         sumSeries(history.diskRead, history.diskWrite));
-    m_root->gpu->setVisible(metrics.gpuAvailable);
-    set(m_root->gpu,
-        metrics.gpuHasBusy ? Monitor::formatPercent(metrics.gpuPercent) : Monitor::formatTemperature(metrics.gpuTemperature),
-        metrics.gpuHasBusy && metrics.gpuHasTemperature ? Monitor::formatTemperature(metrics.gpuTemperature)
-                                                        : metrics.gpuName,
-        metrics.gpuHasBusy ? history.gpuPercent : history.gpuTemperature);
+    updateGpuCards();
+    for (size_t index = 0; index < m_root->gpus.size(); ++index) {
+        const Gpu& gpu = metrics.gpus[index];
+        const std::string temperature = Monitor::formatTemperature(std::max(0.0, gpu.temperature));
+        std::string subtitle = gpu.hasBusy && gpu.hasTemperature ? temperature : gpu.name;
+        if (!gpu.active)
+            subtitle = tr("Powered off");
+        std::vector<double> values;
+        // The history lists the GPUs in the same order.
+        if (index < history.gpus.size())
+            values = gpu.hasBusy ? history.gpus[index].percent : history.gpus[index].temperature;
+        set(m_root->gpus[index], gpu.hasBusy ? Monitor::formatPercent(gpu.busy) : gpu.active ? temperature : "—",
+            std::move(subtitle), std::move(values));
+    }
 
     m_root->error->setText(m_monitor.error());
     m_root->error->setVisible(!m_monitor.error().empty());

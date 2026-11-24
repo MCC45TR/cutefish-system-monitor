@@ -44,10 +44,11 @@ static std::string lower(std::string_view text)
     return result;
 }
 
-GpuReader::GpuReader(std::string procRoot, std::string sysRoot)
+GpuReader::GpuReader(std::string procRoot, std::string sysRoot, NvmlLoader nvml)
     : m_procRoot(std::move(procRoot))
     , m_sysRoot(std::move(sysRoot))
     , m_uid(getuid())
+    , m_nvml(std::move(nvml))
 {
 }
 
@@ -60,13 +61,23 @@ void GpuReader::scan()
             continue;
 
         Card card;
+        card.id = entry;
         card.device = drm + '/' + entry + "/device";
         const auto monitors = subdirectories(card.device + "/hwmon");
         if (!monitors.empty())
             card.hwmon = card.device + "/hwmon/" + monitors.front();
         card.hasBusy = fileExists(card.device + "/gpu_busy_percent");
-        card.hasTemperature = !card.hwmon.empty() && fileExists(card.hwmon + "/temp1_input");
-        card.hasFrequency = !card.hwmon.empty() && fileExists(card.hwmon + "/freq1_input");
+        if (!card.hwmon.empty()) {
+            card.hasTemperature = fileExists(card.hwmon + "/temp1_input");
+            card.hasFrequency = fileExists(card.hwmon + "/freq1_input");
+            card.hasMemoryFrequency = fileExists(card.hwmon + "/freq2_input");
+            for (const char* power : {"/power1_average", "/power1_input"}) {
+                if (fileExists(card.hwmon + power)) {
+                    card.powerFile = card.hwmon + power;
+                    break;
+                }
+            }
+        }
         card.hasVram = fileExists(card.device + "/mem_info_vram_total");
         for (const std::string& node : subdirectories(card.device + "/drm")) {
             if (node.starts_with("card") || node.starts_with("renderD"))
@@ -75,8 +86,19 @@ void GpuReader::scan()
         if (!card.hasBusy && !card.hasTemperature && card.nodes.empty())
             continue;
 
+        std::string driver;
+        for (const std::string_view line : split(readFile(card.device + "/uevent"), '\n')) {
+            if (line.starts_with("PCI_SLOT_NAME="))
+                card.pciSlot = std::string(line.substr(14));
+            else if (line.starts_with("DRIVER="))
+                driver = validUtf8(line.substr(7));
+        }
         card.primary = trimmed(readFile(card.device + "/boot_vga")) == "1";
         card.driver = validUtf8(fileName(symLinkTarget(card.device + "/driver")));
+        if (card.driver.empty())
+            card.driver = driver;
+        if (card.driver == "nvidia")
+            card.nvml = Nvml::Unknown;
         card.name = validUtf8(trimmed(readFile(card.device + "/product_name")));
         if (card.name.empty())
             card.name = pciName(trimmed(readFile(card.device + "/vendor")), trimmed(readFile(card.device + "/device")));
@@ -251,6 +273,30 @@ std::vector<DrmClients> GpuReader::drmClients(const std::vector<ProcessRecord>& 
     return clients;
 }
 
+Gpu GpuReader::nvmlGpu(const Card& card, bool active)
+{
+    Gpu gpu = card.nvmlSample;
+    gpu.id = card.id;
+    gpu.name = card.name;
+    gpu.driver = card.driver;
+    gpu.active = active;
+    // The library reports activity for every card; the rest is known once the card was read.
+    if (card.nvml == Nvml::Unknown)
+        gpu.hasBusy = true;
+    if (!active) {
+        gpu.busy = 0;
+        gpu.temperature = -1;
+        gpu.frequency = 0;
+        gpu.memoryFrequency = 0;
+        gpu.vramUsed = 0;
+        gpu.vramTotal = 0;
+        gpu.encoder = 0;
+        gpu.decoder = 0;
+        gpu.power = 0;
+    }
+    return gpu;
+}
+
 void GpuReader::sample(Metrics* metrics, const std::vector<ProcessRecord>& processes, double elapsed)
 {
     if (!m_scanned)
@@ -260,15 +306,33 @@ void GpuReader::sample(Metrics* metrics, const std::vector<ProcessRecord>& proce
     std::vector<bool> active(m_cards.size());
     std::vector<bool> clientCounted(m_cards.size());
     for (size_t index = 0; index < m_cards.size(); ++index) {
-        const Card& card = m_cards[index];
+        Card& card = m_cards[index];
         active[index] = trimmed(readFile(card.device + "/power/runtime_status")) != "suspended";
-        clientCounted[index] = active[index] && !card.hasBusy && !card.nodes.empty();
+        if (card.nvml != Nvml::None && active[index]) {
+            Gpu sample;
+            if (m_nvml.sample(card.pciSlot, &sample)) {
+                card.nvml = Nvml::Known;
+                card.nvmlSample = sample;
+                if (!sample.name.empty())
+                    card.name = sample.name;
+            } else {
+                card.nvml = Nvml::None;
+            }
+        }
+        if (card.nvml == Nvml::Unknown && m_nvml.failed())
+            card.nvml = Nvml::None;
+        clientCounted[index] = active[index] && !card.hasBusy && !card.nodes.empty() && card.nvml == Nvml::None;
     }
     auto clients = drmClients(processes, clientCounted);
 
     std::vector<Gpu> gpus;
     for (size_t index = 0; index < m_cards.size(); ++index) {
         Card& card = m_cards[index];
+        if (card.nvml != Nvml::None) {
+            gpus.push_back(nvmlGpu(card, active[index]));
+            continue;
+        }
+
         int busy = 0;
         // Without a device-wide counter, activity sums the busy time that
         // DRM fdinfo reports for each of the user's clients.
@@ -282,13 +346,16 @@ void GpuReader::sample(Metrics* metrics, const std::vector<ProcessRecord>& proce
             continue;
 
         Gpu gpu;
+        gpu.id = card.id;
         gpu.name = card.name;
         gpu.driver = card.driver;
         gpu.active = active[index];
         gpu.hasBusy = card.hasBusy || card.hasClientBusy;
         gpu.hasTemperature = card.hasTemperature;
         gpu.hasFrequency = card.hasFrequency;
+        gpu.hasMemoryFrequency = card.hasMemoryFrequency;
         gpu.hasVram = card.hasVram;
+        gpu.hasPower = !card.powerFile.empty();
         if (active[index] && card.hasBusy) {
             int64_t value = 0;
             parseNumber(trimmed(readFile(card.device + "/gpu_busy_percent")), &value);
@@ -302,6 +369,10 @@ void GpuReader::sample(Metrics* metrics, const std::vector<ProcessRecord>& proce
         }
         if (active[index] && card.hasFrequency)
             gpu.frequency = toUnsigned(trimmed(readFile(card.hwmon + "/freq1_input"))) / 1e6;
+        if (active[index] && card.hasMemoryFrequency)
+            gpu.memoryFrequency = toUnsigned(trimmed(readFile(card.hwmon + "/freq2_input"))) / 1e6;
+        if (active[index] && gpu.hasPower)
+            gpu.power = toUnsigned(trimmed(readFile(card.powerFile))) / 1e6;
         if (active[index] && card.hasVram) {
             gpu.vramUsed = toUnsigned(trimmed(readFile(card.device + "/mem_info_vram_used")));
             gpu.vramTotal = toUnsigned(trimmed(readFile(card.device + "/mem_info_vram_total")));
